@@ -14,8 +14,8 @@ import flixel.util.FlxMath;
 class MenuState extends FlxState
 {
     var titleText :FlxText;
-    var scoreText :FlxText;
     var highScoreText :FlxText;
+    var scoreText :FlxText;
     var playButton :FlxButton;
 
 	/**
@@ -23,23 +23,31 @@ class MenuState extends FlxState
 	 */
 	override public function create():Void
 	{
-        titleText = new FlxText(0, FlxG.worldBounds.height * 1/6, FlxG.worldBounds.width, "Some Clever Title", 36);
+        titleText = new FlxText(0, 110, FlxG.worldBounds.width, "Some Clever Title", 36);
         titleText.alignment = "center";
         add(titleText);
 
-        scoreText = new FlxText(0, FlxG.worldBounds.height / 2 - 20, FlxG.worldBounds.width, 'Score: ${Reg.score}', 30);
-        scoreText.alignment = "center";
-        scoreText.color = FlxColor.GREEN;
-        add(scoreText);
-
-        highScoreText = new FlxText(0, FlxG.worldBounds.height / 2 + 20, FlxG.worldBounds.width, 'Highscore: ${Reg.highscore}', 30);
+        highScoreText = new FlxText(0, 300, FlxG.worldBounds.width, 'Highscore: ${Reg.highscore}', 30);
         highScoreText.alignment = "center";
         highScoreText.color = FlxColor.RED;
         add(highScoreText);
 
-        playButton = new FlxButton(FlxG.worldBounds.width / 2, FlxG.worldBounds.height * 3/4, "Play", onPlayClicked);
+        scoreText = new FlxText(0, 400, FlxG.worldBounds.width, 'Score: ${Reg.score}', 30);
+        scoreText.alignment = "center";
+        scoreText.color = FlxColor.GREEN;
+        add(scoreText);
+
+        playButton = new FlxButton(FlxG.worldBounds.width / 2, 550, "Play", onPlayClicked);
         playButton.setPosition(playButton.x - playButton.width / 2, playButton.y - playButton.height / 2);
         add(playButton);
+
+        var resetButton = new FlxButton(FlxG.worldBounds.width / 2, 600, "Reset Progress", function () {
+            Reg.highscore = 0;
+            Reg.speed = 1;
+            Reg.gameManager.reset();
+        });
+        resetButton.setPosition(resetButton.x - resetButton.width / 2, resetButton.y - resetButton.height / 2);
+        add(resetButton);
 
 		super.create();
 	}
@@ -65,7 +73,8 @@ class MenuState extends FlxState
     {
         Reg.score = 0;
         Reg.speed = 1;
+        Reg.gameManager.reset();
 
-        FlxG.switchState(new games.Jump());
+        FlxG.switchState(Reg.gameManager.getNextGame());
     }
 }

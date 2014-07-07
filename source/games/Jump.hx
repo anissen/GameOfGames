@@ -26,6 +26,8 @@ class Jump extends GameState
 
     override public function create() :Void
     {
+        name = "Jump";
+
         var width = 360;
         var height = 640;
 

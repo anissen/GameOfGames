@@ -47,6 +47,9 @@ class GameState extends FlxState
     override public function destroy():Void
     {
         timer = FlxDestroyUtil.destroy(timer);
+
+        // Reg.gameManager.onGameUnlocked.remove(newGameUnlocked);
+
         super.destroy();
     }
 
@@ -89,17 +92,10 @@ class GameState extends FlxState
         }
         Reg.speed += 0.1;
         speed = Reg.speed;
-        trace('speed: $speed');
+        trace('Speed: $speed');
         FlxG.camera.flash(FlxColor.GREEN);
-        // FlxG.timeScale = 0.2;
         new FlxTimer(0.5 * FlxG.timeScale, function(timer :FlxTimer) {
-            var newGameState = switch (FlxRandom.intRanged(0, 2)) {
-                case 0: new games.Jump();
-                case 1: new games.ConnectDots();
-                case 2: new games.Bounce();
-                case _: throw "Unknown game";
-            }
-            FlxG.switchState(newGameState);
+            FlxG.switchState(Reg.gameManager.getNextGame());
         });
     }
 }

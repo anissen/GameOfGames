@@ -32,6 +32,8 @@ class Bounce extends GameState
     
     override public function create() :Void
     {
+        name = "Breakout";
+
         var colors :Array<Int> = [FlxColor.BROWN, FlxColor.BEIGE, FlxColor.CRIMSON, FlxColor.FOREST_GREEN]; // Reg.getColors(43, 3);
 
         // this.bgColor = colors.shift(); //FlxColor.NAVY_BLUE;

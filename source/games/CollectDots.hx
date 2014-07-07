@@ -10,7 +10,7 @@ import states.GameState;
 
 using flixel.util.FlxSpriteUtil;
 
-class ConnectDots extends GameState
+class CollectDots extends GameState
 {
     var dotSprites :FlxSpriteGroup;
     var dotsToCollect :Array<FlxSprite>;
