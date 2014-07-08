@@ -20,9 +20,10 @@ import states.GameState;
 
 class Jump extends GameState
 {
-    private var playerSprite :FlxSprite;
-    private var groundSprite :FlxSprite;
-    private var obstacles :FlxSpriteGroup;
+    var playerSprite :FlxSprite;
+    var groundSprite :FlxSprite;
+    var obstacles :FlxSpriteGroup;
+    var isOnGround :Bool = true;
 
     override public function create() :Void
     {
@@ -51,14 +52,6 @@ class Jump extends GameState
         FlxG.camera.followLead.x = 15 / speed;
 
         obstacles = new FlxSpriteGroup();
-        // obstacles.add(new FlxSprite(800 * speed, -32).makeGraphic(64, 64, FlxColor.YELLOW));
-        // obstacles.add(new FlxSprite(1400 * speed, -32).makeGraphic(64, 64, FlxColor.YELLOW));
-        // obstacles.add(new FlxSprite(1700 * speed, -64 - 32).makeGraphic(64, 64, FlxColor.RED));
-        // obstacles.add(new FlxSprite(2100 * speed, -128 + 32).makeGraphic(64, 128, FlxColor.RED));
-        // obstacles.add(new FlxSprite(2600 * speed, -128 + 32).makeGraphic(64, 128, FlxColor.RED));
-        // obstacles.add(new FlxSprite(3000 * speed, -128 - 32).makeGraphic(128, 128, FlxColor.RED));
-        // obstacles.add(new FlxSprite(3300 * speed, -128 + 32).makeGraphic(128, 128, FlxColor.RED));
-
 
         var x = 300 * speed;
         do {
@@ -81,26 +74,31 @@ class Jump extends GameState
         super.update();
 
         if (playerSprite.overlaps(obstacles)) {
-            // FlxG.camera.flash(FlxColor.RED);
-            // playerSprite.x = 0;
             lose();
         }
 
         if (playerSprite.overlaps(groundSprite)) {
             playerSprite.velocity.y = 0;
             playerSprite.y = -32 + 1;
+            if (!isOnGround) {
+                isOnGround = true;
+                FlxG.camera.shake(0.02 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
+            }
+
             #if !FLX_NO_TOUCH
             for (touch in FlxG.touches.list)
             {
                 if (touch.pressed)
                 {
                    playerSprite.velocity.y -= 1500;
+                   isOnGround = false;
                    break; 
                 }
             }
             #else
             if (FlxG.mouse.justPressed) {
                 playerSprite.velocity.y -= 1500;
+                isOnGround = false;
             }
             #end
         }

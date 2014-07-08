@@ -34,7 +34,6 @@ class CollectDots extends GameState
             var x = FlxRandom.intRanged(0, 3);
             var y = FlxRandom.intRanged(0, 6);
             if (collectableDotMap[x][y] == false) {
-                trace("Putting collectable dot at " + x + "," + y);
                 collectableDotMap[x][y] = true;
                 collectableDotCount++;
             }
@@ -47,7 +46,6 @@ class CollectDots extends GameState
                 var isCollectableDot = collectableDotMap[x][y];
                 var color;
                 if (isCollectableDot) {
-                    trace("Collectable dot at " + x + "," + y);
                     color = FlxColor.RED;
                     dotsToCollect.push(dot);
                 } else {
@@ -100,6 +98,8 @@ class CollectDots extends GameState
 
         dotsToCollect.remove(dot);
         dot.kill();
+
+        FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);        
 
         if (dotsToCollect.length == 0) {
             win();
