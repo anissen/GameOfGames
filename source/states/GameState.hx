@@ -100,4 +100,13 @@ class GameState extends FlxState
             FlxG.switchState(Reg.gameManager.getNextGame());
         });
     }
+
+    /* TODO: Implement the following functions:
+        success(); // freeze followed by shake + sound + flash
+        warning(); // freeze followed by shake + sound + flash
+        explosion(); // particle explosion (e.g. ball hits the paddle)
+        colorPalette(); // returns a color scheme
+
+        // effects should be limited at first, to be unlocked through play
+    */
 }
