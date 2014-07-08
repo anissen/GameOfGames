@@ -19,7 +19,7 @@ class GameManager
     public function new() :Void
     {
         gameList = [games.Jump, games.CollectDots, games.Bounce];
-
+        // gamesUnlocked = [games.Jump, games.CollectDots, games.Bounce];
         // onGameUnlocked = new flixel.util.FlxSignal();
     }
 

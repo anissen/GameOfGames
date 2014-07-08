@@ -20,25 +20,44 @@ class CollectDots extends GameState
     override public function create() :Void
     {
         name = "Collect The Dots";
-        description = "Collect all the BLUE!";
+        description = "Collect all the RED!";
         winningCondition = WinningCondition.CompleteObjective;
 
         dotSprites = new FlxSpriteGroup();
         dotsToCollect = new Array<FlxSprite>();
 
+        var dotColors = [FlxColor.GREEN, FlxColor.GOLDEN, FlxColor.MAGENTA];
+
+        var collectableDotMap :Array<Array<Bool>> = [ for (y in 0...7) [ for (x in 0...4) false ]];
+        var collectableDotCount = 0;
+        while (collectableDotCount < 10) {
+            var x = FlxRandom.intRanged(0, 3);
+            var y = FlxRandom.intRanged(0, 6);
+            if (collectableDotMap[x][y] == false) {
+                trace("Putting collectable dot at " + x + "," + y);
+                collectableDotMap[x][y] = true;
+                collectableDotCount++;
+            }
+        }
+
         for (y in 0...7) {
             for (x in 0...4) {
                 var dot = new FlxSprite(x * cellSize + (x + 1) * 8, y * cellSize + (y + 1) * 8);
                 dot.makeGraphic(cellSize, cellSize, FlxColor.TRANSPARENT, true);
-                if (FlxRandom.chanceRoll(30 - speed * 10)) { // TODO: Change this
-                    dot.drawCircle(cellSize / 2, cellSize / 2, radius,  FlxColor.BLUE);
+                var isCollectableDot = collectableDotMap[x][y];
+                var color;
+                if (isCollectableDot) {
+                    trace("Collectable dot at " + x + "," + y);
+                    color = FlxColor.RED;
                     dotsToCollect.push(dot);
                 } else {
-                    dot.drawCircle(cellSize / 2, cellSize / 2, radius, FlxRandom.getObject([FlxColor.GREEN, FlxColor.GOLDEN, FlxColor.MAGENTA]));
+                    color = FlxRandom.getObject(dotColors);
                 }
+                dot.drawCircle(cellSize / 2, cellSize / 2, radius, color);
                 dotSprites.add(dot);
             }
         }
+
         add(dotSprites);
 
         super.create();
