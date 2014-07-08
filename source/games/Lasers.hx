@@ -10,6 +10,8 @@ import flixel.group.FlxGroup;
 
 using flixel.util.FlxSpriteUtil;
 
+import flixel.util.FlxColor;
+import flixel.util.FlxRandom;
 import states.GameState;
 
 class Lasers extends GameState
@@ -18,6 +20,7 @@ class Lasers extends GameState
     var laserPoint2 :FlxSprite;
     var playerSprite :FlxSprite;
     var laserSprite :FlxSprite;
+    var clockwise :Bool;
 
     override public function create() :Void
     {
@@ -30,12 +33,16 @@ class Lasers extends GameState
         var pointC = new FlxPoint(FlxG.worldBounds.width - margin, FlxG.worldBounds.height - margin);
         var pointD = new FlxPoint(FlxG.worldBounds.width - margin, margin);
 
-        laserPoint = new FlxSprite(pointA.x - 32, pointA.y - 32);
+        clockwise = FlxRandom.chanceRoll();
+        var point1 = (clockwise ? pointB : pointA);
+        var point2 = (clockwise ? pointD : pointC);
+
+        laserPoint = new FlxSprite(point1.x - 32, point1.y - 32);
         laserPoint.makeGraphic(64, 64, FlxColor.TRANSPARENT, true);
         laserPoint.drawCircle(32, 32, 32, FlxColor.RED);
         add(laserPoint);
 
-        laserPoint2 = new FlxSprite(pointC.x - 32, pointC.y - 32);
+        laserPoint2 = new FlxSprite(point2.x - 32, point2.y - 32);
         laserPoint2.makeGraphic(64, 64, FlxColor.TRANSPARENT, true);
         laserPoint2.drawCircle(32, 32, 32, FlxColor.RED);
         add(laserPoint2);
@@ -49,10 +56,10 @@ class Lasers extends GameState
         laserSprite.makeGraphic(Math.floor(FlxG.worldBounds.width), Math.floor(FlxG.worldBounds.height), FlxColor.TRANSPARENT);
         add(laserSprite);
 
-        var path = new FlxPath(laserPoint, [pointA, pointB, pointC, pointD], 350);
-        var path2 = new FlxPath(laserPoint2, [pointC, pointD, pointA, pointB], 350);
+        var path = new FlxPath(laserPoint, (clockwise ? [pointB, pointA, pointD, pointC] : [pointA, pointB, pointC, pointD]), 300 * speed);
+        var path2 = new FlxPath(laserPoint2, (clockwise ? [pointD, pointC, pointB, pointA] : [pointC, pointD, pointA, pointB]), 300 * speed);
 
-        var laserTimer = new FlxTimer(0.5, makeLaser, 20);
+        var laserTimer = new FlxTimer(0.8 / speed, makeLaser, 20);
 
         super.create();
     }
@@ -79,14 +86,19 @@ class Lasers extends GameState
 
     function makeLaser(timer :FlxTimer) :Void
     {
-        var lineStyle :LineStyle = { color: FlxColor.RED, thickness: 10 };
+        // var lineStyle :LineStyle = { color: FlxColor.RED, thickness: 10 };
         
         laserSprite.alpha = 1;
         laserSprite.fill(FlxColor.TRANSPARENT);
         laserSprite.blend = openfl.display.BlendMode.ADD;
-        laserSprite.drawLine(laserPoint.getMidpoint().x, laserPoint.getMidpoint().y, laserPoint2.getMidpoint().x, laserPoint2.getMidpoint().y, lineStyle);
+        laserSprite.drawLine(laserPoint.getMidpoint().x, laserPoint.getMidpoint().y, laserPoint2.getMidpoint().x, laserPoint2.getMidpoint().y, { color: FlxColor.WHITE, thickness: 10 });
+        laserSprite.drawLine(laserPoint.getMidpoint().x, laserPoint.getMidpoint().y, laserPoint2.getMidpoint().x, laserPoint2.getMidpoint().y, { color: FlxColor.RED, thickness: 8 });
         laserSprite.fadeOut();
+        FlxG.camera.flash(FlxColor.CHARCOAL, 0.1);
         FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
+
+        laserPoint.flicker(0.4 / speed);
+        laserPoint2.flicker(0.4 / speed);
 
         if (FlxG.pixelPerfectOverlap(laserSprite, playerSprite, 1)) {
             lose();
