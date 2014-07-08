@@ -60,7 +60,6 @@ class Overlap extends GameState
         {
             if (touch.pressed)
             {
-                var pos = FlxG.mouse.getWorldPosition();
                 if (movingRect == null) {
                     rectangles.forEach(function (rect) {
                         if (movingRect != null) return;
