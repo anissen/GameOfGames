@@ -37,6 +37,8 @@ class GameState extends FlxState
         add(new FlxText(100, 100, 200, description));
         timer = new FlxTimer(5, timesUp);
 
+        FlxG.cameras.fade(FlxColor.BLACK, 0.1, true);
+
         super.create();
     }
     
@@ -93,8 +95,8 @@ class GameState extends FlxState
         Reg.speed += 0.1;
         speed = Reg.speed;
         trace('Speed: $speed');
-        FlxG.camera.flash(FlxColor.GREEN);
-        new FlxTimer(0.5 * FlxG.timeScale, function(timer :FlxTimer) {
+        // FlxG.camera.flash(FlxColor.GREEN);
+        FlxG.cameras.fade(FlxColor.BLACK, 0.1, false, function () {
             FlxG.switchState(Reg.gameManager.getNextGame());
         });
     }
