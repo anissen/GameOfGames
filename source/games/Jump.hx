@@ -25,7 +25,7 @@ class Jump extends GameState
     var obstacles :FlxSpriteGroup;
     var isOnGround :Bool = true;
 
-    override public function create() :Void
+    override function setup() :Void
     {
         name = "Jump";
 
@@ -33,7 +33,7 @@ class Jump extends GameState
         var height = 640;
 
         for (i in 0...10) {
-            var backgroundSprite = FlxGridOverlay.create(128, 128, width + 128, height * 2, true, true, FlxColor.CHARCOAL, FlxColor.BLACK);
+            var backgroundSprite = FlxGridOverlay.create(128, 128, width + 128, height * 2, true, true, FlxColor.CHARCOAL, FlxColor.TRANSPARENT);
             backgroundSprite.x = (width + 128) * i;
             backgroundSprite.y = -height;
             add(backgroundSprite);
@@ -64,8 +64,6 @@ class Jump extends GameState
         } while (x < (3500 * speed));
 
         add(obstacles);
-
-        super.create();
     }
 
     override function start() :Void

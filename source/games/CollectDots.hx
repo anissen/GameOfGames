@@ -17,7 +17,7 @@ class CollectDots extends GameState
     var cellSize :Int = 80;
     var radius :Int = 40;
 
-    override public function create() :Void
+    override function setup() :Void
     {
         name = "Collect The Dots";
         description = "Collect all the RED!";
@@ -57,8 +57,6 @@ class CollectDots extends GameState
         }
 
         add(dotSprites);
-
-        super.create();
     }
 
     override public function update():Void

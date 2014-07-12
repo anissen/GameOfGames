@@ -29,6 +29,9 @@ class GameState extends FlxState
 
     var speed :Float = 1;
 
+    var gradientSprite :FlxSprite;
+    var blackSprite :FlxSprite;
+
     /**
      * Function that is called up when to state is created to set it up. 
      */
@@ -38,6 +41,16 @@ class GameState extends FlxState
 
         FlxG.cameras.fade(FlxColor.BLACK, 0.1, true);
 
+        gradientSprite = flixel.util.FlxGradient.createGradientFlxSprite(Math.floor(FlxG.worldBounds.width), Math.floor(FlxG.worldBounds.height), [FlxColor.GREEN, FlxColor.GREEN, FlxColor.GREEN, FlxColor.YELLOW, FlxColor.RED], Math.floor(FlxG.worldBounds.height / 5), 90, false);
+        gradientSprite.alpha = 0.3;
+        add(gradientSprite);
+
+        blackSprite = new FlxSprite(0, 0);
+        blackSprite.makeGraphic(Math.floor(FlxG.worldBounds.width), 0);
+        add(blackSprite);
+
+        setup();
+
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             start();
             gameActive = true;
@@ -45,6 +58,11 @@ class GameState extends FlxState
         });
 
         super.create();
+    }
+
+    function setup() :Void
+    {
+        // placeholder
     }
 
     function start() :Void
@@ -76,6 +94,14 @@ class GameState extends FlxState
     override public function update() :Void
     {
         super.update();
+
+        // remove(gradientSprite);
+        // gradientSprite = flixel.util.FlxGradient.createGradientFlxSprite(Math.floor(FlxG.worldBounds.width), Math.floor(FlxG.worldBounds.height), [FlxColor.BLACK, FlxColor.GREEN, FlxColor.GREEN, FlxColor.YELLOW, FlxColor.RED], 5, 0, false);
+        // add(gradientSprite);
+
+        if (timer != null && gameActive) {
+            blackSprite.makeGraphic(Math.floor(FlxG.worldBounds.width), Math.floor(timer.progress * FlxG.worldBounds.height), FlxColor.BLACK);
+        }
     }
 
     function timesUp(_ :FlxTimer) {
@@ -131,7 +157,7 @@ class GameState extends FlxState
         FlxG.camera.flash(0x22FFFFFF, 0.05);
         FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
     }
-    
+
     /* TODO: Implement the following functions:
         success(); // freeze followed by shake + sound + flash
         warning(); // freeze followed by shake + sound + flash

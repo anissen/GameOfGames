@@ -30,7 +30,7 @@ class Bounce extends GameState
     var zText :FlxText;
     var accText :FlxText;
     
-    override public function create() :Void
+    override function setup() :Void
     {
         name = "Breakout";
 
@@ -96,8 +96,6 @@ class Bounce extends GameState
         add(yText);
         add(zText);
         add(accText);
-
-        super.create();
 	}
 	
 	override public function update():Void

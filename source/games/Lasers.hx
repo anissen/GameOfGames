@@ -22,7 +22,7 @@ class Lasers extends GameState
     var laserSprite :FlxSprite;
     var clockwise :Bool;
 
-    override public function create() :Void
+    override function setup() :Void
     {
         name = "Lasers";
         description = "Avoid the laser";
@@ -60,8 +60,6 @@ class Lasers extends GameState
         var path2 = new FlxPath(laserPoint2, (clockwise ? [pointD, pointC, pointB, pointA] : [pointC, pointD, pointA, pointB]), 300 * speed);
 
         var laserTimer = new FlxTimer(0.8 / speed, makeLaser, 20);
-
-        super.create();
     }
     
     override public function update():Void

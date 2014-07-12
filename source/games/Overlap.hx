@@ -19,7 +19,7 @@ class Overlap extends GameState
     var rectangles :FlxSpriteGroup;
     var movingRect :FlxSprite;
 
-    override public function create() :Void
+    override function setup() :Void
     {
         name             = "No Overlap";
         description      = "Avoid overlap";
@@ -47,8 +47,6 @@ class Overlap extends GameState
         }
 
         add(rectangles);
-
-        super.create();
     }
 
     override public function update():Void
