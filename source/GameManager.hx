@@ -14,12 +14,20 @@ class GameManager
     var gamesPlayed :Array<Class<states.GameState>> = [];
     var currentGameBatch :Array<Class<states.GameState>> = [];
 
+    var _gameSave :FlxSave;
+
     // public var onGameUnlocked :flixel.util.FlxSignal;
 
     public function new() :Void
     {
+        _gameSave = new FlxSave();
+        _gameSave.bind("GamesUnlocked");
+
         gameList = [games.Jump, games.CollectDots, games.Bounce, games.Lasers, games.Overlap];
-        // gamesUnlocked = [games.Jump, games.CollectDots, games.Bounce];
+
+        var unlockCount :Int = (_gameSave.data.unlockCount != null ? _gameSave.data.unlockCount : 0);
+        gamesUnlocked = gameList.slice(0, unlockCount);
+        trace('Unlock count: $unlockCount');
         // onGameUnlocked = new flixel.util.FlxSignal();
     }
 
@@ -50,7 +58,8 @@ class GameManager
     {
         if (currentGameBatch.length > 0) throw "currentGameBatch is non-empty";
 
-        var lastPlayedGame = gamesPlayed[gamesPlayed.length];
+        var lastPlayedGame = gamesPlayed[gamesPlayed.length - 1];
+        trace('lastPlayedGame: ${Type.getClassName(lastPlayedGame)}');
         var gameBatch :Array<Class<states.GameState>> = FlxRandom.shuffleArray(gamesUnlocked.copy(), gamesUnlocked.length * 3);
         if (gameBatch.length > 0 && gameBatch[0] == lastPlayedGame) {
             gameBatch.shift();
@@ -64,6 +73,9 @@ class GameManager
     {
         var unlockedGame = gameList[gamesUnlocked.length];
         gamesUnlocked.push(unlockedGame);
+
+        _gameSave.data.unlockCount = gamesUnlocked.length;
+        _gameSave.flush();
         trace('Unlocked new game: ${Type.getClassName(unlockedGame)}');
         // onGameUnlocked.dispatch();
 
@@ -79,5 +91,8 @@ class GameManager
     {
         gamesPlayed = [];
         currentGameBatch = [];
+
+        _gameSave.data.unlockCount = 0;
+        _gameSave.flush();
     }
 }

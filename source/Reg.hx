@@ -38,5 +38,5 @@ class Reg
 	 */
 	public static var saves :Array<FlxSave> = [];
 
-    public static var gameManager :GameManager = new GameManager();
+    public static var gameManager :GameManager;
 }

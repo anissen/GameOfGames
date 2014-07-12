@@ -75,7 +75,6 @@ class Jump extends GameState
 
     override function end() :Void
     {
-        trace("ended!");
         playerSprite.velocity.x = 0;
     }
   
