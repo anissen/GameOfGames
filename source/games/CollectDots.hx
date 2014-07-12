@@ -60,7 +60,7 @@ class CollectDots extends GameState
 
         super.create();
     }
-  
+
     override public function update():Void
     {
         super.update();
@@ -99,7 +99,8 @@ class CollectDots extends GameState
         dotsToCollect.remove(dot);
         dot.kill();
 
-        FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);        
+        success();
+        // FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
 
         if (dotsToCollect.length == 0) {
             win();

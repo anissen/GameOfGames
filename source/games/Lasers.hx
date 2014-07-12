@@ -102,6 +102,8 @@ class Lasers extends GameState
 
         if (FlxG.pixelPerfectOverlap(laserSprite, playerSprite, 1)) {
             lose();
+        } else {
+            success();
         }
     }
 }

@@ -101,6 +101,15 @@ class GameState extends FlxState
         });
     }
 
+    // TODO: Make this into a pluggable system, e.g.
+    // effects.flash()
+    // effects.freeze()
+    function success()
+    {
+        Sys.sleep(0.02);
+        FlxG.camera.flash(0x22FFFFFF, 0.05);
+        FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
+    }
     /* TODO: Implement the following functions:
         success(); // freeze followed by shake + sound + flash
         warning(); // freeze followed by shake + sound + flash

@@ -186,6 +186,7 @@ class Bounce extends GameState
             Ball.angularVelocity = 0;
         }
         Ball.velocity.y = -1500 * speed;
-        FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);        
+        // FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);        
+        success();
 	}
 }

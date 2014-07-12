@@ -21,8 +21,8 @@ class Overlap extends GameState
 
     override public function create() :Void
     {
-        name = "No Overlap";
-        description = "Avoid overlap";
+        name             = "No Overlap";
+        description      = "Avoid overlap";
         winningCondition = WinningCondition.CompleteObjective;
 
         rectangles = new FlxSpriteGroup();
@@ -50,7 +50,7 @@ class Overlap extends GameState
 
         super.create();
     }
-    
+
     override public function update():Void
     {
         super.update();
@@ -72,6 +72,8 @@ class Overlap extends GameState
                     movingRect.setPosition(touch.getWorldPosition().x - movingRect.width / 2, touch.getWorldPosition().y - movingRect.height / 2);
                     if (FlxG.overlap(movingRect, rectangles)) {
                         FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
+                    } else {
+                        success();
                     }
                 }
             } else if (touch.justReleased) {
