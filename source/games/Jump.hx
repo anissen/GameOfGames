@@ -45,7 +45,6 @@ class Jump extends GameState
 
         playerSprite = new FlxSprite(width / 4, -32);
         playerSprite.makeGraphic(32, 32, FlxColor.AZURE);
-        playerSprite.velocity.x = 500 * speed;
         add(playerSprite);
 
         FlxG.camera.follow(playerSprite);
@@ -68,6 +67,17 @@ class Jump extends GameState
 
         super.create();
     }
+
+    override function start() :Void
+    {
+        playerSprite.velocity.x = 500 * speed;
+    }
+
+    override function end() :Void
+    {
+        trace("ended!");
+        playerSprite.velocity.x = 0;
+    }
   
     override public function update():Void
     {
@@ -85,6 +95,8 @@ class Jump extends GameState
                 // success();
                 FlxG.camera.shake(0.02 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
             }
+
+            if (!gameActive) return; // TODO: Put this check in the abstract input handler
 
             #if !FLX_NO_TOUCH
             for (touch in FlxG.touches.list)

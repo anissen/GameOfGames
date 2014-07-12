@@ -25,28 +25,43 @@ class GameState extends FlxState
 
     var timer :FlxTimer;
 
-    var gameEnded :Bool = false;
+    var gameActive :Bool = false;
 
     var speed :Float = 1;
 
     /**
      * Function that is called up when to state is created to set it up. 
      */
-    override public function create():Void
+    override public function create() :Void
     {
         add(new FlxText(100, 100, 200, description));
-        timer = new FlxTimer(5, timesUp);
 
         FlxG.cameras.fade(FlxColor.BLACK, 0.1, true);
 
+        new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
+            start();
+            gameActive = true;
+            timer = new FlxTimer(5, timesUp);
+        });
+
         super.create();
+    }
+
+    function start() :Void
+    {
+        // placeholder
+    }
+
+    function end() :Void
+    {
+        // placeholder
     }
     
     /**
      * Function that is called when this state is destroyed - you might want to 
      * consider setting all objects this state uses to null to help garbage collection.
      */
-    override public function destroy():Void
+    override public function destroy() :Void
     {
         timer = FlxDestroyUtil.destroy(timer);
 
@@ -58,12 +73,12 @@ class GameState extends FlxState
     /**
      * Function that is called once every frame.
      */
-    override public function update():Void
+    override public function update() :Void
     {
         super.update();
     }
 
-    function timesUp(timer :FlxTimer) {
+    function timesUp(_ :FlxTimer) {
         switch (winningCondition) {
             case Survive: win();
             case CompleteObjective: lose();
@@ -72,20 +87,24 @@ class GameState extends FlxState
     }
 
     function lose() {
-        if (gameEnded) return;
-        gameEnded = true;
+        if (!gameActive) return;
+        gameActive = false;
+
+        end();
 
         FlxG.camera.shake();
         FlxG.camera.flash(FlxColor.RED);
-        // FlxG.timeScale = 0.2;
-        new FlxTimer(0.5 * FlxG.timeScale, function(timer :FlxTimer) {
+
+        new FlxTimer(0.5 * FlxG.timeScale, function(_ :FlxTimer) {
             FlxG.switchState(new MenuState());
         });
     }
 
     function win() {
-        if (gameEnded) return;
-        gameEnded = true;
+        if (!gameActive) return;
+        gameActive = false;
+
+        end();
         
         Reg.score++;
         if (Reg.score > Reg.highscore)
@@ -94,10 +113,12 @@ class GameState extends FlxState
         }
         Reg.speed += 0.1;
         speed = Reg.speed;
-        trace('Speed: $speed');
-        // FlxG.camera.flash(FlxColor.GREEN);
-        FlxG.cameras.fade(FlxColor.BLACK, 0.1, false, function () {
-            FlxG.switchState(Reg.gameManager.getNextGame());
+        // trace('Speed: $speed');
+
+        new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
+            FlxG.cameras.fade(FlxColor.BLACK, 0.1, false, function () {
+                FlxG.switchState(Reg.gameManager.getNextGame());
+            });
         });
     }
 
@@ -110,11 +131,14 @@ class GameState extends FlxState
         FlxG.camera.flash(0x22FFFFFF, 0.05);
         FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
     }
+    
     /* TODO: Implement the following functions:
         success(); // freeze followed by shake + sound + flash
         warning(); // freeze followed by shake + sound + flash
         explosion(); // particle explosion (e.g. ball hits the paddle)
         colorPalette(); // returns a color scheme
+
+        generalize input: touch/mouse, accelerometer
 
         // effects should be limited at first, to be unlocked through play
     */
