@@ -63,7 +63,9 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
 
-        Reg.gameManager =  new GameManager();
+        Reg.gameManager = new GameManager();
+        Reg.networkManager = new NetworkManager();
+        Reg.networkManager.connect();
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 	}
 }

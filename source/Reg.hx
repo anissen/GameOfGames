@@ -39,4 +39,5 @@ class Reg
 	public static var saves :Array<FlxSave> = [];
 
     public static var gameManager :GameManager;
+    public static var networkManager :NetworkManager;
 }

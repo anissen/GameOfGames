@@ -87,6 +87,11 @@ class GameManager
         return Type.createInstance(getNextGameClass(), []);
     }
 
+    public function getGamesPlayedList() :Array<String>
+    {
+        return [for (g in gamesPlayed) Type.getClassName(g)];
+    }
+
     public function reset() :Void
     {
         gamesPlayed = [];

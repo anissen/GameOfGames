@@ -93,14 +93,17 @@ class GameState extends FlxState
      */
     override public function update() :Void
     {
-        super.update();
-
         // remove(gradientSprite);
         // gradientSprite = flixel.util.FlxGradient.createGradientFlxSprite(Math.floor(FlxG.worldBounds.width), Math.floor(FlxG.worldBounds.height), [FlxColor.BLACK, FlxColor.GREEN, FlxColor.GREEN, FlxColor.YELLOW, FlxColor.RED], 5, 0, false);
         // add(gradientSprite);
 
         if (timer != null && gameActive) {
             blackSprite.makeGraphic(Math.floor(FlxG.worldBounds.width), Math.floor(timer.progress * FlxG.worldBounds.height), FlxColor.BLACK);
+        }
+
+        if (gameActive) {
+            // FlxG.camera.alpha += 0.01;
+            super.update();
         }
     }
 
@@ -118,6 +121,9 @@ class GameState extends FlxState
 
         end();
 
+        // Reg.networkManager.send({ "game": name, "won": false });
+        Reg.networkManager.send({ "games": Reg.gameManager.getGamesPlayedList() });
+
         FlxG.camera.shake();
         FlxG.camera.flash(FlxColor.RED);
 
@@ -131,7 +137,7 @@ class GameState extends FlxState
         gameActive = false;
 
         end();
-        
+
         Reg.score++;
         if (Reg.score > Reg.highscore)
         {
@@ -153,7 +159,11 @@ class GameState extends FlxState
     // effects.freeze()
     function success()
     {
+        #if android
         Sys.sleep(0.02);
+        #elseif neko
+        Sys.sleep(0.02);
+        #end
         FlxG.camera.flash(0x22FFFFFF, 0.05);
         FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
     }
