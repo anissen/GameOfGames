@@ -1,11 +1,15 @@
 
 package ;
 
+#if USE_SOCKETS
 import sockjs.SockJS;
+#end
 
 class NetworkManager 
 {
+    #if USE_SOCKETS
     var socket :SockJS;
+    #end
 
     public function new() :Void
     {
@@ -14,6 +18,7 @@ class NetworkManager
 
     public function connect() :Void
     {
+        #if USE_SOCKETS
         // Create socket (automatically reconnect when connection is lost).
         socket = new SockJS("http://192.168.1.10:9999/echo", { reconnect: true });
 
@@ -42,10 +47,12 @@ class NetworkManager
 
         // Connect socket
         socket.connect();
+        #end
     }
 
     public function send(data :Dynamic) :Void
     {
+        #if USE_SOCKETS
         if (!socket.isConnected()) {
             trace("Cannot send; socket is not connected");
 
@@ -53,5 +60,11 @@ class NetworkManager
         }
 
         socket.send(haxe.Json.stringify(data));
+        #end
+
+        // posting to https://data.sparkfun.com/streams/1nn3V2nQvEtrMR1V16KK
+        var request = new haxe.Http("http://data.sparkfun.com/input/1nn3V2nQvEtrMR1V16KK?private_key=0mmWG4mVKMU6Z2zMz0XX");
+        request.setParameter("games", haxe.Json.stringify(data.games));
+        request.request(true);
     }
 }
