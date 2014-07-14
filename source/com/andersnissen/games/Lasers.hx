@@ -1,4 +1,4 @@
-package games;
+package com.andersnissen.games;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -12,7 +12,7 @@ using flixel.util.FlxSpriteUtil;
 
 import flixel.util.FlxColor;
 import flixel.util.FlxRandom;
-import states.GameState;
+import com.andersnissen.states.GameState;
 
 class Lasers extends GameState
 {

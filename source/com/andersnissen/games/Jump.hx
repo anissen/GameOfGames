@@ -1,4 +1,4 @@
-package games;
+package com.andersnissen.games;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -16,7 +16,7 @@ import flixel.addons.display.FlxBackdrop;
 import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxPoint;
 
-import states.GameState;
+import com.andersnissen.states.GameState;
 
 class Jump extends GameState
 {

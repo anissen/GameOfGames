@@ -1,4 +1,4 @@
-package states;
+package com.andersnissen.states;
 
 import flixel.FlxG;
 import flixel.FlxSprite;

@@ -1,4 +1,4 @@
-package games;
+package com.andersnissen.games;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -6,7 +6,7 @@ import flixel.FlxState;
 import flixel.util.FlxColor;
 import flixel.util.FlxRandom;
 import flixel.group.FlxSpriteGroup;
-import states.GameState;
+import com.andersnissen.states.GameState;
 
 using flixel.util.FlxSpriteUtil;
 

@@ -1,4 +1,4 @@
-package games;
+package com.andersnissen.games;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -12,7 +12,7 @@ import flixel.group.FlxGroup;
 using flixel.util.FlxSpriteUtil;
 
 import flixel.util.FlxRandom;
-import states.GameState;
+import com.andersnissen.states.GameState;
 
 class Overlap extends GameState
 {

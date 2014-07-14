@@ -1,18 +1,20 @@
-package;
+package com.andersnissen;
 
 import flixel.util.FlxRandom;
 import flixel.util.FlxSave;
+import com.andersnissen.states.GameState;
+import com.andersnissen.games.*;
 
-// import states.GameState;
+// import GameState;
 
 // typedef Array<Class<states.GameState>> GameList
 
 class GameManager
 {
-    var gameList :Array<Class<states.GameState>> = [];
-    var gamesUnlocked :Array<Class<states.GameState>> = [];
-    var gamesPlayed :Array<Class<states.GameState>> = [];
-    var currentGameBatch :Array<Class<states.GameState>> = [];
+    var gameList :Array<Class<GameState>> = [];
+    var gamesUnlocked :Array<Class<GameState>> = [];
+    var gamesPlayed :Array<Class<GameState>> = [];
+    var currentGameBatch :Array<Class<GameState>> = [];
 
     var _gameSave :FlxSave;
 
@@ -23,7 +25,7 @@ class GameManager
         _gameSave = new FlxSave();
         _gameSave.bind("GamesUnlocked");
 
-        gameList = [games.Jump, games.CollectDots, games.Bounce, games.Lasers, games.Overlap];
+        gameList = [Jump, CollectDots, Bounce, Lasers, Overlap];
 
         var unlockCount :Int = (_gameSave.data.unlockCount != null ? _gameSave.data.unlockCount : 0);
         gamesUnlocked = gameList.slice(0, unlockCount);
@@ -31,7 +33,7 @@ class GameManager
         // onGameUnlocked = new flixel.util.FlxSignal();
     }
 
-    function getNextGameClass() :Class<states.GameState>
+    function getNextGameClass() :Class<GameState>
     {
         // completed entire batch of games
         if (currentGameBatch.length == 0) {
@@ -45,7 +47,7 @@ class GameManager
                 currentGameBatch.unshift(unlockedGame); // Add the new game as the first in the batch
             }
 
-            var batchString = [for (g in currentGameBatch) Type.getClassName(g)].join(", ");
+            var batchString = [for (g in currentGameBatch) getGameName(g)].join(", ");
             trace('currentGameBatch: [$batchString]');
         }
 
@@ -54,13 +56,13 @@ class GameManager
         return nextGame;
     }
 
-    function createGameBatch() :Array<Class<states.GameState>>
+    function createGameBatch() :Array<Class<GameState>>
     {
         if (currentGameBatch.length > 0) throw "currentGameBatch is non-empty";
 
         var lastPlayedGame = gamesPlayed[gamesPlayed.length - 1];
         trace('lastPlayedGame: ${Type.getClassName(lastPlayedGame)}');
-        var gameBatch :Array<Class<states.GameState>> = FlxRandom.shuffleArray(gamesUnlocked.copy(), gamesUnlocked.length * 3);
+        var gameBatch :Array<Class<GameState>> = FlxRandom.shuffleArray(gamesUnlocked.copy(), gamesUnlocked.length * 3);
         if (gameBatch.length > 0 && gameBatch[0] == lastPlayedGame) {
             gameBatch.shift();
             gameBatch.insert(FlxRandom.intRanged(1, gameBatch.length), lastPlayedGame);
@@ -69,27 +71,35 @@ class GameManager
         return gameBatch;
     }
 
-    function unlockNextGame() :Class<states.GameState>
+    function unlockNextGame() :Class<GameState>
     {
         var unlockedGame = gameList[gamesUnlocked.length];
         gamesUnlocked.push(unlockedGame);
 
         _gameSave.data.unlockCount = gamesUnlocked.length;
         _gameSave.flush();
-        trace('Unlocked new game: ${Type.getClassName(unlockedGame)}');
+        trace('Unlocked new game: ${getGameName(unlockedGame)}');
         // onGameUnlocked.dispatch();
 
         return unlockedGame;
     }
 
-    public function getNextGame() :states.GameState
+    function getGameName(cls :Class<GameState>) :String 
+    {
+        var qualifiedName = Type.getClassName(cls);
+        var lastDotPos = qualifiedName.lastIndexOf(".");
+        if (lastDotPos < 0) return qualifiedName;
+        return qualifiedName.substr(lastDotPos + 1);
+    }
+
+    public function getNextGame() :GameState
     {
         return Type.createInstance(getNextGameClass(), []);
     }
 
     public function getGamesPlayedList() :Array<String>
     {
-        return [for (g in gamesPlayed) Type.getClassName(g)];
+        return [for (g in gamesPlayed) getGameName(g)];
     }
 
     public function reset() :Void

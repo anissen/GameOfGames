@@ -1,4 +1,4 @@
-package;
+package com.andersnissen;
 
 import flixel.util.FlxSave;
 

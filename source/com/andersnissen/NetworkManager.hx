@@ -1,5 +1,4 @@
-
-package ;
+package com.andersnissen;
 
 #if USE_SOCKETS
 import sockjs.SockJS;

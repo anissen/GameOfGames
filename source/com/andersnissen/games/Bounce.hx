@@ -1,4 +1,4 @@
-package games;
+package com.andersnissen.games;
 
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -11,7 +11,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxRandom;
 import flixel.addons.effects.FlxTrailArea;
 
-import states.GameState;
+import com.andersnissen.states.GameState;
 
 class Bounce extends GameState
 {
