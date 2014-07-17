@@ -8,6 +8,9 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import flixel.util.FlxMath;
 
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxTween.TweenOptions;
+
 /**
  * A FlxState which can be used for the game's menu.
  */
@@ -15,39 +18,59 @@ class MenuState extends FlxState
 {
     var titleText :FlxText;
     var highScoreText :FlxText;
-    var scoreText :FlxText;
-    var playButton :FlxButton;
+    var gameText :FlxText;
+    var playButton :FlxText;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	override public function create():Void
 	{
-        titleText = new FlxText(0, 110, FlxG.worldBounds.width, "Some Clever Title", 36);
+        titleText = new FlxText(0, 50, Settings.WIDTH, "Game of Games", 36);
+        titleText.color = FlxColor.BLUE;
+        titleText.borderStyle = FlxText.BORDER_SHADOW;
+        titleText.borderColor = FlxColor.GRAY;
         titleText.alignment = "center";
         add(titleText);
 
-        highScoreText = new FlxText(0, 300, FlxG.worldBounds.width, 'Highscore: ${Reg.highscore}', 30);
+        highScoreText = new FlxText(0, 200, Settings.WIDTH, 'Highscore: ${Reg.highscore}', 30);
         highScoreText.alignment = "center";
         highScoreText.color = FlxColor.RED;
         add(highScoreText);
 
-        scoreText = new FlxText(0, 400, FlxG.worldBounds.width, 'Score: ${Reg.score}', 30);
-        scoreText.alignment = "center";
-        scoreText.color = FlxColor.GREEN;
-        add(scoreText);
+        gameText = new FlxText(0, 385, Settings.WIDTH, 'Games Unlocked: ${Reg.gameManager.getUnlockCount()}', 16);
+        gameText.alignment = "center";
+        gameText.color = FlxColor.BLUE;
+        gameText.alpha = 0.5;
+        add(gameText);
 
-        playButton = new FlxButton(FlxG.worldBounds.width / 2, 550, "Play", onPlayClicked);
-        playButton.setPosition(playButton.x - playButton.width / 2, playButton.y - playButton.height / 2);
+        playButton = new FlxText(0, 350, Settings.WIDTH, 'Play', 30);
+        playButton.alignment = "center";
+        playButton.color = FlxColor.YELLOW;
+        playButton.borderStyle = FlxText.BORDER_OUTLINE;
+        playButton.borderColor = FlxColor.BROWN;
+        playButton.borderSize = 5.0;
         add(playButton);
 
-        var resetButton = new FlxButton(FlxG.worldBounds.width / 2, 600, "Reset Progress", function () {
+        var options :TweenOptions = { type: FlxTween.PINGPONG };
+        FlxTween.angle(highScoreText, -12, 12, 1, options );
+        FlxTween.angle(gameText, -5, -10, 2.2, options );
+
+        FlxTween.tween(playButton.scale, { x: 1.5, y: 1.5 }, 1, { type: FlxTween.PINGPONG, startDelay: 0.5 });
+
+        //var oldPlayButton = new FlxButton(Settings.WIDTH / 2, 550, "Play", onPlayClicked);
+        // oldPlayButton.setPosition(oldPlayButton.x - oldPlayButton.width / 2, oldPlayButton.y - oldPlayButton.height / 2);
+        // add(oldPlayButton);
+
+        #if DEBUG
+        var resetButton = new FlxButton(Settings.WIDTH / 2, 600, "Reset Progress", function () {
             Reg.highscore = 0;
             Reg.speed = 1;
             Reg.gameManager.reset();
         });
         resetButton.setPosition(resetButton.x - resetButton.width / 2, resetButton.y - resetButton.height / 2);
         add(resetButton);
+        #end
 
 		super.create();
 	}
@@ -66,7 +89,28 @@ class MenuState extends FlxState
 	 */
 	override public function update():Void
 	{
-		super.update();
+        super.update();
+
+        // var rotationSpeed :Float = 2;
+        // var maxRotation :Float = 15;
+        // highScoreText.angle = Math.sin(Sys.time() * rotationSpeed) * maxRotation;
+        
+        playButton.borderSize = Math.abs(Math.cos(Sys.time() * 3) * 4);
+
+        #if !FLX_NO_TOUCH
+        for (touch in FlxG.touches.list)
+        {
+            if (touch.justPressed && playButton.overlapsPoint(touch.getWorldPosition()))
+            {
+               onPlayClicked();
+               break; 
+            }
+        }
+        #else
+        if (FlxG.mouse.justPressed && playButton.overlapsPoint(FlxG.mouse.getWorldPosition())) {
+            onPlayClicked();
+        }
+        #end
 	}
 
     function onPlayClicked()

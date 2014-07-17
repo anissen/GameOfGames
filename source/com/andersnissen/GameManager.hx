@@ -102,6 +102,11 @@ class GameManager
         return [for (g in gamesPlayed) getGameName(g)];
     }
 
+    public function getUnlockCount() :Int
+    {
+        return gamesUnlocked.length;
+    }
+
     public function reset() :Void
     {
         gamesPlayed = [];
