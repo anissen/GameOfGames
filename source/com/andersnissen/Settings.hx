@@ -2,5 +2,6 @@ package com.andersnissen;
 
 class Settings 
 {
-    public static var SOME_PROPERTY :Int = 3;
+    public static var WIDTH  :Int = 340;
+    public static var HEIGHT :Int = 640;
 }
