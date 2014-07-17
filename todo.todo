@@ -1,0 +1,23 @@
+
+TODO:
+
+  ☐ Title screen
+      ☐ Make a background animation
+      ☐ Remove score
+  ☐ Add button for game selection
+  ☐ Make a game selection screen
+      ☐ Make list of game buttons
+      ☐ Make back button
+  ☐ Pause game before/after play
+  ☐ Add instruction screen before playing
+  ☐ Add game over screen
+  ☐ Use a bar for count down timer
+  ☐ Make a game screen frame that shows timer, high score etc. (or is that too non-minimalistic?)
+
+  Games:
+      ☐ Rope swinging
+      ☐ Swiping (?)
+      ☐ Match game
+      ☐ Vacuum game (rotating vacuum cleaners)
+      ☐ Some physics game
+      ☐ Color confusion (e.g. label says "green" but color is blue)
