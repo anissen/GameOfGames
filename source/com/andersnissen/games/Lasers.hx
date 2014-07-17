@@ -29,9 +29,9 @@ class Lasers extends GameState
 
         var margin = 0;
         var pointA = new FlxPoint(margin, margin);
-        var pointB = new FlxPoint(margin, FlxG.worldBounds.height - margin);
-        var pointC = new FlxPoint(FlxG.worldBounds.width - margin, FlxG.worldBounds.height - margin);
-        var pointD = new FlxPoint(FlxG.worldBounds.width - margin, margin);
+        var pointB = new FlxPoint(margin, Settings.HEIGHT - margin);
+        var pointC = new FlxPoint(Settings.WIDTH - margin, Settings.HEIGHT - margin);
+        var pointD = new FlxPoint(Settings.WIDTH - margin, margin);
 
         clockwise = FlxRandom.chanceRoll();
         var point1 = (clockwise ? pointB : pointA);
@@ -47,13 +47,13 @@ class Lasers extends GameState
         laserPoint2.drawCircle(32, 32, 32, FlxColor.RED);
         add(laserPoint2);
 
-        playerSprite = new FlxSprite(FlxG.worldBounds.width / 2, 400);
+        playerSprite = new FlxSprite(Settings.WIDTH / 2, 400);
         playerSprite.makeGraphic(64, 64, FlxColor.BLUE, true);
         playerSprite.centerOffsets();
         add(playerSprite);
 
         laserSprite = new FlxSprite(0, 0);
-        laserSprite.makeGraphic(Math.floor(FlxG.worldBounds.width), Math.floor(FlxG.worldBounds.height), FlxColor.TRANSPARENT);
+        laserSprite.makeGraphic(Settings.WIDTH, Settings.HEIGHT, FlxColor.TRANSPARENT);
         add(laserSprite);
 
         var path = new FlxPath(laserPoint, (clockwise ? [pointB, pointA, pointD, pointC] : [pointA, pointB, pointC, pointD]), 300 * speed);

@@ -13,6 +13,7 @@ TODO:
   ☐ Add game over screen
   ☐ Use a bar for count down timer
   ☐ Make a game screen frame that shows timer, high score etc. (or is that too non-minimalistic?)
+  ☐ Make games use the proper screen resolution from Settings
 
   Games:
       ☐ Rope swinging
@@ -21,3 +22,6 @@ TODO:
       ☐ Vacuum game (rotating vacuum cleaners)
       ☐ Some physics game
       ☐ Color confusion (e.g. label says "green" but color is blue)
+
+Bugs:
+    ☐ Unlocked count is being reset sometimes (when not playing any games maybe?)

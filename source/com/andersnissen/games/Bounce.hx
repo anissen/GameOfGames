@@ -83,13 +83,13 @@ class Bounce extends GameState
         add(walls);
 		add(_bat);
 
-        xText = new FlxText(0, 20, FlxG.width, "x", 30);
+        xText = new FlxText(0, 20, Settings.WIDTH, "x", 30);
         xText.alignment = "center";
-        yText = new FlxText(0, xText.frameHeight + 30, FlxG.width, "y", 30);
+        yText = new FlxText(0, xText.frameHeight + 30, Settings.WIDTH, "y", 30);
         yText.alignment = "center";
-        zText = new FlxText(0, xText.frameHeight + yText.frameHeight + 40, FlxG.width, "z", 30);
+        zText = new FlxText(0, xText.frameHeight + yText.frameHeight + 40, Settings.WIDTH, "z", 30);
         zText.alignment = "center";
-        accText = new FlxText(0, zText.frameHeight + xText.frameHeight + yText.frameHeight + 40, FlxG.width, "acc", 30);
+        accText = new FlxText(0, zText.frameHeight + xText.frameHeight + yText.frameHeight + 40, Settings.WIDTH, "acc", 30);
         accText.alignment = "center";
         
         add(xText);

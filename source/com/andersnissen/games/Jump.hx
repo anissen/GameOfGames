@@ -29,21 +29,18 @@ class Jump extends GameState
     {
         name = "Jump";
 
-        var width = 360;
-        var height = 640;
-
         for (i in 0...10) {
-            var backgroundSprite = FlxGridOverlay.create(128, 128, width + 128, height * 2, true, true, FlxColor.CHARCOAL, FlxColor.TRANSPARENT);
-            backgroundSprite.x = (width + 128) * i;
-            backgroundSprite.y = -height;
+            var backgroundSprite = FlxGridOverlay.create(128, 128, Settings.WIDTH + 128, Settings.HEIGHT * 2, true, true, FlxColor.CHARCOAL, FlxColor.TRANSPARENT);
+            backgroundSprite.x = (Settings.WIDTH + 128) * i;
+            backgroundSprite.y = -Settings.HEIGHT;
             add(backgroundSprite);
         }
 
         groundSprite = new FlxSprite(0, 0);
-        groundSprite.makeGraphic(width * 2, 64, FlxColor.BROWN);
+        groundSprite.makeGraphic(Settings.WIDTH * 2, 64, FlxColor.BROWN);
         add(groundSprite);
 
-        playerSprite = new FlxSprite(width / 4, -32);
+        playerSprite = new FlxSprite(Settings.WIDTH / 4, -32);
         playerSprite.makeGraphic(32, 32, FlxColor.AZURE);
         add(playerSprite);
 
