@@ -20,6 +20,7 @@ class MenuState extends FlxState
     var titleText :FlxText;
     var highScoreText :FlxText;
     var gameText :FlxText;
+    var gameSelectionButton :FlxText;
     var playButton :FlxText;
 
 	/**
@@ -48,6 +49,14 @@ class MenuState extends FlxState
         gameText.color = FlxColor.BLUE;
         gameText.alpha = 0.5;
         add(gameText);
+
+        gameSelectionButton = new FlxText(0, 480, Settings.WIDTH, 'Game Selection', 24);
+        gameSelectionButton.alignment = "center";
+        gameSelectionButton.color = FlxColor.KHAKI;
+        gameSelectionButton.borderStyle = FlxText.BORDER_OUTLINE;
+        gameSelectionButton.borderColor = FlxColor.NAVY_BLUE;
+        gameSelectionButton.borderSize = 2.0;
+        add(gameSelectionButton);
 
         playButton = new FlxText(0, 350, Settings.WIDTH, 'Play', 30);
         playButton.alignment = "center";
@@ -105,15 +114,23 @@ class MenuState extends FlxState
         #if !FLX_NO_TOUCH
         for (touch in FlxG.touches.list)
         {
-            if (touch.justPressed && playButton.overlapsPoint(touch.getWorldPosition()))
+            if (!touch.justPressed) continue;
+
+            if (playButton.overlapsPoint(touch.getWorldPosition()))
             {
                onPlayClicked();
                break; 
+            } else if (playButton.overlapsPoint(touch.getWorldPosition())) {
+                onGameSelectionClicked();
+                break;
             }
         }
         #else
-        if (FlxG.mouse.justPressed && playButton.overlapsPoint(FlxG.mouse.getWorldPosition())) {
+        if (!FlxG.mouse.justPressed) return;
+        if (playButton.overlapsPoint(FlxG.mouse.getWorldPosition())) {
             onPlayClicked();
+        } else if (gameSelectionButton.overlapsPoint(FlxG.mouse.getWorldPosition())) {
+            onGameSelectionClicked();
         }
         #end
 	}
@@ -125,5 +142,10 @@ class MenuState extends FlxState
         Reg.gameManager.reset();
 
         FlxG.switchState(Reg.gameManager.getNextGame());
+    }
+
+    function onGameSelectionClicked()
+    {
+        FlxG.switchState(new GameSelectState());
     }
 }
