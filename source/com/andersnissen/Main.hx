@@ -1,5 +1,6 @@
 package com.andersnissen;
 
+import com.andersnissen.Settings;
 import com.andersnissen.states.MenuState;
 import flash.display.Sprite;
 import flash.display.StageAlign;
@@ -11,8 +12,8 @@ import flixel.FlxState;
 
 class Main extends Sprite 
 {
-	var gameWidth :Int = 360; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
-	var gameHeight :Int = 640; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
+	var gameWidth :Int = Settings.WIDTH; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
+	var gameHeight :Int = Settings.HEIGHT; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	var initialState :Class<FlxState> = MenuState; // The FlxState the game starts with.
 	var zoom :Float = -1; // If -1, zoom is automatically calculated to fit the window dimensions.
 	var framerate :Int = 60; // How many frames per second the game should run at.

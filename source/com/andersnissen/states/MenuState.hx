@@ -6,6 +6,7 @@ import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
+import flixel.util.FlxGradient;
 import flixel.util.FlxMath;
 
 import flixel.tweens.FlxTween;
@@ -26,6 +27,10 @@ class MenuState extends FlxState
 	 */
 	override public function create():Void
 	{
+        var gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [FlxColor.RED, FlxColor.BLUE]);
+        gradientSprite.alpha = 0.3;
+        add(gradientSprite);
+
         titleText = new FlxText(0, 50, Settings.WIDTH, "Game of Games", 36);
         titleText.color = FlxColor.BLUE;
         titleText.borderStyle = FlxText.BORDER_SHADOW;
@@ -38,7 +43,7 @@ class MenuState extends FlxState
         highScoreText.color = FlxColor.RED;
         add(highScoreText);
 
-        gameText = new FlxText(0, 385, Settings.WIDTH, 'Games Unlocked: ${Reg.gameManager.getUnlockCount()}', 16);
+        gameText = new FlxText(0, 390, Settings.WIDTH, 'Games Unlocked: ${Reg.gameManager.getUnlockCount()}', 16);
         gameText.alignment = "center";
         gameText.color = FlxColor.BLUE;
         gameText.alpha = 0.5;

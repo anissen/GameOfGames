@@ -6,6 +6,7 @@ import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxDestroyUtil;
+import flixel.util.FlxGradient;
 import flixel.util.FlxMath;
 import flixel.util.FlxRandom;
 import flixel.util.FlxTimer;
@@ -41,7 +42,7 @@ class GameState extends FlxState
 
         FlxG.cameras.fade(FlxColor.BLACK, 0.1, true);
 
-        gradientSprite = flixel.util.FlxGradient.createGradientFlxSprite(Math.floor(FlxG.worldBounds.width), Math.floor(FlxG.worldBounds.height), [FlxColor.GREEN, FlxColor.GREEN, FlxColor.GREEN, FlxColor.YELLOW, FlxColor.RED], Math.floor(FlxG.worldBounds.height / 5), 90, false);
+        gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [FlxColor.GREEN, FlxColor.GREEN, FlxColor.GREEN, FlxColor.YELLOW, FlxColor.RED], Math.floor(Settings.HEIGHT / 5), 90, false);
         gradientSprite.alpha = 0.3;
         add(gradientSprite);
 

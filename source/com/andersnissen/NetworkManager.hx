@@ -4,7 +4,7 @@ package com.andersnissen;
 import sockjs.SockJS;
 #end
 
-class NetworkManager 
+class NetworkManager
 {
     #if USE_SOCKETS
     var socket :SockJS;
