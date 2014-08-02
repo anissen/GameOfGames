@@ -156,35 +156,35 @@ class Bounce extends GameState
         lose();
 	}
 	
-	private function ping(Bat:FlxObject, Ball:FlxObject):Void
+	private function ping(bat :FlxObject, ball :FlxObject):Void
 	{
-		var batmid:Int = Std.int(Bat.x) + 20;
-		var ballmid:Int = Std.int(Ball.x) + 3;
+		var batmid :Int = Std.int(bat.x) + 20;
+		var ballmid :Int = Std.int(ball.x) + 3;
 		var diff :Int;
 		
 		if (ballmid < batmid)
 		{
 			// Ball is on the left of the bat
 			diff = batmid - ballmid;
-			Ball.velocity.x = ( -10 * diff);
-            Ball.angularVelocity = diff * 10;
+			ball.velocity.x = ( -10 * diff);
+            ball.angularVelocity = diff * 10;
         }
         else if (ballmid > batmid)
         {
             // Ball on the right of the bat
             diff = ballmid - batmid;
-            Ball.velocity.x = (10 * diff);
-            Ball.angularVelocity = diff * 10;
+            ball.velocity.x = (10 * diff);
+            ball.angularVelocity = diff * 10;
         }
         else
         {
             // Ball is perfectly in the middle
             // A little random X to stop it bouncing up!
-            Ball.velocity.x = 2 + FlxRandom.intRanged(0, 8);
-            Ball.angularVelocity = 0;
+            ball.velocity.x = 2 + FlxRandom.intRanged(0, 8);
+            ball.angularVelocity = 0;
         }
-        Ball.velocity.y = -1500 * speed;
+        ball.velocity.y = -1500 * speed;
         // FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);        
-        success();
+        success(ball.getMidpoint());
 	}
 }

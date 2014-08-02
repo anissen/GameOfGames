@@ -97,7 +97,7 @@ class CollectDots extends GameState
         dotsToCollect.remove(dot);
         dot.kill();
 
-        success();
+        success(point);
         // FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
 
         if (dotsToCollect.length == 0) {

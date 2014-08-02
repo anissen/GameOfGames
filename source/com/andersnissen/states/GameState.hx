@@ -1,5 +1,7 @@
 package com.andersnissen.states;
 
+import com.andersnissen.Settings;
+import flixel.effects.particles.*;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -8,6 +10,7 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxGradient;
 import flixel.util.FlxMath;
+import flixel.util.FlxPoint;
 import flixel.util.FlxRandom;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
@@ -33,6 +36,10 @@ class GameState extends FlxState
     var gradientSprite :FlxSprite;
     var blackSprite :FlxSprite;
 
+    // Particles
+    var emitter :FlxEmitterExt;
+    var whitePixel :FlxParticle;
+
     /**
      * Function that is called up when to state is created to set it up. 
      */
@@ -51,6 +58,25 @@ class GameState extends FlxState
         add(blackSprite);
 
         setup();
+
+        var particleCount = 200;
+        emitter = new FlxEmitterExt(Settings.WIDTH / 2, Settings.HEIGHT / 2, particleCount);
+        // emitter.setXSpeed(100, 200);
+        // emitter.setYSpeed(100, 200);
+        emitter.bounce = 0.8;
+        add(emitter);
+
+        for (i in 0...(Std.int(particleCount / 2))) {
+            whitePixel = new FlxParticle();
+            whitePixel.makeGraphic(5, 5, FlxRandom.color());
+            whitePixel.visible = false; 
+            emitter.add(whitePixel);
+
+            whitePixel = new FlxParticle();
+            whitePixel.makeGraphic(2, 2, FlxRandom.color());
+            whitePixel.visible = false;
+            emitter.add(whitePixel);
+        }
 
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             start();
@@ -158,7 +184,7 @@ class GameState extends FlxState
     // TODO: Make this into a pluggable system, e.g.
     // effects.flash()
     // effects.freeze()
-    function success()
+    function success(?position :FlxPoint)
     {
         #if android
         Sys.sleep(0.02);
@@ -167,6 +193,11 @@ class GameState extends FlxState
         #end
         FlxG.camera.flash(0x22FFFFFF, 0.05);
         FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
+
+        if (position != null) {
+            emitter.setPosition(position.x, position.y);
+        }
+        emitter.start(true, 0, 0.01, 20);
     }
 
     /* TODO: Implement the following functions:

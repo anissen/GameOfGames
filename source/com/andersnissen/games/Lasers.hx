@@ -89,8 +89,8 @@ class Lasers extends GameState
         laserSprite.alpha = 1;
         laserSprite.fill(FlxColor.TRANSPARENT);
         laserSprite.blend = openfl.display.BlendMode.ADD;
-        laserSprite.drawLine(laserPoint.getMidpoint().x, laserPoint.getMidpoint().y, laserPoint2.getMidpoint().x, laserPoint2.getMidpoint().y, { color: FlxColor.WHITE, thickness: 10 });
-        laserSprite.drawLine(laserPoint.getMidpoint().x, laserPoint.getMidpoint().y, laserPoint2.getMidpoint().x, laserPoint2.getMidpoint().y, { color: FlxColor.RED, thickness: 8 });
+        laserSprite.drawLine(laserPoint.getMidpoint().x, laserPoint.getMidpoint().y, laserPoint2.getMidpoint().x, laserPoint2.getMidpoint().y, { color: FlxColor.RED, thickness: 10 });
+        laserSprite.drawLine(laserPoint.getMidpoint().x, laserPoint.getMidpoint().y, laserPoint2.getMidpoint().x, laserPoint2.getMidpoint().y, { color: FlxColor.WHITE, thickness: 8 });
         laserSprite.fadeOut();
         FlxG.camera.flash(FlxColor.CHARCOAL, 0.1);
         FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
@@ -101,7 +101,7 @@ class Lasers extends GameState
         if (FlxG.pixelPerfectOverlap(laserSprite, playerSprite, 1)) {
             lose();
         } else {
-            success();
+            success(playerSprite.getMidpoint());
         }
     }
 }

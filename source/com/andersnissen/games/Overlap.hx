@@ -71,7 +71,7 @@ class Overlap extends GameState
                     if (FlxG.overlap(movingRect, rectangles)) {
                         FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
                     } else {
-                        success();
+                        success(movingRect.getMidpoint());
                     }
                 }
             } else if (touch.justReleased) {
@@ -93,6 +93,8 @@ class Overlap extends GameState
                 movingRect.setPosition(pos.x - movingRect.width / 2, pos.y - movingRect.height / 2);
                 if (FlxG.overlap(movingRect, rectangles)) {
                     FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
+                } else {
+                    success(movingRect.getMidpoint());
                 }
             }
         } else if (FlxG.mouse.justReleased) {

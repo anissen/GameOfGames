@@ -1,19 +1,21 @@
 
 TODO:
 
-  ☐ Title screen
-      ☐ Make a background animation
-      ☐ Remove score
-  ☐ Add button for game selection
+  ✔ Title screen @done (02-08-14 21:31)
+      ✔ Make a background animation @done (02-08-14 21:31)
+      ✔ Remove score @done (02-08-14 21:31)
+  ✔ Add button for game selection @done (02-08-14 21:31)
   ☐ Make a game selection screen
       ☐ Make list of game buttons
-      ☐ Make back button
+      ✔ Make back button @done (02-08-14 21:31)
   ☐ Pause game before/after play
   ☐ Add instruction screen before playing
   ☐ Add game over screen
   ☐ Use a bar for count down timer
   ☐ Make a game screen frame that shows timer, high score etc. (or is that too non-minimalistic?)
-  ☐ Make games use the proper screen resolution from Settings
+  ✔ Make games use the proper screen resolution from Settings @done (02-08-14 21:37)
+  ☐ Consider changing "Jump" game into a tilemap
+  ☐ Improve "Lasers" game
 
   ☐ Google Analytics: https://github.com/fbricker/haxe-ga
   ☐ Investigate more life-like animations: http://codepen.io/ayamflow/pen/LFexf?editors=001

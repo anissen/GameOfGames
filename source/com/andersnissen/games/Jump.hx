@@ -86,7 +86,7 @@ class Jump extends GameState
             playerSprite.y = -32 + 1;
             if (!isOnGround) {
                 isOnGround = true;
-                // success();
+                success(playerSprite.getMidpoint());
                 FlxG.camera.shake(0.02 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
             }
 
