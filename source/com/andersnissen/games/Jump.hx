@@ -78,7 +78,7 @@ class Jump extends GameState
         super.update();
 
         if (playerSprite.overlaps(obstacles)) {
-            lose();
+            lose(playerSprite.getMidpoint());
         }
 
         if (playerSprite.overlaps(groundSprite)) {

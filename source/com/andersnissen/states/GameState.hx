@@ -14,6 +14,8 @@ import flixel.util.FlxPoint;
 import flixel.util.FlxRandom;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
 
 enum WinningCondition
 {
@@ -78,6 +80,10 @@ class GameState extends FlxState
             emitter.add(whitePixel);
         }
 
+        FlxG.camera.zoom = 1.5;
+        FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
+        FlxTween.tween(FlxG.camera, { zoom: 1 }, 1, { ease: FlxEase.quadInOut });
+
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             start();
             gameActive = true;
@@ -89,17 +95,17 @@ class GameState extends FlxState
 
     function setup() :Void
     {
-        // placeholder
+        // overridden by inheriting class
     }
 
     function start() :Void
     {
-        // placeholder
+        // overridden by inheriting class
     }
 
     function end() :Void
     {
-        // placeholder
+        // overridden by inheriting class
     }
     
     /**
@@ -142,7 +148,7 @@ class GameState extends FlxState
         }
     }
 
-    function lose() {
+    function lose(?position :FlxPoint) {
         if (!gameActive) return;
         gameActive = false;
 
@@ -154,12 +160,19 @@ class GameState extends FlxState
         FlxG.camera.shake();
         FlxG.camera.flash(FlxColor.RED);
 
-        new FlxTimer(0.5 * FlxG.timeScale, function(_ :FlxTimer) {
+        if (position != null) {
+            FlxG.camera.focusOn(position);
+        } else {
+            FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
+        }
+        FlxTween.tween(FlxG.camera, { zoom: 1.5 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
+
+        new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             FlxG.switchState(new MenuState());
         });
     }
 
-    function win() {
+    function win(?position :FlxPoint) {
         if (!gameActive) return;
         gameActive = false;
 
@@ -174,6 +187,13 @@ class GameState extends FlxState
         speed = Reg.speed;
         // trace('Speed: $speed');
 
+        FlxTween.tween(FlxG.camera, { zoom: 1.5 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
+        if (position != null) {
+            FlxG.camera.focusOn(position);
+        } else {
+            FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
+        }
+        
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             FlxG.cameras.fade(FlxColor.BLACK, 0.1, false, function () {
                 FlxG.switchState(Reg.gameManager.getNextGame());
