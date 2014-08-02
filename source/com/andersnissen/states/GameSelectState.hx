@@ -25,19 +25,24 @@ class GameSelectState extends FlxState
      */
     override public function create():Void
     {
-        var gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [FlxColor.RED, FlxColor.YELLOW]);
+        var gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [FlxColor.YELLOW, FlxColor.RED]);
         gradientSprite.alpha = 0.3;
         add(gradientSprite);
+
+        FlxTween.tween(gradientSprite, { alpha: 0.7 }, 5, { type: FlxTween.PINGPONG });
 
         var gameCount = 0;
         for (gameName in Reg.gameManager.getGamesUnlockedList()) {
             gameCount++;
 
-            var gameText = new FlxText(20, gameCount * 40, Settings.WIDTH - 40, '#$gameCount $gameName', 20);
+            var gameText = new FlxText(50, gameCount * 40, Settings.WIDTH - 40, '#$gameCount $gameName', 20);
             gameText.color = FlxColor.BLUE;
             gameText.borderStyle = FlxText.BORDER_OUTLINE_FAST;
             gameText.borderColor = FlxColor.WHITE;
-            add(gameText); 
+            gameText.alpha = 0.0;
+            add(gameText);
+
+            FlxTween.tween(gameText, { x: 20, alpha: 1.0 }, 0.3, { startDelay: gameCount * 0.1 });
         }
 
         backButton = new FlxText(0, Settings.HEIGHT - 100, Settings.WIDTH, 'Back', 30);

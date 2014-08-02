@@ -32,12 +32,16 @@ class MenuState extends FlxState
         gradientSprite.alpha = 0.3;
         add(gradientSprite);
 
+        FlxTween.tween(gradientSprite, { alpha: 0.7 }, 5, { type: FlxTween.PINGPONG });
+
         titleText = new FlxText(0, 50, Settings.WIDTH, "Game of Games", 36);
         titleText.color = FlxColor.BLUE;
         titleText.borderStyle = FlxText.BORDER_SHADOW;
         titleText.borderColor = FlxColor.GRAY;
         titleText.alignment = "center";
         add(titleText);
+
+        FlxTween.tween(titleText, { y: 60 }, 2, { type: FlxTween.PINGPONG });
 
         highScoreText = new FlxText(0, 200, Settings.WIDTH, 'Highscore: ${Reg.highscore}', 30);
         highScoreText.alignment = "center";
@@ -50,13 +54,15 @@ class MenuState extends FlxState
         gameText.alpha = 0.5;
         add(gameText);
 
-        gameSelectionButton = new FlxText(0, 480, Settings.WIDTH, 'Game Selection', 24);
+        gameSelectionButton = new FlxText(-10, 480, Settings.WIDTH, 'Game Selection', 24);
         gameSelectionButton.alignment = "center";
-        gameSelectionButton.color = FlxColor.KHAKI;
+        gameSelectionButton.color = FlxColor.CYAN;
         gameSelectionButton.borderStyle = FlxText.BORDER_OUTLINE;
         gameSelectionButton.borderColor = FlxColor.NAVY_BLUE;
         gameSelectionButton.borderSize = 2.0;
         add(gameSelectionButton);
+
+        FlxTween.tween(gameSelectionButton, { x: 10 }, 3, { type: FlxTween.PINGPONG });
 
         playButton = new FlxText(0, 350, Settings.WIDTH, 'Play', 30);
         playButton.alignment = "center";
