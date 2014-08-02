@@ -42,6 +42,8 @@ class GameState extends FlxState
     var emitter :FlxEmitterExt;
     var whitePixel :FlxParticle;
 
+    var initialZoom :Float;
+
     /**
      * Function that is called up when to state is created to set it up. 
      */
@@ -80,9 +82,10 @@ class GameState extends FlxState
             emitter.add(whitePixel);
         }
 
-        FlxG.camera.zoom = 1.5;
+        initialZoom = FlxG.camera.zoom;
+        FlxG.camera.zoom = initialZoom * 1.5;
         FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
-        FlxTween.tween(FlxG.camera, { zoom: 1 }, 1, { ease: FlxEase.quadInOut });
+        FlxTween.tween(FlxG.camera, { zoom: initialZoom }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
 
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             start();
@@ -165,7 +168,7 @@ class GameState extends FlxState
         } else {
             FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
         }
-        FlxTween.tween(FlxG.camera, { zoom: 1.5 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
+        FlxTween.tween(FlxG.camera, { zoom: initialZoom * 1.5 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
 
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             FlxG.switchState(new MenuState());
@@ -187,7 +190,7 @@ class GameState extends FlxState
         speed = Reg.speed;
         // trace('Speed: $speed');
 
-        FlxTween.tween(FlxG.camera, { zoom: 1.5 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
+        FlxTween.tween(FlxG.camera, { zoom: initialZoom * 1.5 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
         if (position != null) {
             FlxG.camera.focusOn(position);
         } else {

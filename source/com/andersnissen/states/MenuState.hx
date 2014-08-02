@@ -128,7 +128,7 @@ class MenuState extends FlxState
             {
                onPlayClicked();
                break; 
-            } else if (playButton.overlapsPoint(touch.getWorldPosition())) {
+            } else if (gameSelectionButton.overlapsPoint(touch.getWorldPosition())) {
                 onGameSelectionClicked();
                 break;
             }
