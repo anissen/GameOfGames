@@ -93,6 +93,8 @@ class MenuState extends FlxState
         #end
 
 		super.create();
+
+        // FlxG.debugger.visible = true;
 	}
 	
 	/**

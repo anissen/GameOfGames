@@ -206,6 +206,8 @@ class GameState extends FlxState
     // effects.freeze()
     function success(?position :FlxPoint)
     {
+        FlxG.sound.play("assets/sounds/success.wav", 0.5);
+
         #if android
         Sys.sleep(0.02);
         #elseif neko
