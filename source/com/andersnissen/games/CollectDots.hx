@@ -28,7 +28,7 @@ class CollectDots extends GameState
 
         var dotColors = [FlxColor.GREEN, FlxColor.GOLDEN, FlxColor.MAGENTA];
 
-        var collectableDotMap :Array<Array<Bool>> = [ for (y in 0...7) [ for (x in 0...4) false ]];
+        var collectableDotMap :Array<Array<Bool>> = [ for (x in 0...4) [ for (y in 0...7) false ]];
         var collectableDotCount = 0;
         while (collectableDotCount < 10) {
             var x = FlxRandom.intRanged(0, 3);
