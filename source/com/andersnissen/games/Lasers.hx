@@ -47,7 +47,7 @@ class Lasers extends GameState
         laserPoint2.drawCircle(32, 32, 30, FlxColor.RED);
         add(laserPoint2);
 
-        playerSprite = new FlxSprite(Settings.WIDTH / 2, 400);
+        playerSprite = new FlxSprite(Settings.WIDTH / 2 - 32, Settings.HEIGHT / 2 - 32);
         playerSprite.makeGraphic(64, 64, FlxColor.BLUE, true);
         playerSprite.centerOffsets();
         add(playerSprite);
@@ -63,13 +63,18 @@ class Lasers extends GameState
         laserBeamSprite.drawLine(5, 5, Settings.WIDTH - 64 - 5, 5, { color: FlxColor.WHITE, thickness: 8 });
         add(laserBeamSprite);
 
-        var path = new FlxPath(laserPoint, [bottomLeft, topLeft, bottomLeft, topLeft], 300 * speed);
-        var path2 = new FlxPath(laserPoint2, [bottomRight, topRight, bottomRight, topRight], 300 * speed);
+        var path = new FlxPath(laserPoint, [bottomLeft, topLeft, bottomLeft, topLeft], 250 * speed);
+        var path2 = new FlxPath(laserPoint2, [bottomRight, topRight, bottomRight, topRight], 250 * speed);
 
         laserTimer = new FlxTimer(0.8 / speed, makeLaser, 20);
     }
+
+    override public function end() :Void
+    {
+        laserTimer.destroy();
+    }
     
-    override public function update():Void
+    override public function update() :Void
     {
         super.update();
 
@@ -95,8 +100,9 @@ class Lasers extends GameState
     {
         laserBeamSprite.y = laserPoint.getMidpoint().y;
         laserBeamSprite.alpha = 1;
-        laserBeamSprite.fadeOut();
-        // FlxG.camera.flash(FlxColor.CHARCOAL, 0.1);
+        laserBeamSprite.fadeOut(0.4);
+        
+        FlxG.camera.flash(FlxColor.CHARCOAL, 0.2);
         // FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
 
         if (FlxG.overlap(laserBeamSprite, playerSprite)) {
