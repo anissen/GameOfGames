@@ -16,7 +16,7 @@ class HexChain extends GameState
 {
     var hexSprites :FlxSpriteGroup;
     var hexToCollect :Array<FlxSprite>;
-    var hexRadius :Int = 40;
+    var hexRadius :Int = 41;
 
     var chainLength :Int = 5;
     var chain :Array<FlxSprite>;
@@ -62,7 +62,7 @@ class HexChain extends GameState
             for (x in 0...5) {
                 if (x == 4 && y % 2 == 1) continue;
                 
-                var hex = new FlxSprite((y % 2 == 0 ? 0 : horizontalDistance / 2) + x * horizontalDistance, y * verticalDistance + 100);
+                var hex = new FlxSprite((y % 2 == 0 ? 0 : horizontalDistance / 2) + x * horizontalDistance, y * verticalDistance);
                 hex.makeGraphic(Math.ceil(hexWidth), Math.ceil(hexHeight), FlxColor.TRANSPARENT, true);
 
                 var isCollectableDot = collectableDotMap[x][y];
@@ -130,22 +130,13 @@ class HexChain extends GameState
     {
         if (point.distanceTo(hex.getMidpoint()) > hexRadius * 0.9) return;
 
-        var correctHex = (hexToCollect.indexOf(hex) > -1);
-        if (!correctHex) {
-            lose();
-            return;
-        }
-
         var hexPositionInChain = chain.indexOf(hex);
-        var isBacktracking = (hexPositionInChain > -1 && hexPositionInChain < chain.length);
+        // Mouse/finger hovering over the last chained hex
+        if (hexPositionInChain > -1 && hexPositionInChain == chain.length - 1) return;
+        var isBacktracking = hexPositionInChain > -1;
         if (isBacktracking) {
             // Restore removed hexes when backtracking
             while (chain[chain.length - 1] != hex) {
-                // Getting closer to goal
-                if (chain.length > chainLength) {
-                    success(chain[chain.length - 1].getMidpoint());
-                }
-
                 var oldHex = chain.pop();
                 FlxTween.tween(oldHex, { alpha: 1 }, 0.4);
                 FlxTween.tween(oldHex.scale, { x: 1, y: 1 }, 0.4);
@@ -154,14 +145,19 @@ class HexChain extends GameState
             // Only chain adjacent hexes (i.e. with distance <= hexRadius * 2)
             if (chain.length > 0 && chain[chain.length - 1].getMidpoint().distanceTo(hex.getMidpoint()) > hexRadius * 3) return;
 
-            // Getting closer to goal
-            if (chain.length < chainLength) {
-                success(hex.getMidpoint());
+            var correctHex = (hexToCollect.indexOf(hex) > -1);
+            if (!correctHex) {
+                lose();
+                return;
             }
 
             chain.push(hex);
             FlxTween.tween(hex, { alpha: 0 }, 0.4);
             FlxTween.tween(hex.scale, { x: 0, y: 0 }, 0.4);
+        }
+
+        if (chain.length == chainLength) {
+            success(chain[chain.length - 1].getMidpoint());
         }
 
         chainSprite.fill(FlxColor.TRANSPARENT);
