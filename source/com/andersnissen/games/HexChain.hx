@@ -36,8 +36,9 @@ class HexChain extends GameState
         var collectableHexMap :Array<Array<Bool>> = [ for (x in 0...4) [ for (y in 0...7) false ]];
         var collectableHexCount = 0;
         
+        // TODO: A chain that has a hex with three neighbors can occur! FIX IT
         function makeChain(x :Int, y :Int) :Bool {
-            if (collectableHexCount > 8) return false;
+            if (collectableHexCount > 8) return true;
 
             if (x < 0 || x > 3) return false;
             if (y < 0 || y > 6) return false;
@@ -52,9 +53,8 @@ class HexChain extends GameState
             var neighborsY = FlxRandom.shuffleArray([y - 1, y, y + 1], 5);
             for (nX in neighborsX) {
                 for (nY in neighborsY) {
-                    if (collectableHexCount <= 8) {
-                        if (makeChain(nX, nY)) return true;
-                    }
+                    var chainFinished = makeChain(nX, nY);
+                    if (chainFinished) return true;
                 }
             }
             return false;
