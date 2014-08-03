@@ -222,7 +222,7 @@ class GameState extends FlxState
         if (position != null) {
             emitter.setPosition(position.x, position.y);
         }
-        emitter.start(true, 0, 0.01, 20);
+        emitter.start(true, 0, 0.01, 20, 1);
     }
 
     /* TODO: Implement the following functions:
