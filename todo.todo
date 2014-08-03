@@ -15,7 +15,7 @@ TODO:
   ☐ Make a game screen frame that shows timer, high score etc. (or is that too non-minimalistic?)
   ✔ Make games use the proper screen resolution from Settings @done (02-08-14 21:37)
   ☐ Consider changing "Jump" game into a tilemap
-  ☐ Improve "Lasers" game
+  ✔ Improve "Lasers" game @done (03-08-14 13:21)
 
   ☐ Google Analytics: https://github.com/fbricker/haxe-ga
   ☐ Investigate more life-like animations: http://codepen.io/ayamflow/pen/LFexf?editors=001
@@ -28,6 +28,7 @@ TODO:
       ☐ Some physics game
       ☐ Color confusion (e.g. label says "green" but color is blue)
       ☐ A game about squares (http://gameaboutsquares.com/)
+      ☐ Jump onto sliding blocks (http://www.romancode.com/zoi/)
 
 Bugs:
     ☐ Unlocked count is being reset sometimes (when not playing any games maybe?)

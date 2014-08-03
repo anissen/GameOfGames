@@ -19,8 +19,10 @@ class Lasers extends GameState
     var laserPoint :FlxSprite;
     var laserPoint2 :FlxSprite;
     var playerSprite :FlxSprite;
+    var laserBeamSprite :FlxSprite;
     var laserSprite :FlxSprite;
-    var clockwise :Bool;
+
+    var laserTimer :FlxTimer;
 
     override function setup() :Void
     {
@@ -28,23 +30,21 @@ class Lasers extends GameState
         description = "Avoid the laser";
 
         var margin = 0;
-        var pointA = new FlxPoint(margin, margin);
-        var pointB = new FlxPoint(margin, Settings.HEIGHT - margin);
-        var pointC = new FlxPoint(Settings.WIDTH - margin, Settings.HEIGHT - margin);
-        var pointD = new FlxPoint(Settings.WIDTH - margin, margin);
+        var topLeft = new FlxPoint(margin, margin);
+        var topRight = new FlxPoint(Settings.WIDTH - margin, margin);
+        var bottomLeft = new FlxPoint(margin, Settings.HEIGHT - margin);
+        var bottomRight = new FlxPoint(Settings.WIDTH - margin, Settings.HEIGHT - margin);
 
-        clockwise = FlxRandom.chanceRoll();
-        var point1 = (clockwise ? pointB : pointA);
-        var point2 = (clockwise ? pointD : pointC);
-
-        laserPoint = new FlxSprite(point1.x - 32, point1.y - 32);
+        laserPoint = new FlxSprite(topLeft.x - 32, topLeft.y - 32);
         laserPoint.makeGraphic(64, 64, FlxColor.TRANSPARENT, true);
-        laserPoint.drawCircle(32, 32, 32, FlxColor.RED);
+        laserPoint.drawCircle(32, 32, 32, FlxColor.BLACK);
+        laserPoint.drawCircle(32, 32, 30, FlxColor.RED);
         add(laserPoint);
 
-        laserPoint2 = new FlxSprite(point2.x - 32, point2.y - 32);
+        laserPoint2 = new FlxSprite(topRight.x - 32, topRight.y - 32);
         laserPoint2.makeGraphic(64, 64, FlxColor.TRANSPARENT, true);
-        laserPoint2.drawCircle(32, 32, 32, FlxColor.RED);
+        laserPoint2.drawCircle(32, 32, 32, FlxColor.BLACK);
+        laserPoint2.drawCircle(32, 32, 30, FlxColor.RED);
         add(laserPoint2);
 
         playerSprite = new FlxSprite(Settings.WIDTH / 2, 400);
@@ -52,19 +52,28 @@ class Lasers extends GameState
         playerSprite.centerOffsets();
         add(playerSprite);
 
-        laserSprite = new FlxSprite(0, 0);
-        laserSprite.makeGraphic(Settings.WIDTH, Settings.HEIGHT, FlxColor.TRANSPARENT);
+        laserSprite = new FlxSprite(32, 0);
+        laserSprite.makeGraphic(Settings.WIDTH - 64, 3, FlxColor.RED);
+        laserSprite.alpha = 0.8;
         add(laserSprite);
 
-        var path = new FlxPath(laserPoint, (clockwise ? [pointB, pointA, pointD, pointC] : [pointA, pointB, pointC, pointD]), 300 * speed);
-        var path2 = new FlxPath(laserPoint2, (clockwise ? [pointD, pointC, pointB, pointA] : [pointC, pointD, pointA, pointB]), 300 * speed);
+        laserBeamSprite = new FlxSprite(32, 0);
+        laserBeamSprite.makeGraphic(Settings.WIDTH - 64, 10, FlxColor.TRANSPARENT);
+        laserBeamSprite.drawLine(5, 5, Settings.WIDTH - 64 - 5, 5, { color: FlxColor.RED, thickness: 10 });
+        laserBeamSprite.drawLine(5, 5, Settings.WIDTH - 64 - 5, 5, { color: FlxColor.WHITE, thickness: 8 });
+        add(laserBeamSprite);
 
-        var laserTimer = new FlxTimer(0.8 / speed, makeLaser, 20);
+        var path = new FlxPath(laserPoint, [bottomLeft, topLeft, bottomLeft, topLeft], 300 * speed);
+        var path2 = new FlxPath(laserPoint2, [bottomRight, topRight, bottomRight, topRight], 300 * speed);
+
+        laserTimer = new FlxTimer(0.8 / speed, makeLaser, 20);
     }
     
     override public function update():Void
     {
         super.update();
+
+        laserSprite.y = laserPoint.getMidpoint().y;
 
         #if !FLX_NO_TOUCH
         for (touch in FlxG.touches.list)
@@ -84,21 +93,13 @@ class Lasers extends GameState
 
     function makeLaser(timer :FlxTimer) :Void
     {
-        // var lineStyle :LineStyle = { color: FlxColor.RED, thickness: 10 };
-        
-        laserSprite.alpha = 1;
-        laserSprite.fill(FlxColor.TRANSPARENT);
-        laserSprite.blend = openfl.display.BlendMode.ADD;
-        laserSprite.drawLine(laserPoint.getMidpoint().x, laserPoint.getMidpoint().y, laserPoint2.getMidpoint().x, laserPoint2.getMidpoint().y, { color: FlxColor.RED, thickness: 10 });
-        laserSprite.drawLine(laserPoint.getMidpoint().x, laserPoint.getMidpoint().y, laserPoint2.getMidpoint().x, laserPoint2.getMidpoint().y, { color: FlxColor.WHITE, thickness: 8 });
-        laserSprite.fadeOut();
-        FlxG.camera.flash(FlxColor.CHARCOAL, 0.1);
-        FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
+        laserBeamSprite.y = laserPoint.getMidpoint().y;
+        laserBeamSprite.alpha = 1;
+        laserBeamSprite.fadeOut();
+        // FlxG.camera.flash(FlxColor.CHARCOAL, 0.1);
+        // FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
 
-        laserPoint.flicker(0.4 / speed);
-        laserPoint2.flicker(0.4 / speed);
-
-        if (FlxG.pixelPerfectOverlap(laserSprite, playerSprite, 1)) {
+        if (FlxG.overlap(laserBeamSprite, playerSprite)) {
             lose();
         } else {
             success(playerSprite.getMidpoint());
