@@ -70,11 +70,13 @@ class Overlap extends GameState
                     movingRect.setPosition(touch.getWorldPosition().x - movingRect.width / 2, touch.getWorldPosition().y - movingRect.height / 2);
                     if (FlxG.overlap(movingRect, rectangles)) {
                         FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
-                    } else {
-                        success(movingRect.getMidpoint());
                     }
                 }
             } else if (touch.justReleased) {
+                if (!FlxG.overlap(movingRect, rectangles)) {
+                    success(movingRect.getMidpoint());
+                }
+
                 movingRect = null;
             }
         }
@@ -93,17 +95,19 @@ class Overlap extends GameState
                 movingRect.setPosition(pos.x - movingRect.width / 2, pos.y - movingRect.height / 2);
                 if (FlxG.overlap(movingRect, rectangles)) {
                     FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
-                } else {
-                    success(movingRect.getMidpoint());
                 }
             }
         } else if (FlxG.mouse.justReleased) {
+            if (!FlxG.overlap(movingRect, rectangles)) {
+                success(movingRect.getMidpoint());
+            }
+
             movingRect = null;
         }
         #end
 
         var overlaps = FlxG.overlap(rectangles, rectangles);
-        if (!overlaps) {
+        if (!overlaps && movingRect == null) {
             win();
         }
     }
