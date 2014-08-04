@@ -29,6 +29,8 @@ TODO:
       ☐ Color confusion (e.g. label says "green" but color is blue)
       ☐ A game about squares (http://gameaboutsquares.com/)
       ☐ Jump onto sliding blocks (http://www.romancode.com/zoi/)
+      ☐ Game mechanics (http://gamemechanicexplorer.com)
+      ☐ Game mechanics - HaxeFlixel (http://gme.kasoki.de/)
 
 Bugs:
     ☐ Unlocked count is being reset sometimes (when not playing any games maybe?)
