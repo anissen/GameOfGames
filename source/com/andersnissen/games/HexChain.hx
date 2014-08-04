@@ -83,15 +83,15 @@ class HexChain extends GameState
                 if (x == 3 && y % 2 == 0) continue;
                 
                 var hex = new FlxSprite((y % 2 == 0 ? horizontalDistance / 2 : 0) + x * horizontalDistance, y * verticalDistance);
-                hex.makeGraphic(Math.ceil(hexWidth), Math.ceil(hexHeight), FlxColor.TRANSPARENT, true);
+                hex.makeGraphic(Math.ceil(hexWidth), Math.ceil(hexHeight), ColorScheme.TRANSPARENT, true);
 
                 var isCollectableHex = collectableHexMap[x][y];
                 var color;
                 if (isCollectableHex) {
-                    color = FlxColor.BLUE;
+                    color = ColorScheme.BLUE;
                     hexToCollect.push(hex);
                 } else {
-                    color = FlxRandom.getObject([FlxColor.RED, FlxColor.GREEN, FlxColor.YELLOW, FlxColor.CYAN]);
+                    color = FlxRandom.getObject([ColorScheme.RED, ColorScheme.GREEN, ColorScheme.YELLOW, ColorScheme.PURPLE]);
                 }
 
                 hex.drawPolygon(polys.copy(), color);
@@ -104,7 +104,7 @@ class HexChain extends GameState
         add(hexSprites);
 
         chainSprite = new FlxSprite(0, 0);
-        chainSprite.makeGraphic(Settings.WIDTH, Settings.HEIGHT, FlxColor.TRANSPARENT);
+        chainSprite.makeGraphic(Settings.WIDTH, Settings.HEIGHT, ColorScheme.TRANSPARENT);
         add(chainSprite);
     }
 
@@ -171,17 +171,17 @@ class HexChain extends GameState
             }
         }
 
-        chainSprite.fill(FlxColor.TRANSPARENT);
+        chainSprite.fill(ColorScheme.TRANSPARENT);
         // Draw a dot if there is only one hex in the chain
         if (chain.length == 1) {
-            chainSprite.drawCircle(chain[0].getMidpoint().x, chain[0].getMidpoint().y, hexRadius / 2, FlxColor.BLACK);
-            chainSprite.drawCircle(chain[0].getMidpoint().x, chain[0].getMidpoint().y, hexRadius / 2 - 5, FlxColor.YELLOW);
+            chainSprite.drawCircle(chain[0].getMidpoint().x, chain[0].getMidpoint().y, hexRadius / 2, ColorScheme.BLACK);
+            chainSprite.drawCircle(chain[0].getMidpoint().x, chain[0].getMidpoint().y, hexRadius / 2 - 5, ColorScheme.WHITE);
         }
         for (chainIndex in 1...chain.length) {
-            chainSprite.drawLine(chain[chainIndex - 1].getMidpoint().x, chain[chainIndex - 1].getMidpoint().y, chain[chainIndex].getMidpoint().x, chain[chainIndex].getMidpoint().y, { color: FlxColor.BLACK, thickness: hexRadius } );
+            chainSprite.drawLine(chain[chainIndex - 1].getMidpoint().x, chain[chainIndex - 1].getMidpoint().y, chain[chainIndex].getMidpoint().x, chain[chainIndex].getMidpoint().y, { color: ColorScheme.BLACK, thickness: hexRadius } );
         }
         for (chainIndex in 1...chain.length) {
-            chainSprite.drawLine(chain[chainIndex - 1].getMidpoint().x, chain[chainIndex - 1].getMidpoint().y, chain[chainIndex].getMidpoint().x, chain[chainIndex].getMidpoint().y, { color: FlxColor.YELLOW, thickness: hexRadius - 5 } );
+            chainSprite.drawLine(chain[chainIndex - 1].getMidpoint().x, chain[chainIndex - 1].getMidpoint().y, chain[chainIndex].getMidpoint().x, chain[chainIndex].getMidpoint().y, { color: ColorScheme.WHITE, thickness: hexRadius - 5 } );
         }
     }
 }

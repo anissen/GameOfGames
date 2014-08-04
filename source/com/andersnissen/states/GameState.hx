@@ -1,5 +1,6 @@
 package com.andersnissen.states;
 
+import com.andersnissen.ColorScheme;
 import com.andersnissen.Settings;
 import flixel.effects.particles.*;
 import flixel.FlxG;
@@ -51,9 +52,13 @@ class GameState extends FlxState
     {
         add(new FlxText(100, 100, 200, description));
 
-        FlxG.cameras.fade(FlxColor.BLACK, 0.1, true);
+        FlxG.cameras.fade(ColorScheme.BLACK, 0.1, true);
 
-        gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [FlxColor.GREEN, FlxColor.GREEN, FlxColor.GREEN, FlxColor.YELLOW, FlxColor.RED], Math.floor(Settings.HEIGHT / 5), 90, false);
+        // FlxG.camera.bgColor = FlxRandom.color();
+
+        this.bgColor = FlxRandom.color();
+
+        gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [ColorScheme.GREEN, ColorScheme.GREEN, ColorScheme.GREEN, ColorScheme.YELLOW, ColorScheme.RED], Math.floor(Settings.HEIGHT / 5), 90, false);
         gradientSprite.alpha = 0.3;
         add(gradientSprite);
 
@@ -130,11 +135,11 @@ class GameState extends FlxState
     override public function update() :Void
     {
         // remove(gradientSprite);
-        // gradientSprite = flixel.util.FlxGradient.createGradientFlxSprite(Math.floor(FlxG.worldBounds.width), Math.floor(FlxG.worldBounds.height), [FlxColor.BLACK, FlxColor.GREEN, FlxColor.GREEN, FlxColor.YELLOW, FlxColor.RED], 5, 0, false);
+        // gradientSprite = flixel.util.FlxGradient.createGradientFlxSprite(Math.floor(FlxG.worldBounds.width), Math.floor(FlxG.worldBounds.height), [ColorScheme.BLACK, ColorScheme.GREEN, ColorScheme.GREEN, ColorScheme.YELLOW, ColorScheme.RED], 5, 0, false);
         // add(gradientSprite);
 
         if (timer != null && gameActive) {
-            blackSprite.makeGraphic(Math.floor(FlxG.worldBounds.width), Math.floor(timer.progress * FlxG.worldBounds.height), FlxColor.BLACK);
+            blackSprite.makeGraphic(Math.floor(FlxG.worldBounds.width), Math.floor(timer.progress * FlxG.worldBounds.height), ColorScheme.BLACK);
         }
 
         if (gameActive) {
@@ -161,7 +166,7 @@ class GameState extends FlxState
         Reg.networkManager.send({ "games": Reg.gameManager.getGamesPlayedList() });
 
         FlxG.camera.shake();
-        FlxG.camera.flash(FlxColor.RED);
+        FlxG.camera.flash(ColorScheme.RED);
 
         if (position != null) {
             FlxG.camera.focusOn(position);
@@ -198,7 +203,7 @@ class GameState extends FlxState
         }
         
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
-            FlxG.cameras.fade(FlxColor.BLACK, 0.1, false, function () {
+            FlxG.cameras.fade(ColorScheme.BLACK, 0.1, false, function () {
                 FlxG.switchState(Reg.gameManager.getNextGame());
             });
         });
