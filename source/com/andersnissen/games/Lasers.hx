@@ -10,6 +10,7 @@ import flixel.group.FlxGroup;
 
 using flixel.util.FlxSpriteUtil;
 
+import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxRandom;
 import com.andersnissen.states.GameState;
@@ -100,7 +101,9 @@ class Lasers extends GameState
     {
         laserBeamSprite.y = laserPoint.getMidpoint().y;
         laserBeamSprite.alpha = 1;
-        laserBeamSprite.fadeOut(0.4);
+        laserBeamSprite.scale.y = 1;
+        FlxTween.tween(laserBeamSprite.scale, { y: 0 }, 0.5);
+        laserBeamSprite.fadeOut(0.5);
         
         FlxG.camera.flash(FlxColor.CHARCOAL, 0.2);
         // FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);

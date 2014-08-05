@@ -25,6 +25,8 @@
 	
 	<!--Mobile-specific-->
 	<window if="mobile" orientation="portrait" fullscreen="true" width="0" height="0" />
+
+  <window antialiasing="4" />
 	
 	<!--------------------------------PATHS SETTINGS-------------------------------->
 	
