@@ -1,5 +1,6 @@
 package com.andersnissen.games;
 
+import com.andersnissen.ColorScheme;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -11,7 +12,6 @@ import flixel.group.FlxGroup;
 using flixel.util.FlxSpriteUtil;
 
 import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
 import flixel.util.FlxRandom;
 import com.andersnissen.states.GameState;
 
@@ -37,31 +37,31 @@ class Lasers extends GameState
         var bottomRight = new FlxPoint(Settings.WIDTH - margin, Settings.HEIGHT - margin);
 
         laserPoint = new FlxSprite(topLeft.x - 32, topLeft.y - 32);
-        laserPoint.makeGraphic(64, 64, FlxColor.TRANSPARENT, true);
-        laserPoint.drawCircle(32, 32, 32, FlxColor.BLACK);
-        laserPoint.drawCircle(32, 32, 30, FlxColor.RED);
+        laserPoint.makeGraphic(64, 64, ColorScheme.TRANSPARENT, true);
+        laserPoint.drawCircle(32, 32, 32, ColorScheme.BLACK);
+        laserPoint.drawCircle(32, 32, 30, ColorScheme.RED);
         add(laserPoint);
 
         laserPoint2 = new FlxSprite(topRight.x - 32, topRight.y - 32);
-        laserPoint2.makeGraphic(64, 64, FlxColor.TRANSPARENT, true);
-        laserPoint2.drawCircle(32, 32, 32, FlxColor.BLACK);
-        laserPoint2.drawCircle(32, 32, 30, FlxColor.RED);
+        laserPoint2.makeGraphic(64, 64, ColorScheme.TRANSPARENT, true);
+        laserPoint2.drawCircle(32, 32, 32, ColorScheme.BLACK);
+        laserPoint2.drawCircle(32, 32, 30, ColorScheme.RED);
         add(laserPoint2);
 
         playerSprite = new FlxSprite(Settings.WIDTH / 2 - 32, Settings.HEIGHT / 2 - 32);
-        playerSprite.makeGraphic(64, 64, FlxColor.BLUE, true);
+        playerSprite.makeGraphic(64, 64, ColorScheme.BLUE, true);
         playerSprite.centerOffsets();
         add(playerSprite);
 
         laserSprite = new FlxSprite(32, 0);
-        laserSprite.makeGraphic(Settings.WIDTH - 64, 3, FlxColor.RED);
+        laserSprite.makeGraphic(Settings.WIDTH - 64, 3, ColorScheme.RED);
         laserSprite.alpha = 0.8;
         add(laserSprite);
 
         laserBeamSprite = new FlxSprite(32, 0);
-        laserBeamSprite.makeGraphic(Settings.WIDTH - 64, 10, FlxColor.TRANSPARENT);
-        laserBeamSprite.drawLine(5, 5, Settings.WIDTH - 64 - 5, 5, { color: FlxColor.RED, thickness: 10 });
-        laserBeamSprite.drawLine(5, 5, Settings.WIDTH - 64 - 5, 5, { color: FlxColor.WHITE, thickness: 8 });
+        laserBeamSprite.makeGraphic(Settings.WIDTH - 64, 10, ColorScheme.TRANSPARENT);
+        laserBeamSprite.drawLine(5, 5, Settings.WIDTH - 64 - 5, 5, { color: ColorScheme.RED, thickness: 10 });
+        laserBeamSprite.drawLine(5, 5, Settings.WIDTH - 64 - 5, 5, { color: ColorScheme.WHITE, thickness: 8 });
         add(laserBeamSprite);
 
         var path = new FlxPath(laserPoint, [bottomLeft, topLeft, bottomLeft, topLeft], 250 * speed);
@@ -105,7 +105,7 @@ class Lasers extends GameState
         FlxTween.tween(laserBeamSprite.scale, { y: 0 }, 0.5);
         laserBeamSprite.fadeOut(0.5);
         
-        FlxG.camera.flash(FlxColor.CHARCOAL, 0.2);
+        FlxG.camera.flash(ColorScheme.RED, 0.2);
         // FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
 
         if (FlxG.overlap(laserBeamSprite, playerSprite)) {

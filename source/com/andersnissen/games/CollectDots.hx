@@ -1,9 +1,9 @@
 package com.andersnissen.games;
 
+import com.andersnissen.ColorScheme;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.util.FlxColor;
 import flixel.util.FlxRandom;
 import flixel.group.FlxSpriteGroup;
 import com.andersnissen.states.GameState;
@@ -26,8 +26,6 @@ class CollectDots extends GameState
         dotSprites = new FlxSpriteGroup();
         dotsToCollect = new Array<FlxSprite>();
 
-        var dotColors = [FlxColor.GREEN, FlxColor.GOLDEN, FlxColor.MAGENTA];
-
         var collectableDotMap :Array<Array<Bool>> = [ for (x in 0...4) [ for (y in 0...7) false ]];
         var collectableDotCount = 0;
         while (collectableDotCount < 10) {
@@ -42,16 +40,17 @@ class CollectDots extends GameState
         for (y in 0...7) {
             for (x in 0...4) {
                 var dot = new FlxSprite(x * cellSize + (x + 1) * 8, y * cellSize + (y + 1) * 8);
-                dot.makeGraphic(cellSize, cellSize, FlxColor.TRANSPARENT, true);
+                dot.makeGraphic(cellSize, cellSize, ColorScheme.TRANSPARENT, true);
                 var isCollectableDot = collectableDotMap[x][y];
                 var color;
                 if (isCollectableDot) {
-                    color = FlxColor.RED;
+                    color = ColorScheme.RED;
                     dotsToCollect.push(dot);
                 } else {
-                    color = FlxRandom.getObject(dotColors);
+                    color = ColorScheme.randomExcept([ColorScheme.RED]);
                 }
-                dot.drawCircle(cellSize / 2, cellSize / 2, radius, color);
+                dot.drawCircle(cellSize / 2, cellSize / 2, radius, ColorScheme.BLACK);
+                dot.drawCircle(cellSize / 2, cellSize / 2, radius - 2, color);
                 dotSprites.add(dot);
             }
         }

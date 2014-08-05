@@ -25,7 +25,7 @@ class GameManager
         _gameSave = new FlxSave();
         _gameSave.bind("GamesUnlocked");
 
-        gameList = [Jump, CollectDots, Bounce, Lasers, Overlap];
+        gameList = [HexChain, Jump, CollectDots, Bounce, Lasers, Overlap];
 
         var unlockCount :Int = (_gameSave.data.unlockCount != null ? _gameSave.data.unlockCount : 0);
         gamesUnlocked = gameList.slice(0, unlockCount);

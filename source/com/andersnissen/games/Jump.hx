@@ -1,5 +1,6 @@
 package com.andersnissen.games;
 
+import com.andersnissen.ColorScheme;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -7,7 +8,6 @@ import flixel.text.FlxText;
 import flixel.util.FlxMath;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
-import flixel.util.FlxColor;
 import flixel.util.FlxRandom;
 import flixel.addons.effects.FlxTrailArea;
 
@@ -30,18 +30,18 @@ class Jump extends GameState
         name = "Jump";
 
         for (i in 0...10) {
-            var backgroundSprite = FlxGridOverlay.create(128, 128, Settings.WIDTH + 128, Settings.HEIGHT * 2, true, true, FlxColor.CHARCOAL, FlxColor.TRANSPARENT);
+            var backgroundSprite = FlxGridOverlay.create(128, 128, Settings.WIDTH + 128, Settings.HEIGHT * 2, true, true, ColorScheme.GRAY, ColorScheme.TRANSPARENT);
             backgroundSprite.x = (Settings.WIDTH + 128) * i;
             backgroundSprite.y = -Settings.HEIGHT;
             add(backgroundSprite);
         }
 
         groundSprite = new FlxSprite(0, 0);
-        groundSprite.makeGraphic(Settings.WIDTH * 2, 64, FlxColor.BROWN);
+        groundSprite.makeGraphic(Settings.WIDTH * 2, 64, ColorScheme.PURPLE);
         add(groundSprite);
 
         playerSprite = new FlxSprite(Settings.WIDTH / 4, -32);
-        playerSprite.makeGraphic(32, 32, FlxColor.AZURE);
+        playerSprite.makeGraphic(32, 32, ColorScheme.MAROON);
         add(playerSprite);
 
         FlxG.camera.follow(playerSprite);
@@ -56,7 +56,7 @@ class Jump extends GameState
             var width  = FlxRandom.getObject([64, 128]);
             var height = FlxRandom.getObject([64, 128]);
             var y = -height - (FlxRandom.chanceRoll(25) ? 32 : 0);
-            var color = FlxRandom.getObject([FlxColor.RED, FlxColor.YELLOW, FlxColor.CRIMSON]);
+            var color = FlxRandom.getObject([ColorScheme.RED, ColorScheme.ORANGE, ColorScheme.YELLOW]);
             obstacles.add(new FlxSprite(x, y).makeGraphic(width, height, color));
         } while (x < (3500 * speed));
 

@@ -1,5 +1,6 @@
 package com.andersnissen.games;
 
+import com.andersnissen.ColorScheme;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -41,8 +42,8 @@ class Overlap extends GameState
                     var rect = new FlxSprite(x * 96 + FlxRandom.floatRanged(-10, 10), y * 96 + FlxRandom.floatRanged(-10, 10));
                     var width = FlxRandom.getObject([64, 96]);
                     var height = FlxRandom.getObject([96, 128]);
-                    rect.makeGraphic(width, height, FlxColor.TRANSPARENT, true);
-                    rect.drawRect(2, 2, width - 4, height - 4, FlxRandom.color() /* [FlxColor.RED, FlxColor.BLUE, FlxColor.GREEN][i] */, { color: FlxColor.BLACK, thickness: 2.0 });
+                    rect.makeGraphic(width, height, ColorScheme.TRANSPARENT, true);
+                    rect.drawRect(2, 2, width - 4, height - 4, ColorScheme.random(), { color: ColorScheme.BLACK, thickness: 2.0 });
                     rect.alpha = 0.7;
                     rectangles.add(rect);
                 }

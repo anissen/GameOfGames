@@ -91,10 +91,10 @@ class HexChain extends GameState
                     color = ColorScheme.BLUE;
                     hexToCollect.push(hex);
                 } else {
-                    color = FlxRandom.getObject([ColorScheme.RED, ColorScheme.GREEN, ColorScheme.YELLOW, ColorScheme.PURPLE]);
+                    color = ColorScheme.randomExcept([ColorScheme.BLUE]);
                 }
 
-                hex.drawPolygon(polys.copy(), color);
+                hex.drawPolygon(polys.copy(), color, { color: ColorScheme.BLACK, thickness: 2.0 });
 
                 // flixel.tweens.FlxTween.tween(hex.scale, { x: -1 }, 1, { startDelay: (y + x) / 10 });
                 hexSprites.add(hex);
@@ -175,13 +175,13 @@ class HexChain extends GameState
         // Draw a dot if there is only one hex in the chain
         if (chain.length == 1) {
             chainSprite.drawCircle(chain[0].getMidpoint().x, chain[0].getMidpoint().y, hexRadius / 2, ColorScheme.BLACK);
-            chainSprite.drawCircle(chain[0].getMidpoint().x, chain[0].getMidpoint().y, hexRadius / 2 - 5, ColorScheme.WHITE);
+            chainSprite.drawCircle(chain[0].getMidpoint().x, chain[0].getMidpoint().y, hexRadius / 2 - 5, ColorScheme.ORANGE);
         }
         for (chainIndex in 1...chain.length) {
             chainSprite.drawLine(chain[chainIndex - 1].getMidpoint().x, chain[chainIndex - 1].getMidpoint().y, chain[chainIndex].getMidpoint().x, chain[chainIndex].getMidpoint().y, { color: ColorScheme.BLACK, thickness: hexRadius } );
         }
         for (chainIndex in 1...chain.length) {
-            chainSprite.drawLine(chain[chainIndex - 1].getMidpoint().x, chain[chainIndex - 1].getMidpoint().y, chain[chainIndex].getMidpoint().x, chain[chainIndex].getMidpoint().y, { color: ColorScheme.WHITE, thickness: hexRadius - 5 } );
+            chainSprite.drawLine(chain[chainIndex - 1].getMidpoint().x, chain[chainIndex - 1].getMidpoint().y, chain[chainIndex].getMidpoint().x, chain[chainIndex].getMidpoint().y, { color: ColorScheme.ORANGE, thickness: hexRadius - 5 } );
         }
     }
 }

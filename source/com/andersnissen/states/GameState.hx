@@ -36,6 +36,7 @@ class GameState extends FlxState
 
     var speed :Float = 1;
 
+    var backgroundColor :Int;
     var gradientSprite :FlxSprite;
     var blackSprite :FlxSprite;
 
@@ -54,19 +55,23 @@ class GameState extends FlxState
 
         FlxG.cameras.fade(ColorScheme.BLACK, 0.1, true);
 
-        // FlxG.camera.bgColor = FlxRandom.color();
-
-        this.bgColor = FlxRandom.color();
-
-        gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [ColorScheme.GREEN, ColorScheme.GREEN, ColorScheme.GREEN, ColorScheme.YELLOW, ColorScheme.RED], Math.floor(Settings.HEIGHT / 5), 90, false);
-        gradientSprite.alpha = 0.3;
+        gradientSprite = new FlxSprite(0, 0);
+        gradientSprite.makeGraphic(Settings.WIDTH, Settings.HEIGHT, ColorScheme.random());
+        // gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [ColorScheme.GREEN, ColorScheme.GREEN, ColorScheme.GREEN, ColorScheme.YELLOW, ColorScheme.RED], Math.floor(Settings.HEIGHT / 5), 90, false);
+        // gradientSprite.alpha = 0.3;
         add(gradientSprite);
 
         blackSprite = new FlxSprite(0, 0);
-        blackSprite.makeGraphic(Math.floor(FlxG.worldBounds.width), 0);
+        blackSprite.makeGraphic(Settings.WIDTH, 0);
         add(blackSprite);
 
         setup();
+
+        backgroundColor = switch (winningCondition) {
+            case Survive: ColorScheme.GREEN;
+            case CompleteObjective: ColorScheme.RED;
+            default: ColorScheme.randomExcept([ColorScheme.GREEN, ColorScheme.RED]);
+        }
 
         var particleCount = 200;
         emitter = new FlxEmitterExt(Settings.WIDTH / 2, Settings.HEIGHT / 2, particleCount);
@@ -88,7 +93,7 @@ class GameState extends FlxState
         }
 
         initialZoom = FlxG.camera.zoom;
-        FlxG.camera.zoom = initialZoom * 1.5;
+        FlxG.camera.zoom = initialZoom * 1.2;
         FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
         FlxTween.tween(FlxG.camera, { zoom: initialZoom }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
 
@@ -139,7 +144,7 @@ class GameState extends FlxState
         // add(gradientSprite);
 
         if (timer != null && gameActive) {
-            blackSprite.makeGraphic(Math.floor(FlxG.worldBounds.width), Math.floor(timer.progress * FlxG.worldBounds.height), ColorScheme.BLACK);
+            blackSprite.makeGraphic(Settings.WIDTH, Math.floor(timer.progress * Settings.HEIGHT), backgroundColor);
         }
 
         if (gameActive) {
@@ -173,7 +178,7 @@ class GameState extends FlxState
         } else {
             FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
         }
-        FlxTween.tween(FlxG.camera, { zoom: initialZoom * 1.5 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
+        FlxTween.tween(FlxG.camera, { zoom: initialZoom * 1.2 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
 
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             FlxG.switchState(new MenuState());
@@ -195,7 +200,7 @@ class GameState extends FlxState
         speed = Reg.speed;
         // trace('Speed: $speed');
 
-        FlxTween.tween(FlxG.camera, { zoom: initialZoom * 1.5 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
+        FlxTween.tween(FlxG.camera, { zoom: initialZoom * 1.2 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
         if (position != null) {
             FlxG.camera.focusOn(position);
         } else {

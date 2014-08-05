@@ -1,5 +1,6 @@
 package com.andersnissen.games;
 
+import com.andersnissen.ColorScheme;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -34,26 +35,22 @@ class Bounce extends GameState
     {
         name = "Breakout";
 
-        var colors :Array<Int> = [FlxColor.BROWN, FlxColor.BEIGE, FlxColor.CRIMSON, FlxColor.FOREST_GREEN]; // Reg.getColors(43, 3);
-
-        // this.bgColor = colors.shift(); //FlxColor.NAVY_BLUE;
-
         var trailArea = new FlxTrailArea(0, 0, 360, 640);
         trailArea.antialiasing = true;
         
 		_bat = new FlxSprite(360 / 2 - _batWidth / 2, 600);
-		_bat.makeGraphic(_batWidth, 12, colors.shift() /* FlxColor.CYAN */);
+		_bat.makeGraphic(_batWidth, 12, ColorScheme.random());
 		_bat.immovable = true;
 		
 		_ball = new FlxSprite(360 / 2, 500);
-		_ball.makeGraphic(12, 12, colors.shift());
+		_ball.makeGraphic(12, 12, ColorScheme.random());
 		_ball.elasticity = 1;
 		_ball.maxVelocity.set(350, 1500);
 		_ball.velocity.y = -1500;
 		
 		walls = new FlxGroup();
 
-        var wallColor = colors.shift();
+        var wallColor = ColorScheme.random();
 		
         var wallWidth :Int = 10;
 		var leftWall = new FlxSprite(0, 0);
@@ -72,7 +69,7 @@ class Bounce extends GameState
 		walls.add(topWall);
 		
 		bottomWall = new FlxSprite(0, 640 - 1);
-		bottomWall.makeGraphic(640, wallWidth, FlxColor.TRANSPARENT);
+		bottomWall.makeGraphic(640, wallWidth, ColorScheme.TRANSPARENT);
 		bottomWall.immovable = true;
 		walls.add(bottomWall);
 		
