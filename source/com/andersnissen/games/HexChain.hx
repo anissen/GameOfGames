@@ -49,19 +49,38 @@ class HexChain extends GameState
             collectableHexCount++;
             if (collectableHexCount > 8) return true;
 
-            var neighborsX = FlxRandom.shuffleArray([x - 1, x, x + 1], 5);
-            var neighborsY = FlxRandom.shuffleArray([y - 1, y, y + 1], 5);
-            for (nX in neighborsX) {
-                for (nY in neighborsY) {
-                    var chainFinished = makeChain(nX, nY);
-                    if (chainFinished) return true;
+            // http://www.redblobgames.com/grids/hexagons/#neighbors
+            function getNeighbor(direction :Int) {
+                var neighbors;
+                if (y % 2 == 1) { // ODD x
+                    neighbors = [
+                       [ [ 1,  0], [ 0, -1], [-1, -1],
+                         [-1,  0], [-1,  1], [ 0,  1] ],
+                       [ [ 1,  0], [ 1, -1], [ 0, -1],
+                         [-1,  0], [ 0,  1], [ 1,  1] ]
+                    ];
+                } else { // EVEN x
+                    neighbors = [
+                       [ [ 1,  0], [ 1, -1], [ 0, -1],
+                         [-1,  0], [ 0,  1], [ 1,  1] ],
+                       [ [ 1,  0], [ 0, -1], [-1, -1],
+                         [-1,  0], [-1,  1], [ 0,  1] ]
+                    ];
                 }
+                var d = neighbors[x & 1][direction];
+                return [ x + d[0], y + d[1] ];
+            }
+
+            for (d in 0...6) {
+                var neighbor = getNeighbor(d);
+                var chainFinished = makeChain(neighbor[0], neighbor[1]);
+                if (chainFinished) return true;
             }
             return false;
         }
 
-        var x = FlxRandom.intRanged(1, 2);
-        var y = FlxRandom.intRanged(2, 4);
+        var x = FlxRandom.intRanged(0, 2);
+        var y = FlxRandom.intRanged(1, 6);
         makeChain(x, y);
 
         var margin = 2;
