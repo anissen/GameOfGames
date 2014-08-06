@@ -95,7 +95,21 @@ class GameState extends FlxState
         initialZoom = FlxG.camera.zoom;
         FlxG.camera.zoom = initialZoom * 1.2;
         FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
-        FlxTween.tween(FlxG.camera, { zoom: initialZoom }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
+
+        function takeScreenshot(tween :FlxTween) :Void {
+            #if (!FLX_NO_DEBUG && neko)
+            trace("Screenshot!");
+            flixel.addons.plugin.screengrab.FlxScreenGrab.grab(null, true, true);
+            // var bitmap :flash.display.Bitmap = flixel.addons.plugin.screengrab.FlxScreenGrab.grab(new flash.geom.Rectangle(0, 0, Settings.WIDTH, Settings.HEIGHT), false, true); //
+            // // Saving the BitmapData
+            // var b :flash.utils.ByteArray = bitmap.bitmapData.encode("png", 1);
+            // var fo :sys.io.FileOutput = sys.io.File.write('${name}.png', true);
+            // fo.writeString(b.toString());
+            // fo.close();
+            #end
+        }
+
+        FlxTween.tween(FlxG.camera, { zoom: initialZoom }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut, complete: takeScreenshot });
 
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             start();

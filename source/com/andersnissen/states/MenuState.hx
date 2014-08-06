@@ -117,7 +117,9 @@ class MenuState extends FlxState
         // var maxRotation :Float = 15;
         // highScoreText.angle = Math.sin(Sys.time() * rotationSpeed) * maxRotation;
         
+        #if (neko || cpp)
         playButton.borderSize = Math.abs(Math.cos(Sys.time() * 3) * 4);
+        #end
 
         #if !FLX_NO_TOUCH
         for (touch in FlxG.touches.list)
