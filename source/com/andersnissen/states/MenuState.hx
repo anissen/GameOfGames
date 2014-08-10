@@ -35,16 +35,16 @@ class MenuState extends FlxState
 
         FlxTween.tween(gradientSprite, { alpha: 0.7 }, 5, { type: FlxTween.PINGPONG });
 
-        titleText = new FlxText(0, 50, Settings.WIDTH, "Game of Games", 36);
+        titleText = new FlxText(0, 20, Settings.WIDTH, "Game\nof\nGames", 36);
         titleText.color = ColorScheme.BLUE;
         titleText.borderStyle = FlxTextBorderStyle.SHADOW;
         titleText.borderColor = ColorScheme.GRAY;
         titleText.alignment = "center";
         add(titleText);
 
-        FlxTween.tween(titleText, { y: 60 }, 2, { type: FlxTween.PINGPONG });
+        FlxTween.tween(titleText, { y: 30 }, 2, { type: FlxTween.PINGPONG });
 
-        highScoreText = new FlxText(0, 200, Settings.WIDTH, 'Highscore: ${Reg.highscore}', 30);
+        highScoreText = new FlxText(0, 230, Settings.WIDTH, 'Highscore: ${Reg.highscore}', 30);
         highScoreText.alignment = "center";
         highScoreText.color = ColorScheme.RED;
         add(highScoreText);
@@ -92,6 +92,10 @@ class MenuState extends FlxState
         resetButton.setPosition(resetButton.x - resetButton.width / 2, resetButton.y - resetButton.height / 2);
         add(resetButton);
         #end
+
+        if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
+            FlxG.sound.playMusic("assets/music/Kris_Keyser_-_06_-_Nitro.ogg");
+        }
 
 		super.create();
 
@@ -151,6 +155,10 @@ class MenuState extends FlxState
         Reg.score = 0;
         Reg.speed = 1;
         Reg.gameManager.reset();
+
+        if (FlxG.sound.music != null && FlxG.sound.music.playing) {
+            FlxG.sound.music.stop();
+        }
 
         FlxG.switchState(Reg.gameManager.getNextGame());
     }

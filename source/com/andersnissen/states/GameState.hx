@@ -113,12 +113,21 @@ class GameState extends FlxState
         // FlxTween.tween(FlxG.camera, { zoom: initialZoom }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut, complete: takeScreenshot });
 
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
+            if (!gameActive) return;
+            FlxG.sound.play("assets/sounds/heartbeat.ogg");
+        }, 0);
+
+        new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             start();
             gameActive = true;
             timer = new FlxTimer(5, timesUp);
         });
 
         super.create();
+
+        if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
+            FlxG.sound.playMusic("assets/music/RoccoW_-_07_-_Weeklybeats_2014_7_-_Freaking_Viking.ogg");
+        }
     }
 
     function setup() :Void
@@ -210,7 +219,7 @@ class GameState extends FlxState
 
         FlxG.camera.shake();
         FlxG.camera.flash(ColorScheme.RED);
-        
+
         end();
 
         // Reg.networkManager.send({ "game": name, "won": false });
