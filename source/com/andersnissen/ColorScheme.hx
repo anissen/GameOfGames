@@ -1,6 +1,8 @@
 
 package com.andersnissen;
 
+import flixel.FlxG;
+
 enum Color {
     TRANSPARENT;
     NAVY;
@@ -72,14 +74,14 @@ class ColorScheme
 
     public static function random() :Int
     {
-        return flixel.util.FlxRandom.getObject(list);
+        return FlxG.random.getObject(list);
     }
 
     public static function randomExcept(colors :Array<Int>) :Int
     {
         var newList = list.copy();
         for (c in colors) newList.remove(c);
-        return flixel.util.FlxRandom.getObject(newList);
+        return FlxG.random.getObject(newList);
     }
 }
 

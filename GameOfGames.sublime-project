@@ -9,12 +9,12 @@
 		{
 			"follow_symlinks": true,
 			"name": "Flixel",
-			"path": "/usr/lib/haxe/lib/flixel/3,3,4/"
+			"path": "/Users/nissen/code/haxeflixel"
 		},
 		{
 			"follow_symlinks": true,
 			"name": "Flixel Addons",
-			"path": "/usr/lib/haxe/lib/flixel-addons/1,1,0/"
+			"path": "/Users/nissen/code/flixel-addons"
 		},
 		{
 			"follow_symlinks": true,

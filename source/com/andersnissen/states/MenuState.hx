@@ -5,12 +5,13 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
-import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
-import flixel.util.FlxMath;
+import flixel.math.FlxMath;
+import flixel.text.FlxText.FlxTextBorderStyle;
 
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxTween.TweenOptions;
+import com.andersnissen.ColorScheme;
 
 /**
  * A FlxState which can be used for the game's menu.
@@ -28,16 +29,16 @@ class MenuState extends FlxState
 	 */
 	override public function create():Void
 	{
-        var gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [FlxColor.RED, FlxColor.BLUE]);
+        var gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [ColorScheme.RED, ColorScheme.BLUE]);
         gradientSprite.alpha = 0.3;
         add(gradientSprite);
 
         FlxTween.tween(gradientSprite, { alpha: 0.7 }, 5, { type: FlxTween.PINGPONG });
 
         titleText = new FlxText(0, 50, Settings.WIDTH, "Game of Games", 36);
-        titleText.color = FlxColor.BLUE;
-        titleText.borderStyle = FlxText.BORDER_SHADOW;
-        titleText.borderColor = FlxColor.GRAY;
+        titleText.color = ColorScheme.BLUE;
+        titleText.borderStyle = FlxTextBorderStyle.SHADOW;
+        titleText.borderColor = ColorScheme.GRAY;
         titleText.alignment = "center";
         add(titleText);
 
@@ -45,20 +46,20 @@ class MenuState extends FlxState
 
         highScoreText = new FlxText(0, 200, Settings.WIDTH, 'Highscore: ${Reg.highscore}', 30);
         highScoreText.alignment = "center";
-        highScoreText.color = FlxColor.RED;
+        highScoreText.color = ColorScheme.RED;
         add(highScoreText);
 
         gameText = new FlxText(0, 390, Settings.WIDTH, 'Games Unlocked: ${Reg.gameManager.getUnlockCount()}', 16);
         gameText.alignment = "center";
-        gameText.color = FlxColor.BLUE;
+        gameText.color = ColorScheme.BLUE;
         gameText.alpha = 0.5;
         add(gameText);
 
         gameSelectionButton = new FlxText(-10, 480, Settings.WIDTH, 'Game Selection', 24);
         gameSelectionButton.alignment = "center";
-        gameSelectionButton.color = FlxColor.CYAN;
-        gameSelectionButton.borderStyle = FlxText.BORDER_OUTLINE;
-        gameSelectionButton.borderColor = FlxColor.NAVY_BLUE;
+        gameSelectionButton.color = ColorScheme.TEAL;
+        gameSelectionButton.borderStyle = FlxTextBorderStyle.OUTLINE;
+        gameSelectionButton.borderColor = ColorScheme.NAVY;
         gameSelectionButton.borderSize = 2.0;
         add(gameSelectionButton);
 
@@ -66,9 +67,9 @@ class MenuState extends FlxState
 
         playButton = new FlxText(0, 350, Settings.WIDTH, 'Play', 30);
         playButton.alignment = "center";
-        playButton.color = FlxColor.YELLOW;
-        playButton.borderStyle = FlxText.BORDER_OUTLINE;
-        playButton.borderColor = FlxColor.BROWN;
+        playButton.color = ColorScheme.YELLOW;
+        playButton.borderStyle = FlxTextBorderStyle.OUTLINE;
+        playButton.borderColor = ColorScheme.MAROON;
         playButton.borderSize = 5.0;
         add(playButton);
 

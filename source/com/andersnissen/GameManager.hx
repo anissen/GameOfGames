@@ -1,6 +1,7 @@
 package com.andersnissen;
 
-import flixel.util.FlxRandom;
+import flixel.FlxG;
+import flixel.math.FlxRandom;
 import flixel.util.FlxSave;
 import com.andersnissen.states.GameState;
 import com.andersnissen.games.*;
@@ -25,7 +26,7 @@ class GameManager
         _gameSave = new FlxSave();
         _gameSave.bind("GamesUnlocked");
 
-        gameList = [HexChain, Jump, CollectDots, Bounce, Lasers, Overlap];
+        gameList = [HexChain/*, Jump, CollectDots, Bounce, Lasers, Overlap*/];
 
         var unlockCount :Int = (_gameSave.data.unlockCount != null ? _gameSave.data.unlockCount : 0);
         gamesUnlocked = gameList.slice(0, unlockCount);
@@ -62,10 +63,10 @@ class GameManager
 
         var lastPlayedGame = gamesPlayed[gamesPlayed.length - 1];
         trace('lastPlayedGame: ${Type.getClassName(lastPlayedGame)}');
-        var gameBatch :Array<Class<GameState>> = FlxRandom.shuffleArray(gamesUnlocked.copy(), gamesUnlocked.length * 3);
+        var gameBatch :Array<Class<GameState>> = FlxG.random.shuffleArray(gamesUnlocked.copy(), gamesUnlocked.length * 3);
         if (gameBatch.length > 0 && gameBatch[0] == lastPlayedGame) {
             gameBatch.shift();
-            gameBatch.insert(FlxRandom.intRanged(1, gameBatch.length), lastPlayedGame);
+            gameBatch.insert(FlxG.random.int(1, gameBatch.length), lastPlayedGame);
         }
 
         return gameBatch;

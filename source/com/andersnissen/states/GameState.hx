@@ -11,9 +11,9 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxGradient;
-import flixel.util.FlxMath;
-import flixel.util.FlxPoint;
-import flixel.util.FlxRandom;
+import flixel.math.FlxMath;
+import flixel.math.FlxPoint;
+import flixel.math.FlxRandom;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
@@ -42,7 +42,7 @@ class GameState extends FlxState
     var blackSprite :FlxSprite;
 
     // Particles
-    var emitter :FlxEmitterExt;
+    var emitter :FlxEmitter;
     var whitePixel :FlxParticle;
 
     var initialZoom :Float;
@@ -65,7 +65,7 @@ class GameState extends FlxState
         blackSprite = new FlxSprite(0, 0);
         blackSprite.makeGraphic(Settings.WIDTH, 0);
         add(blackSprite);
-
+        
         setup();
 
         backgroundColor = switch (winningCondition) {
@@ -75,20 +75,20 @@ class GameState extends FlxState
         }
 
         var particleCount = 200;
-        emitter = new FlxEmitterExt(Settings.WIDTH / 2, Settings.HEIGHT / 2, particleCount);
+        emitter = new FlxEmitter(Settings.WIDTH / 2, Settings.HEIGHT / 2, particleCount);
         // emitter.setXSpeed(100, 200);
         // emitter.setYSpeed(100, 200);
-        emitter.bounce = 0.8;
+        // emitter.bounce = 0.8;
         add(emitter);
 
         for (i in 0...(Std.int(particleCount / 2))) {
             whitePixel = new FlxParticle();
-            whitePixel.makeGraphic(5, 5, FlxRandom.color());
+            whitePixel.makeGraphic(5, 5, ColorScheme.random());
             whitePixel.visible = false; 
             emitter.add(whitePixel);
 
             whitePixel = new FlxParticle();
-            whitePixel.makeGraphic(2, 2, FlxRandom.color());
+            whitePixel.makeGraphic(2, 2, ColorScheme.random());
             whitePixel.visible = false;
             emitter.add(whitePixel);
         }
@@ -145,7 +145,7 @@ class GameState extends FlxState
         trace("Adding sprite group!");
 
         function playSound(tween :FlxTween) {
-            FlxG.sound.play("assets/sounds/click" + FlxRandom.intRanged(1, 3) + ".ogg");
+            FlxG.sound.play("assets/sounds/click" + FlxG.random.int(1, 3) + ".ogg");
         }
 
         var delay :Float = 0;
@@ -153,7 +153,7 @@ class GameState extends FlxState
             var spriteEndScaleX = sprite.scale.x;
             var spriteEndScaleY = sprite.scale.y;
             sprite.scale.set(0, 0);
-            FlxTween.tween(sprite.scale, { x: spriteEndScaleX, y: spriteEndScaleY }, 0.4, { startDelay: delay, ease: FlxEase.elasticOut, start: playSound });
+            FlxTween.tween(sprite.scale, { x: spriteEndScaleX, y: spriteEndScaleY }, 0.4, { startDelay: delay, ease: FlxEase.elasticOut, onStart: playSound });
             delay += 0.01;
         }
         return super.add(spriteGroup);
@@ -203,19 +203,24 @@ class GameState extends FlxState
         if (!gameActive) return;
         gameActive = false;
 
+        FlxG.sound.play("assets/sounds/scratch.ogg");
+        if (FlxG.sound.music != null && FlxG.sound.music.playing) {
+            FlxG.sound.music.stop();
+        }
+
+        FlxG.camera.shake();
+        FlxG.camera.flash(ColorScheme.RED);
+        
         end();
 
         // Reg.networkManager.send({ "game": name, "won": false });
         Reg.networkManager.send({ "games": Reg.gameManager.getGamesPlayedList() });
 
-        FlxG.camera.shake();
-        FlxG.camera.flash(ColorScheme.RED);
-
-        if (position != null) {
-            FlxG.camera.focusOn(position);
-        } else {
-            FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
-        }
+        // if (position != null) {
+        //     FlxG.camera.focusOn(position);
+        // } else {
+        //     FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
+        // }
         // FlxTween.tween(FlxG.camera, { zoom: initialZoom * 1.2 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
 
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
@@ -226,6 +231,8 @@ class GameState extends FlxState
     function win(?position :FlxPoint) {
         if (!gameActive) return;
         gameActive = false;
+
+        FlxG.sound.play("assets/sounds/cheer.ogg");
 
         end();
 
@@ -270,7 +277,7 @@ class GameState extends FlxState
         if (position != null) {
             emitter.setPosition(position.x, position.y);
         }
-        emitter.start(true, 0, 0.01, 20, 1);
+        emitter.start(true, 0.01, 20);
     }
 
     /* TODO: Implement the following functions:

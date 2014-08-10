@@ -8,10 +8,11 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
-import flixel.util.FlxMath;
+import flixel.math.FlxMath;
 
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxTween.TweenOptions;
+import flixel.text.FlxText.FlxTextBorderStyle;
 
 /**
  * A FlxState which can be used for the game's menu.
@@ -37,7 +38,7 @@ class GameSelectState extends FlxState
 
             var gameText = new FlxText(50, gameCount * 40, Settings.WIDTH - 40, '#$gameCount $gameName', 20);
             gameText.color = FlxColor.BLUE;
-            gameText.borderStyle = FlxText.BORDER_OUTLINE_FAST;
+            gameText.borderStyle = FlxTextBorderStyle.OUTLINE_FAST;
             gameText.borderColor = FlxColor.WHITE;
             gameText.alpha = 0.0;
             add(gameText);
@@ -48,7 +49,7 @@ class GameSelectState extends FlxState
         backButton = new FlxText(0, Settings.HEIGHT - 100, Settings.WIDTH, 'Back', 30);
         backButton.alignment = "center";
         backButton.color = FlxColor.YELLOW;
-        backButton.borderStyle = FlxText.BORDER_OUTLINE;
+        backButton.borderStyle = FlxTextBorderStyle.OUTLINE;
         backButton.borderColor = FlxColor.BROWN;
         backButton.borderSize = 5.0;
         add(backButton);

@@ -5,8 +5,8 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import flixel.util.FlxPoint;
-import flixel.util.FlxRandom;
+import flixel.math.FlxPoint;
+import flixel.math.FlxRandom;
 import flixel.group.FlxSpriteGroup;
 import com.andersnissen.states.GameState;
 
@@ -25,7 +25,7 @@ class HexChain extends GameState
     override function setup() :Void
     {
         name = "Hex Chain";
-        description = "Make a chain of 5!";
+        description = "Make a chain of all BLUE";
         winningCondition = WinningCondition.CompleteObjective;
 
         hexSprites = new FlxSpriteGroup();
@@ -35,7 +35,7 @@ class HexChain extends GameState
 
         var collectableHexMap :Array<Array<Bool>> = [ for (x in 0...4) [ for (y in 0...7) false ]];
         var collectableHexCount = 0;
-        
+
         // TODO: A chain that has a hex with three neighbors can occur! FIX IT
         function makeChain(x :Int, y :Int) :Bool {
             if (collectableHexCount > 8) return true;
@@ -79,8 +79,8 @@ class HexChain extends GameState
             return false;
         }
 
-        var x = FlxRandom.intRanged(0, 2);
-        var y = FlxRandom.intRanged(1, 6);
+        var x = FlxG.random.int(0, 2);
+        var y = FlxG.random.int(1, 6);
         makeChain(x, y);
 
         var margin = 2;
@@ -100,7 +100,7 @@ class HexChain extends GameState
         for (y in 0...7) {
             for (x in 0...4) {
                 if (x == 3 && y % 2 == 0) continue;
-                
+
                 var hex = new FlxSprite((y % 2 == 0 ? horizontalDistance / 2 : 0) + x * horizontalDistance, y * verticalDistance);
                 hex.makeGraphic(Math.ceil(hexWidth), Math.ceil(hexHeight), ColorScheme.TRANSPARENT, true);
 
@@ -120,7 +120,7 @@ class HexChain extends GameState
             }
         }
 
-        add(hexSprites);
+        addSpriteGroup(hexSprites);
 
         chainSprite = new FlxSprite(0, 0);
         chainSprite.makeGraphic(Settings.WIDTH, Settings.HEIGHT, ColorScheme.TRANSPARENT);
@@ -154,7 +154,7 @@ class HexChain extends GameState
         #end
     }
 
-    function hexTouched(hex :FlxSprite, point :flixel.util.FlxPoint)
+    function hexTouched(hex :FlxSprite, point :FlxPoint)
     {
         if (point.distanceTo(hex.getMidpoint()) > hexRadius * 0.9) return;
 
