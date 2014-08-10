@@ -6,6 +6,7 @@ import flixel.effects.particles.*;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxDestroyUtil;
@@ -93,8 +94,8 @@ class GameState extends FlxState
         }
 
         initialZoom = FlxG.camera.zoom;
-        FlxG.camera.zoom = initialZoom * 1.2;
-        FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
+        // FlxG.camera.zoom = initialZoom * 1.2;
+        // FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
 
         function takeScreenshot(tween :FlxTween) :Void {
             #if (!FLX_NO_DEBUG && neko)
@@ -109,7 +110,7 @@ class GameState extends FlxState
             #end
         }
 
-        FlxTween.tween(FlxG.camera, { zoom: initialZoom }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut, complete: takeScreenshot });
+        // FlxTween.tween(FlxG.camera, { zoom: initialZoom }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut, complete: takeScreenshot });
 
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             start();
@@ -133,6 +134,29 @@ class GameState extends FlxState
     function end() :Void
     {
         // overridden by inheriting class
+    }
+
+    function addSprite(sprite :FlxSprite) :flixel.FlxBasic {
+        trace("Adding sprite!");
+        return super.add(sprite);
+    }
+
+    function addSpriteGroup(spriteGroup :FlxSpriteGroup) :flixel.FlxBasic {
+        trace("Adding sprite group!");
+
+        function playSound(tween :FlxTween) {
+            FlxG.sound.play("assets/sounds/click" + FlxRandom.intRanged(1, 3) + ".ogg");
+        }
+
+        var delay :Float = 0;
+        for (sprite in spriteGroup.members) {
+            var spriteEndScaleX = sprite.scale.x;
+            var spriteEndScaleY = sprite.scale.y;
+            sprite.scale.set(0, 0);
+            FlxTween.tween(sprite.scale, { x: spriteEndScaleX, y: spriteEndScaleY }, 0.4, { startDelay: delay, ease: FlxEase.elasticOut, start: playSound });
+            delay += 0.01;
+        }
+        return super.add(spriteGroup);
     }
     
     /**
@@ -192,7 +216,7 @@ class GameState extends FlxState
         } else {
             FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
         }
-        FlxTween.tween(FlxG.camera, { zoom: initialZoom * 1.2 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
+        // FlxTween.tween(FlxG.camera, { zoom: initialZoom * 1.2 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
 
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             FlxG.switchState(new MenuState());
@@ -214,12 +238,12 @@ class GameState extends FlxState
         speed = Reg.speed;
         // trace('Speed: $speed');
 
-        FlxTween.tween(FlxG.camera, { zoom: initialZoom * 1.2 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
-        if (position != null) {
-            FlxG.camera.focusOn(position);
-        } else {
-            FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
-        }
+        // FlxTween.tween(FlxG.camera, { zoom: initialZoom * 1.2 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
+        // if (position != null) {
+        //     FlxG.camera.focusOn(position);
+        // } else {
+        //     FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
+        // }
         
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             FlxG.cameras.fade(ColorScheme.BLACK, 0.1, false, function () {
