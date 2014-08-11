@@ -78,6 +78,7 @@ class MenuState extends FlxState
         FlxTween.angle(highScoreText, -12, 12, 1, options );
         FlxTween.angle(gameText, -5, -10, 2.2, options );
 
+        FlxTween.tween(highScoreText.scale, { x: 1.2, y: 1.2 }, 1.5, { type: FlxTween.PINGPONG });
         FlxTween.tween(playButton.scale, { x: 1.5, y: 1.5 }, 1, { type: FlxTween.PINGPONG, startDelay: 0.5 });
 
         creditsButton = new FlxText(-10, 540, Settings.WIDTH, 'Credits', 24);
@@ -112,10 +113,6 @@ class MenuState extends FlxState
 	override public function destroy():Void
 	{
 		super.destroy();
-
-        if (FlxG.sound.music != null && FlxG.sound.music.playing) {
-            FlxG.sound.music.stop();
-        }
 	}
 
 	/**

@@ -19,6 +19,7 @@ import flixel.text.FlxText.FlxTextBorderStyle;
  */
 class GameSelectState extends FlxState
 {
+    var titleText :FlxText;
     var backButton :FlxText;
 
     /**
@@ -32,11 +33,21 @@ class GameSelectState extends FlxState
 
         FlxTween.tween(gradientSprite, { alpha: 0.7 }, 5, { type: FlxTween.PINGPONG });
 
+        titleText = new FlxText(0, 20, Settings.WIDTH, 'Training', 30);
+        titleText.alignment = "center";
+        titleText.color = FlxColor.CYAN;
+        titleText.borderStyle = FlxTextBorderStyle.OUTLINE;
+        titleText.borderColor = FlxColor.BLACK;
+        titleText.borderSize = 0.0;
+        add(titleText);
+
+        FlxTween.tween(titleText, { borderSize: 5.0 }, 2, { type: FlxTween.PINGPONG });
+
         var gameCount = 0;
         for (gameName in Reg.gameManager.getGamesUnlockedList()) {
             gameCount++;
 
-            var gameText = new FlxText(50, gameCount * 40, Settings.WIDTH - 40, '#$gameCount $gameName', 20);
+            var gameText = new FlxText(40, 40 + gameCount * 40, Settings.WIDTH - 40, '#$gameCount $gameName', 20);
             gameText.color = FlxColor.BLUE;
             gameText.borderStyle = FlxTextBorderStyle.OUTLINE_FAST;
             gameText.borderColor = FlxColor.WHITE;

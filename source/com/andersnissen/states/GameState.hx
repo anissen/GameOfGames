@@ -104,29 +104,32 @@ class GameState extends FlxState
             #end
         }
 
-        heartBeatTimer = new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
+        trace('Speed is x${Reg.speed}');
+
+        heartBeatTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
             if (!gameActive) return;
             FlxG.sound.play("assets/sounds/heartbeat.ogg");
         }, 0);
 
-        gameStartTimer = new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
+        gameStartTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
             start();
             gameActive = true;
-            gameTimer = new FlxTimer(5, timesUp);
+            gameTimer = new FlxTimer(5 / Reg.speed, timesUp);
         });
 
         super.create();
 
         if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
             var musicFiles = [
-                "RoccoW_-_02_-_Weeklybeats_2014_2_-_Daniels_Kruis.ogg",
                 "RoccoW_-_07_-_Weeklybeats_2014_7_-_Freaking_Viking.ogg",
                 "RoccoW_-_09_-_Weeklybeats_2014_9_-_This_Little_Piggy_Danced.ogg",
                 "RoccoW_-_Chips_Got_Kicks.ogg",
                 "RoccoW_-_Pumped.ogg",
                 "RoccoW_-_Sea_Battles_in_Space.ogg"
             ];
-            FlxG.sound.playMusic("assets/music/" + FlxG.random.getObject(musicFiles));
+            var track = FlxG.random.getObject(musicFiles);
+            trace('Now playing "$track"');
+            FlxG.sound.playMusic("assets/music/" + track);
         }
     }
 
@@ -188,7 +191,7 @@ class GameState extends FlxState
     {
         if (gameTimer != null && gameActive) {
             blackSprite.makeGraphic(Settings.WIDTH, Math.floor(gameTimer.progress * Settings.HEIGHT) + 10, ColorScheme.BLACK);
-            blackSprite.drawRect(0, 0, Settings.WIDTH, gameTimer.progress * Settings.HEIGHT, backgroundColor);
+            blackSprite.drawRect(0, 0, Settings.WIDTH, Math.floor(gameTimer.progress * Settings.HEIGHT), backgroundColor);
         }
 
         if (gameActive) {
@@ -220,7 +223,7 @@ class GameState extends FlxState
 
         // Reg.networkManager.send({ "games": Reg.gameManager.getGamesPlayedList() });
 
-        gameEndTimer = new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
+        gameEndTimer = new FlxTimer(0.5, function(_ :FlxTimer) {
             FlxG.switchState(new MenuState());
         });
     }
@@ -241,7 +244,7 @@ class GameState extends FlxState
         Reg.speed += 0.1;
         speed = Reg.speed;
         
-        gameEndTimer = new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
+        gameEndTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
             FlxG.cameras.fade(ColorScheme.BLACK, 0.1, false, function () {
                 FlxG.switchState(Reg.gameManager.getNextGame());
             });
