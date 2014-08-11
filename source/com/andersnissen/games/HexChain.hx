@@ -22,6 +22,8 @@ class HexChain extends GameState
     var chain :Array<FlxSprite>;
     var chainSprite :FlxSprite;
 
+    var CHAIN_LENGTH = 12;
+
     override function setup() :Void
     {
         name = "Hex Chain";
@@ -36,9 +38,8 @@ class HexChain extends GameState
         var collectableHexMap :Array<Array<Bool>> = [ for (x in 0...4) [ for (y in 0...7) false ]];
         var collectableHexCount = 0;
 
-        // TODO: A chain that has a hex with three neighbors can occur! FIX IT
         function makeChain(x :Int, y :Int) :Bool {
-            if (collectableHexCount > 8) return true;
+            if (collectableHexCount >= CHAIN_LENGTH) return true;
 
             if (x < 0 || x > 3) return false;
             if (y < 0 || y > 6) return false;
@@ -47,7 +48,7 @@ class HexChain extends GameState
 
             collectableHexMap[x][y] = true;
             collectableHexCount++;
-            if (collectableHexCount > 8) return true;
+            if (collectableHexCount >= CHAIN_LENGTH) return true;
 
             // http://www.redblobgames.com/grids/hexagons/#neighbors
             function getNeighbor(direction :Int) {
@@ -71,7 +72,8 @@ class HexChain extends GameState
                 return [ x + d[0], y + d[1] ];
             }
 
-            for (d in 0...6) {
+            var directions = FlxG.random.shuffleArray([0, 1, 2, 3, 4, 5], 15);
+            for (d in directions) {
                 var neighbor = getNeighbor(d);
                 var chainFinished = makeChain(neighbor[0], neighbor[1]);
                 if (chainFinished) return true;
@@ -80,7 +82,7 @@ class HexChain extends GameState
         }
 
         var x = FlxG.random.int(0, 2);
-        var y = FlxG.random.int(1, 6);
+        var y = FlxG.random.int(0, 6);
         makeChain(x, y);
 
         var margin = 2;

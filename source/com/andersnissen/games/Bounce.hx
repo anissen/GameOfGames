@@ -5,11 +5,11 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
-import flixel.util.FlxMath;
+import flixel.math.FlxMath;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.util.FlxColor;
-import flixel.util.FlxRandom;
+import flixel.math.FlxRandom;
 import flixel.addons.effects.FlxTrailArea;
 
 import com.andersnissen.states.GameState;
@@ -39,11 +39,11 @@ class Bounce extends GameState
         trailArea.antialiasing = true;
         
 		_bat = new FlxSprite(360 / 2 - _batWidth / 2, 600);
-		_bat.makeGraphic(_batWidth, 12, ColorScheme.random());
+		_bat.makeGraphic(_batWidth, 12, ColorScheme.randomExcept([this.backgroundColor]));
 		_bat.immovable = true;
 		
 		_ball = new FlxSprite(360 / 2, 500);
-		_ball.makeGraphic(12, 12, ColorScheme.random());
+		_ball.makeGraphic(12, 12, ColorScheme.randomExcept([this.backgroundColor]));
 		_ball.elasticity = 1;
 		_ball.maxVelocity.set(350, 1500);
 		_ball.velocity.y = -1500;
@@ -80,19 +80,19 @@ class Bounce extends GameState
         add(walls);
 		add(_bat);
 
-        xText = new FlxText(0, 20, Settings.WIDTH, "x", 30);
-        xText.alignment = "center";
-        yText = new FlxText(0, xText.frameHeight + 30, Settings.WIDTH, "y", 30);
-        yText.alignment = "center";
-        zText = new FlxText(0, xText.frameHeight + yText.frameHeight + 40, Settings.WIDTH, "z", 30);
-        zText.alignment = "center";
-        accText = new FlxText(0, zText.frameHeight + xText.frameHeight + yText.frameHeight + 40, Settings.WIDTH, "acc", 30);
-        accText.alignment = "center";
+        // xText = new FlxText(0, 20, Settings.WIDTH, "x", 30);
+        // xText.alignment = "center";
+        // yText = new FlxText(0, xText.frameHeight + 30, Settings.WIDTH, "y", 30);
+        // yText.alignment = "center";
+        // zText = new FlxText(0, xText.frameHeight + yText.frameHeight + 40, Settings.WIDTH, "z", 30);
+        // zText.alignment = "center";
+        // accText = new FlxText(0, zText.frameHeight + xText.frameHeight + yText.frameHeight + 40, Settings.WIDTH, "acc", 30);
+        // accText.alignment = "center";
         
-        add(xText);
-        add(yText);
-        add(zText);
-        add(accText);
+        // add(xText);
+        // add(yText);
+        // add(zText);
+        // add(accText);
 	}
 	
 	override public function update():Void
@@ -106,10 +106,10 @@ class Bounce extends GameState
         if (FlxG.accelerometer.isSupported) {
           _bat.velocity.x = -((1 + FlxG.accelerometer.y / 2) * FlxG.accelerometer.x) * BAT_SPEED * speed;
 
-          xText.text = "x: " + FlxMath.roundDecimal(FlxG.accelerometer.x, 1);
-            yText.text = "y: " + FlxMath.roundDecimal(FlxG.accelerometer.y, 1);
-            zText.text = "z: " + FlxMath.roundDecimal(FlxG.accelerometer.z, 1);
-            accText.text = "acc: " + FlxMath.roundDecimal(_bat.velocity.x, 1);
+            // xText.text = "x: " + FlxMath.roundDecimal(FlxG.accelerometer.x, 1);
+            // yText.text = "y: " + FlxMath.roundDecimal(FlxG.accelerometer.y, 1);
+            // zText.text = "z: " + FlxMath.roundDecimal(FlxG.accelerometer.z, 1);
+            // accText.text = "acc: " + FlxMath.roundDecimal(_bat.velocity.x, 1);
         }
         #end
 
@@ -177,7 +177,7 @@ class Bounce extends GameState
         {
             // Ball is perfectly in the middle
             // A little random X to stop it bouncing up!
-            ball.velocity.x = 2 + FlxRandom.intRanged(0, 8);
+            ball.velocity.x = 2 + FlxG.random.int(0, 8);
             ball.angularVelocity = 0;
         }
         ball.velocity.y = -1500 * speed;

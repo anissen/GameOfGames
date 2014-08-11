@@ -19,6 +19,8 @@ import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 
+using flixel.util.FlxSpriteUtil;
+
 enum WinningCondition
 {
     Survive;
@@ -45,8 +47,6 @@ class GameState extends FlxState
     var emitter :FlxEmitter;
     var whitePixel :FlxParticle;
 
-    var initialZoom :Float;
-
     /**
      * Function that is called up when to state is created to set it up. 
      */
@@ -57,9 +57,7 @@ class GameState extends FlxState
         FlxG.cameras.fade(ColorScheme.BLACK, 0.1, true);
 
         gradientSprite = new FlxSprite(0, 0);
-        gradientSprite.makeGraphic(Settings.WIDTH, Settings.HEIGHT, ColorScheme.random());
-        // gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [ColorScheme.GREEN, ColorScheme.GREEN, ColorScheme.GREEN, ColorScheme.YELLOW, ColorScheme.RED], Math.floor(Settings.HEIGHT / 5), 90, false);
-        // gradientSprite.alpha = 0.3;
+        gradientSprite.makeGraphic(Settings.WIDTH, Settings.HEIGHT, ColorScheme.randomExcept([ColorScheme.GREEN, ColorScheme.RED]));
         add(gradientSprite);
 
         blackSprite = new FlxSprite(0, 0);
@@ -71,14 +69,11 @@ class GameState extends FlxState
         backgroundColor = switch (winningCondition) {
             case Survive: ColorScheme.GREEN;
             case CompleteObjective: ColorScheme.RED;
-            default: ColorScheme.randomExcept([ColorScheme.GREEN, ColorScheme.RED]);
+            default: ColorScheme.random();
         }
 
         var particleCount = 200;
         emitter = new FlxEmitter(Settings.WIDTH / 2, Settings.HEIGHT / 2, particleCount);
-        // emitter.setXSpeed(100, 200);
-        // emitter.setYSpeed(100, 200);
-        // emitter.bounce = 0.8;
         add(emitter);
 
         for (i in 0...(Std.int(particleCount / 2))) {
@@ -93,10 +88,6 @@ class GameState extends FlxState
             emitter.add(whitePixel);
         }
 
-        initialZoom = FlxG.camera.zoom;
-        // FlxG.camera.zoom = initialZoom * 1.2;
-        // FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
-
         function takeScreenshot(tween :FlxTween) :Void {
             #if (!FLX_NO_DEBUG && neko)
             trace("Screenshot!");
@@ -109,8 +100,6 @@ class GameState extends FlxState
             // fo.close();
             #end
         }
-
-        // FlxTween.tween(FlxG.camera, { zoom: initialZoom }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut, complete: takeScreenshot });
 
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             if (!gameActive) return;
@@ -146,13 +135,10 @@ class GameState extends FlxState
     }
 
     function addSprite(sprite :FlxSprite) :flixel.FlxBasic {
-        trace("Adding sprite!");
         return super.add(sprite);
     }
 
     function addSpriteGroup(spriteGroup :FlxSpriteGroup) :flixel.FlxBasic {
-        trace("Adding sprite group!");
-
         function playSound(tween :FlxTween) {
             FlxG.sound.play("assets/sounds/click" + FlxG.random.int(1, 3) + ".ogg");
         }
@@ -176,8 +162,6 @@ class GameState extends FlxState
     {
         timer = FlxDestroyUtil.destroy(timer);
 
-        // Reg.gameManager.onGameUnlocked.remove(newGameUnlocked);
-
         super.destroy();
     }
 
@@ -186,16 +170,12 @@ class GameState extends FlxState
      */
     override public function update() :Void
     {
-        // remove(gradientSprite);
-        // gradientSprite = flixel.util.FlxGradient.createGradientFlxSprite(Math.floor(FlxG.worldBounds.width), Math.floor(FlxG.worldBounds.height), [ColorScheme.BLACK, ColorScheme.GREEN, ColorScheme.GREEN, ColorScheme.YELLOW, ColorScheme.RED], 5, 0, false);
-        // add(gradientSprite);
-
         if (timer != null && gameActive) {
-            blackSprite.makeGraphic(Settings.WIDTH, Math.floor(timer.progress * Settings.HEIGHT), backgroundColor);
+            blackSprite.makeGraphic(Settings.WIDTH, Math.floor(timer.progress * Settings.HEIGHT) + 10, ColorScheme.BLACK);
+            blackSprite.drawRect(0, 0, Settings.WIDTH, timer.progress * Settings.HEIGHT, backgroundColor);
         }
 
         if (gameActive) {
-            // FlxG.camera.alpha += 0.01;
             super.update();
         }
     }
@@ -222,15 +202,7 @@ class GameState extends FlxState
 
         end();
 
-        // Reg.networkManager.send({ "game": name, "won": false });
-        Reg.networkManager.send({ "games": Reg.gameManager.getGamesPlayedList() });
-
-        // if (position != null) {
-        //     FlxG.camera.focusOn(position);
-        // } else {
-        //     FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
-        // }
-        // FlxTween.tween(FlxG.camera, { zoom: initialZoom * 1.2 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
+        // Reg.networkManager.send({ "games": Reg.gameManager.getGamesPlayedList() });
 
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             FlxG.switchState(new MenuState());
@@ -252,14 +224,6 @@ class GameState extends FlxState
         }
         Reg.speed += 0.1;
         speed = Reg.speed;
-        // trace('Speed: $speed');
-
-        // FlxTween.tween(FlxG.camera, { zoom: initialZoom * 1.2 }, 1 * FlxG.timeScale, { ease: FlxEase.quadInOut });
-        // if (position != null) {
-        //     FlxG.camera.focusOn(position);
-        // } else {
-        //     FlxG.camera.focusOn(new FlxPoint(Settings.WIDTH / 2, Settings.HEIGHT / 2));
-        // }
         
         new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             FlxG.cameras.fade(ColorScheme.BLACK, 0.1, false, function () {

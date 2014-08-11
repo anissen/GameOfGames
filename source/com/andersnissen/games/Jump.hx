@@ -5,16 +5,16 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
-import flixel.util.FlxMath;
+import flixel.math.FlxMath;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
-import flixel.util.FlxRandom;
+import flixel.math.FlxRandom;
 import flixel.addons.effects.FlxTrailArea;
 
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.display.FlxBackdrop;
 import flixel.group.FlxSpriteGroup;
-import flixel.util.FlxPoint;
+import flixel.math.FlxPoint;
 
 import com.andersnissen.states.GameState;
 
@@ -51,12 +51,12 @@ class Jump extends GameState
 
         var x = 300 * speed;
         do {
-            x += (500 + FlxRandom.intRanged(-100, 100)) * speed;
+            x += (500 + FlxG.random.int(-100, 100)) * speed;
 
-            var width  = FlxRandom.getObject([64, 128]);
-            var height = FlxRandom.getObject([64, 128]);
-            var y = -height - (FlxRandom.chanceRoll(25) ? 32 : 0);
-            var color = FlxRandom.getObject([ColorScheme.RED, ColorScheme.ORANGE, ColorScheme.YELLOW]);
+            var width  = FlxG.random.getObject([64, 128]);
+            var height = FlxG.random.getObject([64, 128]);
+            var y = -height - (FlxG.random.bool(25) ? 32 : 0);
+            var color = FlxG.random.getObject([ColorScheme.RED, ColorScheme.ORANGE, ColorScheme.YELLOW]);
             obstacles.add(new FlxSprite(x, y).makeGraphic(width, height, color));
         } while (x < (3500 * speed));
 

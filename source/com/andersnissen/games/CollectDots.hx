@@ -4,7 +4,8 @@ import com.andersnissen.ColorScheme;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.util.FlxRandom;
+import flixel.math.FlxPoint;
+import flixel.math.FlxRandom;
 import flixel.group.FlxSpriteGroup;
 import com.andersnissen.states.GameState;
 
@@ -29,8 +30,8 @@ class CollectDots extends GameState
         var collectableDotMap :Array<Array<Bool>> = [ for (x in 0...4) [ for (y in 0...7) false ]];
         var collectableDotCount = 0;
         while (collectableDotCount < 10) {
-            var x = FlxRandom.intRanged(0, 3);
-            var y = FlxRandom.intRanged(0, 6);
+            var x = FlxG.random.int(0, 3);
+            var y = FlxG.random.int(0, 6);
             if (collectableDotMap[x][y] == false) {
                 collectableDotMap[x][y] = true;
                 collectableDotCount++;
@@ -83,7 +84,7 @@ class CollectDots extends GameState
         #end
     }
 
-    function dotTouched(dot :FlxSprite, point :flixel.util.FlxPoint)
+    function dotTouched(dot :FlxSprite, point :FlxPoint)
     {
         if (point.distanceTo(dot.getMidpoint()) > radius * 0.9) return;
 

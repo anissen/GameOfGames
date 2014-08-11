@@ -5,14 +5,15 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.util.*;
 import flixel.text.FlxText;
 import flixel.group.FlxGroup;
+import flixel.math.FlxPoint;
+import flixel.util.FlxTimer;
+import flixel.util.FlxPath;
 
 using flixel.util.FlxSpriteUtil;
 
 import flixel.tweens.FlxTween;
-import flixel.util.FlxRandom;
 import com.andersnissen.states.GameState;
 
 class Lasers extends GameState

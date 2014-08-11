@@ -12,7 +12,7 @@ import flixel.group.FlxGroup;
 
 using flixel.util.FlxSpriteUtil;
 
-import flixel.util.FlxRandom;
+import flixel.math.FlxRandom;
 import com.andersnissen.states.GameState;
 
 class Overlap extends GameState
@@ -33,15 +33,15 @@ class Overlap extends GameState
             var rectCount = 0;
             var rectsOnThisLayer = 3 - i; // first 3, then 2, then 1
             while (rectCount < rectsOnThisLayer) {
-                var x = FlxRandom.intRanged(0, 3);
-                var y = FlxRandom.intRanged(0, 6);
+                var x = FlxG.random.int(0, 3);
+                var y = FlxG.random.int(0, 6);
                 if (rectMap[x][y] == i) {
                     rectMap[x][y]++;
                     rectCount++;
 
-                    var rect = new FlxSprite(x * 96 + FlxRandom.floatRanged(-10, 10), y * 96 + FlxRandom.floatRanged(-10, 10));
-                    var width = FlxRandom.getObject([64, 96]);
-                    var height = FlxRandom.getObject([96, 128]);
+                    var rect = new FlxSprite(x * 96 + FlxG.random.float(-10, 10), y * 96 + FlxG.random.float(-10, 10));
+                    var width = FlxG.random.getObject([64, 96]);
+                    var height = FlxG.random.getObject([96, 128]);
                     rect.makeGraphic(width, height, ColorScheme.TRANSPARENT, true);
                     rect.drawRect(2, 2, width - 4, height - 4, ColorScheme.random(), { color: ColorScheme.BLACK, thickness: 2.0 });
                     rect.alpha = 0.7;
