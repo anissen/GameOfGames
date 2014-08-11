@@ -33,7 +33,10 @@ class GameState extends FlxState
     var description :String = "You're on your own...";
     var winningCondition :WinningCondition = WinningCondition.Survive;
 
-    var timer :FlxTimer;
+    var gameTimer :FlxTimer;
+    var heartBeatTimer :FlxTimer;
+    var gameStartTimer :FlxTimer;
+    var gameEndTimer :FlxTimer;
 
     var gameActive :Bool = false;
 
@@ -101,21 +104,29 @@ class GameState extends FlxState
             #end
         }
 
-        new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
+        heartBeatTimer = new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             if (!gameActive) return;
             FlxG.sound.play("assets/sounds/heartbeat.ogg");
         }, 0);
 
-        new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
+        gameStartTimer = new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             start();
             gameActive = true;
-            timer = new FlxTimer(5, timesUp);
+            gameTimer = new FlxTimer(5, timesUp);
         });
 
         super.create();
 
         if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
-            FlxG.sound.playMusic("assets/music/RoccoW_-_07_-_Weeklybeats_2014_7_-_Freaking_Viking.ogg");
+            var musicFiles = [
+                "RoccoW_-_02_-_Weeklybeats_2014_2_-_Daniels_Kruis.ogg",
+                "RoccoW_-_07_-_Weeklybeats_2014_7_-_Freaking_Viking.ogg",
+                "RoccoW_-_09_-_Weeklybeats_2014_9_-_This_Little_Piggy_Danced.ogg",
+                "RoccoW_-_Chips_Got_Kicks.ogg",
+                "RoccoW_-_Pumped.ogg",
+                "RoccoW_-_Sea_Battles_in_Space.ogg"
+            ];
+            FlxG.sound.playMusic("assets/music/" + FlxG.random.getObject(musicFiles));
         }
     }
 
@@ -160,7 +171,12 @@ class GameState extends FlxState
      */
     override public function destroy() :Void
     {
-        timer = FlxDestroyUtil.destroy(timer);
+        end();
+
+        gameTimer = FlxDestroyUtil.destroy(gameTimer);
+        heartBeatTimer = FlxDestroyUtil.destroy(heartBeatTimer);
+        gameStartTimer = FlxDestroyUtil.destroy(gameStartTimer);
+        gameEndTimer = FlxDestroyUtil.destroy(gameEndTimer);
 
         super.destroy();
     }
@@ -170,9 +186,9 @@ class GameState extends FlxState
      */
     override public function update() :Void
     {
-        if (timer != null && gameActive) {
-            blackSprite.makeGraphic(Settings.WIDTH, Math.floor(timer.progress * Settings.HEIGHT) + 10, ColorScheme.BLACK);
-            blackSprite.drawRect(0, 0, Settings.WIDTH, timer.progress * Settings.HEIGHT, backgroundColor);
+        if (gameTimer != null && gameActive) {
+            blackSprite.makeGraphic(Settings.WIDTH, Math.floor(gameTimer.progress * Settings.HEIGHT) + 10, ColorScheme.BLACK);
+            blackSprite.drawRect(0, 0, Settings.WIDTH, gameTimer.progress * Settings.HEIGHT, backgroundColor);
         }
 
         if (gameActive) {
@@ -204,7 +220,7 @@ class GameState extends FlxState
 
         // Reg.networkManager.send({ "games": Reg.gameManager.getGamesPlayedList() });
 
-        new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
+        gameEndTimer = new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             FlxG.switchState(new MenuState());
         });
     }
@@ -213,7 +229,7 @@ class GameState extends FlxState
         if (!gameActive) return;
         gameActive = false;
 
-        FlxG.sound.play("assets/sounds/cheer.ogg");
+        FlxG.sound.play("assets/sounds/yeah.ogg");
 
         end();
 
@@ -225,7 +241,7 @@ class GameState extends FlxState
         Reg.speed += 0.1;
         speed = Reg.speed;
         
-        new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
+        gameEndTimer = new FlxTimer(1 * FlxG.timeScale, function(_ :FlxTimer) {
             FlxG.cameras.fade(ColorScheme.BLACK, 0.1, false, function () {
                 FlxG.switchState(Reg.gameManager.getNextGame());
             });

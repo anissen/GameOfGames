@@ -23,6 +23,7 @@ class MenuState extends FlxState
     var gameText :FlxText;
     var gameSelectionButton :FlxText;
     var playButton :FlxText;
+    var creditsButton :FlxText;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -55,7 +56,15 @@ class MenuState extends FlxState
         gameText.alpha = 0.5;
         add(gameText);
 
-        gameSelectionButton = new FlxText(-10, 480, Settings.WIDTH, 'Game Selection', 24);
+        playButton = new FlxText(0, 350, Settings.WIDTH, 'Play', 30);
+        playButton.alignment = "center";
+        playButton.color = ColorScheme.YELLOW;
+        playButton.borderStyle = FlxTextBorderStyle.OUTLINE;
+        playButton.borderColor = ColorScheme.MAROON;
+        playButton.borderSize = 5.0;
+        add(playButton);
+
+        gameSelectionButton = new FlxText(-10, 480, Settings.WIDTH, 'Training', 24);
         gameSelectionButton.alignment = "center";
         gameSelectionButton.color = ColorScheme.TEAL;
         gameSelectionButton.borderStyle = FlxTextBorderStyle.OUTLINE;
@@ -65,23 +74,17 @@ class MenuState extends FlxState
 
         FlxTween.tween(gameSelectionButton, { x: 10 }, 3, { type: FlxTween.PINGPONG });
 
-        playButton = new FlxText(0, 350, Settings.WIDTH, 'Play', 30);
-        playButton.alignment = "center";
-        playButton.color = ColorScheme.YELLOW;
-        playButton.borderStyle = FlxTextBorderStyle.OUTLINE;
-        playButton.borderColor = ColorScheme.MAROON;
-        playButton.borderSize = 5.0;
-        add(playButton);
-
         var options :TweenOptions = { type: FlxTween.PINGPONG };
         FlxTween.angle(highScoreText, -12, 12, 1, options );
         FlxTween.angle(gameText, -5, -10, 2.2, options );
 
         FlxTween.tween(playButton.scale, { x: 1.5, y: 1.5 }, 1, { type: FlxTween.PINGPONG, startDelay: 0.5 });
 
-        //var oldPlayButton = new FlxButton(Settings.WIDTH / 2, 550, "Play", onPlayClicked);
-        // oldPlayButton.setPosition(oldPlayButton.x - oldPlayButton.width / 2, oldPlayButton.y - oldPlayButton.height / 2);
-        // add(oldPlayButton);
+        creditsButton = new FlxText(-10, 540, Settings.WIDTH, 'Credits', 24);
+        creditsButton.alignment = "center";
+        creditsButton.color = ColorScheme.GRAY;
+        creditsButton.angle = -4.0;
+        add(creditsButton);
 
         #if DEBUG
         var resetButton = new FlxButton(Settings.WIDTH / 2, 600, "Reset Progress", function () {
@@ -109,6 +112,10 @@ class MenuState extends FlxState
 	override public function destroy():Void
 	{
 		super.destroy();
+
+        if (FlxG.sound.music != null && FlxG.sound.music.playing) {
+            FlxG.sound.music.stop();
+        }
 	}
 
 	/**

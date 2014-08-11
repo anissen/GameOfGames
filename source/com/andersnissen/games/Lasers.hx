@@ -50,7 +50,8 @@ class Lasers extends GameState
         add(laserPoint2);
 
         playerSprite = new FlxSprite(Settings.WIDTH / 2 - 32, Settings.HEIGHT / 2 - 32);
-        playerSprite.makeGraphic(64, 64, ColorScheme.BLUE, true);
+        playerSprite.makeGraphic(64, 64, ColorScheme.BLACK, true);
+        playerSprite.drawRect(2, 2, 60, 60, ColorScheme.randomExcept([this.backgroundColor]));
         playerSprite.centerOffsets();
         add(playerSprite);
 

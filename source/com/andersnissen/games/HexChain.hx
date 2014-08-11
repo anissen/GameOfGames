@@ -82,7 +82,7 @@ class HexChain extends GameState
         }
 
         var x = FlxG.random.int(0, 2);
-        var y = FlxG.random.int(0, 6);
+        var y = FlxG.random.int(1, 5);
         makeChain(x, y);
 
         var margin = 2;
