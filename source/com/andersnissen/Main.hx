@@ -10,6 +10,8 @@ import flash.Lib;
 import flixel.FlxGame;
 import flixel.FlxState;
 
+@:font("assets/fonts/kenvector_future.ttf") private class DefaultFont extends openfl.text.Font {}
+
 class Main extends Sprite 
 {
 	var gameWidth :Int = Settings.WIDTH; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
@@ -64,6 +66,11 @@ class Main extends Sprite
 			gameWidth = Math.ceil(stageWidth / zoom);
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
+
+        flixel.FlxG.stage.quality = flash.display.StageQuality.BEST;
+
+        openfl.text.Font.registerFont(DefaultFont);
+        flixel.system.FlxAssets.FONT_DEFAULT = new DefaultFont().fontName;
 
         Reg.gameManager = new GameManager();
         Reg.networkManager = new NetworkManager();
