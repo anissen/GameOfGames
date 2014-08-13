@@ -1,6 +1,7 @@
 package com.andersnissen.states;
 
 import com.andersnissen.ColorScheme;
+import com.andersnissen.DialogBox;
 import com.andersnissen.Settings;
 import flixel.effects.particles.*;
 import flixel.FlxG;
@@ -52,7 +53,7 @@ class GameState extends FlxState
     var whitePixel :FlxParticle;
 
     // Instructions box
-    var instructions :FlxSpriteGroup;
+    var instructions :DialogBox;
 
     /**
      * Function that is called up when to state is created to set it up. 
@@ -79,7 +80,7 @@ class GameState extends FlxState
             default: ColorScheme.random();
         };
 
-        setupInstructions("Instructions!", description, "Dunno!");
+        showInstructions();
 
         var particleCount = 200;
         emitter = new FlxEmitter(Settings.WIDTH / 2, Settings.HEIGHT / 2, particleCount);
@@ -117,10 +118,8 @@ class GameState extends FlxState
             FlxG.sound.play("assets/sounds/heartbeat.ogg");
         }, 0);
 
-        gameStartTimer = new FlxTimer(2 / Reg.speed, function(_ :FlxTimer) {
-            instructions.forEach(function(obj) {
-                FlxTween.tween(obj.scale, { x: 0, y: 0 }, 0.3, { ease: FlxEase.elasticIn });
-            });
+        gameStartTimer = new FlxTimer(3 / Reg.speed, function(_ :FlxTimer) {
+            instructions.close();
             start();
             gameActive = true;
             gameTimer = new FlxTimer(5 / Reg.speed, timesUp);
@@ -142,51 +141,25 @@ class GameState extends FlxState
         }
     }
 
-    function setupInstructions(title: String, goal: String, controls: String) :Void
+    function showInstructions() :Void
     {
-        instructions = new FlxSpriteGroup();
-
-        var width = Settings.WIDTH - 50;
-        var height = 200;
-
-        var borderSize = 5;
-        var margin = borderSize + 10;
-
-        var background = new FlxSprite(0, 0);
-        background.makeGraphic(width, height, ColorScheme.TRANSPARENT);
-        background.drawRect(0, 0, width, height, ColorScheme.BLACK);
-        background.drawRect(borderSize, borderSize, width - 2 * borderSize, height - 2 * borderSize, ColorScheme.MAROON);
-        background.alpha = 0.9;
-        instructions.add(background);
-
-        var titleText = new FlxText(margin, margin, width - 2 * margin, title, 24);
-        titleText.color = ColorScheme.BLUE;
-        titleText.borderStyle = FlxTextBorderStyle.SHADOW;
-        titleText.borderColor = ColorScheme.GRAY;
-        titleText.alignment = "center";
-        instructions.add(titleText);
-
-        var goalText = new FlxText(margin, margin + 60, width - 2 * margin, 'Goal: $goal', 18);
-        goalText.color = ColorScheme.YELLOW;
-        goalText.borderStyle = FlxTextBorderStyle.OUTLINE;
-        goalText.borderColor = ColorScheme.BLACK;
-        goalText.alignment = "center";
-        instructions.add(goalText);
-
-        var controlsText = new FlxText(margin, margin + 120, width - 2 * margin, 'Controls: $controls', 18);
-        controlsText.color = ColorScheme.GREEN;
-        controlsText.borderStyle = FlxTextBorderStyle.OUTLINE;
-        controlsText.borderColor = ColorScheme.BLACK;
-        controlsText.alignment = "center";
-        instructions.add(controlsText);
-
-        instructions.screenCenter();
-
-        instructions.forEach(function(obj) {
-            obj.scale.set(0, 0);
-            FlxTween.tween(obj.scale, { x: 1, y: 1 }, 0.3, { ease: FlxEase.elasticInOut });
-        });
+        instructions = new DialogBox("Instructions!", description, "Dunno!", ColorScheme.BLUE);
         add(instructions);
+        instructions.open();
+    }
+
+    function showWinScreen() :Void
+    {
+        var winScreen = new DialogBox("You Won!", "Highscore: ??? games left", "Game unlocked: ??? games left", ColorScheme.GREEN);
+        add(winScreen);
+        winScreen.open();
+    }
+
+    function showLoseScreen() :Void
+    {
+        var loseScreen = new DialogBox("Game Over", 'Score: ${Reg.score}', 'Highcore: ${Reg.highscore}', ColorScheme.RED);
+        add(loseScreen);
+        loseScreen.open();
     }
 
     function setup() :Void
@@ -277,9 +250,11 @@ class GameState extends FlxState
 
         end();
 
+        showLoseScreen();
+
         // Reg.networkManager.send({ "games": Reg.gameManager.getGamesPlayedList() });
 
-        gameEndTimer = new FlxTimer(0.5, function(_ :FlxTimer) {
+        gameEndTimer = new FlxTimer(2, function(_ :FlxTimer) {
             FlxG.switchState(new MenuState());
         });
     }
@@ -289,6 +264,8 @@ class GameState extends FlxState
         gameActive = false;
 
         FlxG.sound.play("assets/sounds/yeah.ogg");
+
+        showWinScreen();
 
         end();
 
@@ -300,7 +277,7 @@ class GameState extends FlxState
         Reg.speed += 0.1;
         speed = Reg.speed;
         
-        gameEndTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
+        gameEndTimer = new FlxTimer(4 / Reg.speed, function(_ :FlxTimer) {
             FlxG.cameras.fade(ColorScheme.BLACK, 0.1, false, function () {
                 FlxG.switchState(Reg.gameManager.getNextGame());
             });
