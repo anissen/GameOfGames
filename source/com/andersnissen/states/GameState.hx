@@ -6,6 +6,7 @@ import flixel.effects.particles.*;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
@@ -50,6 +51,9 @@ class GameState extends FlxState
     var emitter :FlxEmitter;
     var whitePixel :FlxParticle;
 
+    // Instructions box
+    var instructions :FlxSpriteGroup;
+
     /**
      * Function that is called up when to state is created to set it up. 
      */
@@ -73,7 +77,9 @@ class GameState extends FlxState
             case Survive: ColorScheme.GREEN;
             case CompleteObjective: ColorScheme.RED;
             default: ColorScheme.random();
-        }
+        };
+
+        setupInstructions("Instructions!", description, "Dunno!");
 
         var particleCount = 200;
         emitter = new FlxEmitter(Settings.WIDTH / 2, Settings.HEIGHT / 2, particleCount);
@@ -111,7 +117,10 @@ class GameState extends FlxState
             FlxG.sound.play("assets/sounds/heartbeat.ogg");
         }, 0);
 
-        gameStartTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
+        gameStartTimer = new FlxTimer(2 / Reg.speed, function(_ :FlxTimer) {
+            instructions.forEach(function(obj) {
+                FlxTween.tween(obj.scale, { x: 0, y: 0 }, 0.3, { ease: FlxEase.elasticIn });
+            });
             start();
             gameActive = true;
             gameTimer = new FlxTimer(5 / Reg.speed, timesUp);
@@ -131,6 +140,53 @@ class GameState extends FlxState
             trace('Now playing "$track"');
             FlxG.sound.playMusic("assets/music/" + track);
         }
+    }
+
+    function setupInstructions(title: String, goal: String, controls: String) :Void
+    {
+        instructions = new FlxSpriteGroup();
+
+        var width = Settings.WIDTH - 50;
+        var height = 200;
+
+        var borderSize = 5;
+        var margin = borderSize + 10;
+
+        var background = new FlxSprite(0, 0);
+        background.makeGraphic(width, height, ColorScheme.TRANSPARENT);
+        background.drawRect(0, 0, width, height, ColorScheme.BLACK);
+        background.drawRect(borderSize, borderSize, width - 2 * borderSize, height - 2 * borderSize, ColorScheme.MAROON);
+        background.alpha = 0.9;
+        instructions.add(background);
+
+        var titleText = new FlxText(margin, margin, width - 2 * margin, title, 24);
+        titleText.color = ColorScheme.BLUE;
+        titleText.borderStyle = FlxTextBorderStyle.SHADOW;
+        titleText.borderColor = ColorScheme.GRAY;
+        titleText.alignment = "center";
+        instructions.add(titleText);
+
+        var goalText = new FlxText(margin, margin + 60, width - 2 * margin, 'Goal: $goal', 18);
+        goalText.color = ColorScheme.YELLOW;
+        goalText.borderStyle = FlxTextBorderStyle.OUTLINE;
+        goalText.borderColor = ColorScheme.BLACK;
+        goalText.alignment = "center";
+        instructions.add(goalText);
+
+        var controlsText = new FlxText(margin, margin + 120, width - 2 * margin, 'Controls: $controls', 18);
+        controlsText.color = ColorScheme.GREEN;
+        controlsText.borderStyle = FlxTextBorderStyle.OUTLINE;
+        controlsText.borderColor = ColorScheme.BLACK;
+        controlsText.alignment = "center";
+        instructions.add(controlsText);
+
+        instructions.screenCenter();
+
+        instructions.forEach(function(obj) {
+            obj.scale.set(0, 0);
+            FlxTween.tween(obj.scale, { x: 1, y: 1 }, 0.3, { ease: FlxEase.elasticInOut });
+        });
+        add(instructions);
     }
 
     function setup() :Void
