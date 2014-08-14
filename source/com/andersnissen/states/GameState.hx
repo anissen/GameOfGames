@@ -98,29 +98,32 @@ class GameState extends FlxState
             emitter.add(whitePixel);
         }
 
-        function takeScreenshot(tween :FlxTween) :Void {
+        function takeScreenshot() {
             #if (!FLX_NO_DEBUG && neko)
             trace("Screenshot!");
-            flixel.addons.plugin.screengrab.FlxScreenGrab.grab(null, true, true);
-            // var bitmap :flash.display.Bitmap = flixel.addons.plugin.screengrab.FlxScreenGrab.grab(new flash.geom.Rectangle(0, 0, Settings.WIDTH, Settings.HEIGHT), false, true); //
-            // // Saving the BitmapData
-            // var b :flash.utils.ByteArray = bitmap.bitmapData.encode("png", 1);
-            // var fo :sys.io.FileOutput = sys.io.File.write('${name}.png', true);
-            // fo.writeString(b.toString());
-            // fo.close();
+            //flixel.addons.plugin.screengrab.FlxScreenGrab.grab(null, true, true);
+            var bitmap :flash.display.Bitmap = flixel.addons.plugin.screengrab.FlxScreenGrab.grab(new flash.geom.Rectangle(0, 0, 450, 800), false, true); //
+            // Saving the BitmapData
+            var b :flash.utils.ByteArray = bitmap.bitmapData.encode("png", 1);
+            var fo :sys.io.FileOutput = sys.io.File.write('${name}.png', true);
+            fo.writeString(b.toString());
+            fo.close();
             #end
         }
 
         trace('Speed is x${Reg.speed}');
 
-        heartBeatTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
-            if (!gameActive) return;
-            FlxG.sound.play("assets/sounds/heartbeat.ogg");
-        }, 0);
-
         gameStartTimer = new FlxTimer(3 / Reg.speed, function(_ :FlxTimer) {
             instructions.close();
             start();
+
+            heartBeatTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
+                if (!gameActive) return;
+                FlxG.sound.play("assets/sounds/heartbeat.ogg");
+            }, 0);
+            new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
+                takeScreenshot();
+            });
             gameActive = true;
             gameTimer = new FlxTimer(5 / Reg.speed, timesUp);
         });

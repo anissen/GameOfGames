@@ -7,6 +7,7 @@ import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.Lib;
+import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
 
@@ -67,7 +68,7 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
 
-        flixel.FlxG.stage.quality = flash.display.StageQuality.BEST;
+        FlxG.stage.quality = flash.display.StageQuality.BEST;
 
         openfl.text.Font.registerFont(DefaultFont);
         flixel.system.FlxAssets.FONT_DEFAULT = new DefaultFont().fontName;

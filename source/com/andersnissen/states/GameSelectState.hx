@@ -1,9 +1,11 @@
 
 package com.andersnissen.states;
 
+import com.andersnissen.ColorScheme;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
@@ -22,6 +24,8 @@ class GameSelectState extends FlxState
     var titleText :FlxText;
     var backButton :FlxText;
 
+    var gameList :FlxSpriteGroup;
+
     /**
      * Function that is called up when to state is created to set it up. 
      */
@@ -33,7 +37,7 @@ class GameSelectState extends FlxState
 
         FlxTween.tween(gradientSprite, { alpha: 0.7 }, 5, { type: FlxTween.PINGPONG });
 
-        titleText = new FlxText(0, 20, Settings.WIDTH, 'Training', 30);
+        titleText = new FlxText(0, 20, Settings.WIDTH, "Training", 30);
         titleText.alignment = "center";
         titleText.color = FlxColor.CYAN;
         titleText.borderStyle = FlxTextBorderStyle.OUTLINE;
@@ -43,19 +47,43 @@ class GameSelectState extends FlxState
 
         FlxTween.tween(titleText, { borderSize: 5.0 }, 2, { type: FlxTween.PINGPONG });
 
+        gameList = new FlxSpriteGroup(0, 70);
+
         var gameCount = 0;
         for (gameName in Reg.gameManager.getGamesUnlockedList()) {
-            gameCount++;
+            var x = 20 + (gameCount % 3) * 110;
+            var y = Math.floor(gameCount / 3) * 205;
+            var gameInfo = new FlxSpriteGroup(x, y);
 
-            var gameText = new FlxText(40, 40 + gameCount * 40, Settings.WIDTH - 40, '#$gameCount $gameName', 20);
+            var background = new FlxSprite(0, 0);
+            background.makeGraphic(100, 195, ColorScheme.BLACK);
+            gameInfo.add(background);
+
+            var gameIcon = new FlxSprite(5, 5, "assets/images/games/" + gameName + ".png");
+            gameIcon.origin.set(0, 0);
+            gameIcon.scale.set(0.2, 0.2);
+            gameInfo.add(gameIcon);
+
+            var gameText = new FlxText(0, 162, 100, "HI: ??", 20);
+            gameText.font = "assets/fonts/kenpixel_blocks.ttf";
             gameText.color = FlxColor.BLUE;
             gameText.borderStyle = FlxTextBorderStyle.OUTLINE_FAST;
             gameText.borderColor = FlxColor.WHITE;
+            gameText.alignment = FlxTextAlign.CENTER;
             gameText.alpha = 0.0;
-            add(gameText);
+            gameInfo.add(gameText);
 
-            FlxTween.tween(gameText, { x: 20, alpha: 1.0 }, 0.3, { startDelay: gameCount * 0.1 });
+            gameList.add(gameInfo);
+            gameInfo.forEach(function(sprite) {
+                var originalX = sprite.x;
+                sprite.x += 40;
+                FlxTween.tween(sprite, { x: originalX, alpha: 1.0 }, 0.3, { startDelay: gameCount * 0.1 });
+            });
+
+            gameCount++;
         }
+
+        add(gameList);
 
         backButton = new FlxText(0, Settings.HEIGHT - 100, Settings.WIDTH, 'Back', 30);
         backButton.alignment = "center";
@@ -86,6 +114,17 @@ class GameSelectState extends FlxState
     {
         super.update();
 
+        // for (swipe in FlxG.swipes) {
+        //     trace(swipe);
+        //     if (swipe.duration < 0.5 && swipe.distance > 50) {
+        //         if (swipe.angle > -45 && swipe.angle < 45) {
+        //             trace("Should trigger swipe!");
+        //             gameList.forEach(function(obj) {
+        //                 obj.y -= 100;
+        //             });
+        //         }
+        //     }
+        // }
         #if !FLX_NO_TOUCH
         for (touch in FlxG.touches.list)
         {
