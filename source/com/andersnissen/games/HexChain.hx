@@ -28,6 +28,7 @@ class HexChain extends GameState
     {
         name = "Hex Chain";
         description = "Make a chain of all BLUE";
+        controls = "Drag";
         winningCondition = WinningCondition.CompleteObjective;
 
         hexSprites = new FlxSpriteGroup();

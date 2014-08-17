@@ -28,6 +28,8 @@ class Jump extends GameState
     override function setup() :Void
     {
         name = "Jump";
+        description = "Jump over obstacles";
+        controls = "Tab";
 
         for (i in 0...10) {
             var backgroundSprite = FlxGridOverlay.create(128, 128, Settings.WIDTH + 128, Settings.HEIGHT * 2, true, true, ColorScheme.GRAY, ColorScheme.TRANSPARENT);

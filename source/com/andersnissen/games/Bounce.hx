@@ -34,6 +34,8 @@ class Bounce extends GameState
     override function setup() :Void
     {
         name = "Breakout";
+        description = "Bounce the ball";
+        controls = "Tilt";
 
         var trailArea = new FlxTrailArea(0, 0, 360, 640);
         trailArea.antialiasing = true;

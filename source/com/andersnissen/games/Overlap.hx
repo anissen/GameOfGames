@@ -24,6 +24,7 @@ class Overlap extends GameState
     {
         name             = "No Overlap";
         description      = "Avoid overlap";
+        controls         = "Drag";
         winningCondition = WinningCondition.CompleteObjective;
 
         rectangles = new FlxSpriteGroup();

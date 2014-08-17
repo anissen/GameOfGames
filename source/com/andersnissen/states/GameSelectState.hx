@@ -114,17 +114,21 @@ class GameSelectState extends FlxState
     {
         super.update();
 
-        // for (swipe in FlxG.swipes) {
-        //     trace(swipe);
-        //     if (swipe.duration < 0.5 && swipe.distance > 50) {
-        //         if (swipe.angle > -45 && swipe.angle < 45) {
-        //             trace("Should trigger swipe!");
-        //             gameList.forEach(function(obj) {
-        //                 obj.y -= 100;
-        //             });
-        //         }
-        //     }
-        // }
+        for (swipe in FlxG.swipes) {
+            // trace(swipe);
+            if (swipe.duration < 0.5 && swipe.distance > 50) {
+                if (swipe.angle > -45 && swipe.angle < 45) {
+                    gameList.y -= 205;
+                    //trace("Should trigger swipe!");
+                    // gameList.forEach(function(obj) {
+                    //     obj.y -= 100;
+                    // });
+                } else if (swipe.angle > -(180 - 45) && swipe.angle < (180 + 45)) {
+                    gameList.y += 205;
+                }
+            }
+        }
+
         #if !FLX_NO_TOUCH
         for (touch in FlxG.touches.list)
         {

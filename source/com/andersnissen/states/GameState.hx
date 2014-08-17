@@ -32,7 +32,8 @@ enum WinningCondition
 class GameState extends FlxState
 {
     var name :String = "Nameless Game";
-    var description :String = "You're on your own...";
+    var description :String = "???";
+    var controls :String = "???";
     var winningCondition :WinningCondition = WinningCondition.Survive;
 
     var gameTimer :FlxTimer;
@@ -146,7 +147,7 @@ class GameState extends FlxState
 
     function showInstructions() :Void
     {
-        instructions = new DialogBox("Instructions!", description, "Dunno!", ColorScheme.BLUE);
+        instructions = new DialogBox("New Game!", this.description, 'Controls: ${this.controls}', ColorScheme.BLUE);
         add(instructions);
         instructions.open();
     }
@@ -268,7 +269,7 @@ class GameState extends FlxState
 
         FlxG.sound.play("assets/sounds/yeah.ogg");
 
-        showWinScreen();
+        // showWinScreen();
 
         end();
 
@@ -280,7 +281,7 @@ class GameState extends FlxState
         Reg.speed += 0.1;
         speed = Reg.speed;
         
-        gameEndTimer = new FlxTimer(4 / Reg.speed, function(_ :FlxTimer) {
+        gameEndTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
             FlxG.cameras.fade(ColorScheme.BLACK, 0.1, false, function () {
                 FlxG.switchState(Reg.gameManager.getNextGame());
             });
