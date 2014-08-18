@@ -26,11 +26,12 @@ Games:
     ☐ Click at the right time (like many games in WarioWare Inc.)
 
 Bugs:
-    ☐ Consider changing "Jump" game into a tilemap
-    ☐ Unlocked count is being reset sometimes (when not playing any games maybe?)
+    ☐ Jump: Doesn't work w. instructions dialog 
+    ☐ Jump: Consider using a tilemap instead
     ☐ Hexchain: Can make invalid chain
     ☐ Bounce: Can make ball/paddle same color as background or red/green
-
+    ☐ Multiple: Can be interacted with when instructions dialog is showing
+    ✘ Unlocked count is being reset sometimes (when not playing any games maybe?) @cancelled (18-08-14 22:48)
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
