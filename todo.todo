@@ -1,31 +1,32 @@
 
 TODO:
-  ☐ Make a game selection screen
-      ☐ Make list of game buttons
-  ☐ Add instruction screen before playing
-  ☐ Add game over screen
-  ☐ Consider changing "Jump" game into a tilemap
+    ☐ Make a game selection screen
+        ☐ Make game buttons actually work
+        ☐ Persist train highscore
+    ☐ Add instruction screen before playing
+    ☐ Add game over screen
+    ☐ Remaining to high score + new game unlock after game + fun yes/no for testers
+    ☐ Google Analytics: https://github.com/fbricker/haxe-ga
+    ☐ Investigate more life-like animations: http://codepen.io/ayamflow/pen/LFexf?editors=001
+    ☐ Send data to Google docs
 
-  ☐ Instructions before game
-  ☐ Remaining to high score + new game unlock after game + fun yes/no for testers
-  ☐ Google Analytics: https://github.com/fbricker/haxe-ga
-  ☐ Investigate more life-like animations: http://codepen.io/ayamflow/pen/LFexf?editors=001
-  ☐ Send data to Google docs
-
-  Games:
-      ☐ Rope swinging (http://www.emanueleferonato.com/2013/09/10/creation-of-a-box2d-hook-like-the-one-seen-on-ios-mikey-hooks-game/)
-      ☐ Swiping (?)
-      ☐ Match game
-      ☐ Vacuum game (rotating vacuum cleaners)
-      ☐ Some physics game
-      ☐ Color confusion (e.g. label says "green" but color is blue)
-      ☐ A game about squares (http://gameaboutsquares.com/)
-      ☐ Jump onto sliding blocks (http://www.romancode.com/zoi/)
-      ☐ Game mechanics (http://gamemechanicexplorer.com)
-      ☐ Game mechanics - HaxeFlixel (http://gme.kasoki.de/)
-      ☐ Untangle game
+Games:
+    ☐ Rope swinging (http://www.emanueleferonato.com/2013/09/10/creation-of-a-box2d-hook-like-the-one-seen-on-ios-mikey-hooks-game/)
+    ☐ Swiping (?)
+    ☐ Match game
+    ☐ Vacuum game (rotating vacuum cleaners)
+    ☐ Some physics game
+    ☐ Color confusion (e.g. label says "green" but color is blue)
+    ☐ A game about squares (http://gameaboutsquares.com/)
+    ☐ Jump onto sliding blocks (http://www.romancode.com/zoi/)
+    ☐ Game mechanics (http://gamemechanicexplorer.com)
+    ☐ Game mechanics - HaxeFlixel (http://gme.kasoki.de/)
+    ☐ Untangle game
+    ☐ Multi-touch game (place fingers in the correct order)
+    ☐ Click at the right time (like many games in WarioWare Inc.)
 
 Bugs:
+    ☐ Consider changing "Jump" game into a tilemap
     ☐ Unlocked count is being reset sometimes (when not playing any games maybe?)
     ☐ Hexchain: Can make invalid chain
     ☐ Bounce: Can make ball/paddle same color as background or red/green
@@ -33,13 +34,14 @@ Bugs:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
-  ✔ Title screen @done (02-08-14 21:31) @project(TODO)
-  ✔ Make a background animation @done (02-08-14 21:31) @project(TODO)
-  ✔ Remove score @done (02-08-14 21:31) @project(TODO)
-  ✔ Add button for game selection @done (02-08-14 21:31) @project(TODO)
-  ✔ Make back button @done (02-08-14 21:31) @project(TODO)
-  ✔ Pause game before/after play @done (13-08-14 21:29) @project(TODO)
-  ✘ Use a bar for count down timer @cancelled (13-08-14 21:29) @project(TODO)
-  ✘ Make a game screen frame that shows timer, high score etc. (or is that too non-minimalistic?) @cancelled (13-08-14 21:29) @project(TODO)
-  ✔ Make games use the proper screen resolution from Settings @done (02-08-14 21:37) @project(TODO)
-  ✔ Improve "Lasers" game @done (03-08-14 13:21) @project(TODO)
+    ✔ Make list of game buttons @done (18-08-14 22:39) @project(TODO)
+    ✔ Title screen @done (02-08-14 21:31) @project(TODO)
+    ✔ Make a background animation @done (02-08-14 21:31) @project(TODO)
+    ✔ Remove score @done (02-08-14 21:31) @project(TODO)
+    ✔ Add button for game selection @done (02-08-14 21:31) @project(TODO)
+    ✔ Make back button @done (02-08-14 21:31) @project(TODO)
+    ✔ Pause game before/after play @done (13-08-14 21:29) @project(TODO)
+    ✘ Use a bar for count down timer @cancelled (13-08-14 21:29) @project(TODO)
+    ✘ Make a game screen frame that shows timer, high score etc. (or is that too non-minimalistic?) @cancelled (13-08-14 21:29) @project(TODO)
+    ✔ Make games use the proper screen resolution from Settings @done (02-08-14 21:37) @project(TODO)
+    ✔ Improve "Lasers" game @done (03-08-14 13:21) @project(TODO)
