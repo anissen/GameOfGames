@@ -97,6 +97,14 @@ class MenuState extends FlxState
         add(resetButton);
         #end
 
+        // var textfield = new openfl.text.TextField();
+        // textfield.x = 40;
+        // textfield.y = 620;
+        // textfield.type = openfl.text.TextFieldType.INPUT;
+        // textfield.text = "input";
+        // textfield.textColor = 0xff00ff;
+        // FlxG.addChildBelowMouse(textfield);
+
         if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
             FlxG.sound.playMusic("assets/music/Kris_Keyser_-_06_-_Nitro.ogg");
         }
@@ -112,6 +120,10 @@ class MenuState extends FlxState
 	 */
 	override public function destroy():Void
 	{
+        if (FlxG.sound.music != null) {
+            FlxG.sound.music.stop();
+        }
+
 		super.destroy();
 	}
 

@@ -182,6 +182,8 @@ class GameState extends FlxState
     }
 
     function addSprite(sprite :FlxSprite) :flixel.FlxBasic {
+        sprite.antialiasing = true;
+        sprite.pixelPerfectRender = false;
         return super.add(sprite);
     }
 
@@ -192,6 +194,9 @@ class GameState extends FlxState
 
         var delay :Float = 0;
         for (sprite in spriteGroup.members) {
+            sprite.antialiasing = true;
+            sprite.pixelPerfectRender = false;
+
             var spriteEndScaleX = sprite.scale.x;
             var spriteEndScaleY = sprite.scale.y;
             sprite.scale.set(0, 0);
