@@ -20,7 +20,7 @@ import flixel.text.FlxText.FlxTextBorderStyle;
 /**
  * A FlxState which can be used for the game's menu.
  */
-class GameSelectState extends FlxState
+class TrainingState extends FlxState
 {
     var titleText :FlxText;
     var backButton :FlxText;

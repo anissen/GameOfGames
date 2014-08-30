@@ -21,7 +21,7 @@ class MenuState extends FlxState
     var titleText :FlxText;
     var highScoreText :FlxText;
     var gameText :FlxText;
-    var gameSelectionButton :FlxText;
+    var trainingButton :FlxText;
     var playButton :FlxText;
     var creditsButton :FlxText;
 
@@ -65,15 +65,15 @@ class MenuState extends FlxState
         playButton.borderSize = 5.0;
         add(playButton);
 
-        gameSelectionButton = new FlxText(-10, 480, Settings.WIDTH, 'Training', 24);
-        gameSelectionButton.alignment = "center";
-        gameSelectionButton.color = ColorScheme.TEAL;
-        gameSelectionButton.borderStyle = FlxTextBorderStyle.OUTLINE;
-        gameSelectionButton.borderColor = ColorScheme.NAVY;
-        gameSelectionButton.borderSize = 2.0;
-        add(gameSelectionButton);
+        trainingButton = new FlxText(-10, 480, Settings.WIDTH, 'Training', 24);
+        trainingButton.alignment = "center";
+        trainingButton.color = ColorScheme.TEAL;
+        trainingButton.borderStyle = FlxTextBorderStyle.OUTLINE;
+        trainingButton.borderColor = ColorScheme.NAVY;
+        trainingButton.borderSize = 2.0;
+        add(trainingButton);
 
-        FlxTween.tween(gameSelectionButton, { x: 10 }, 3, { type: FlxTween.PINGPONG });
+        FlxTween.tween(trainingButton, { x: 10 }, 3, { type: FlxTween.PINGPONG });
 
         var options :TweenOptions = { type: FlxTween.PINGPONG };
         FlxTween.angle(highScoreText, -12, 12, 1, options );
@@ -156,8 +156,8 @@ class MenuState extends FlxState
             {
                onPlayClicked();
                break; 
-            } else if (gameSelectionButton.overlapsPoint(touch.getWorldPosition())) {
-                onGameSelectionClicked();
+            } else if (trainingButton.overlapsPoint(touch.getWorldPosition())) {
+                onTrainingClicked();
                 break;
             } else if (creditsButton.overlapsPoint(touch.getWorldPosition())) {
                 onCreditsClicked();
@@ -168,8 +168,8 @@ class MenuState extends FlxState
         if (!FlxG.mouse.justPressed) return;
         if (playButton.overlapsPoint(FlxG.mouse.getWorldPosition())) {
             onPlayClicked();
-        } else if (gameSelectionButton.overlapsPoint(FlxG.mouse.getWorldPosition())) {
-            onGameSelectionClicked();
+        } else if (trainingButton.overlapsPoint(FlxG.mouse.getWorldPosition())) {
+            onTrainingClicked();
         } else if (creditsButton.overlapsPoint(FlxG.mouse.getWorldPosition())) {
             onCreditsClicked();
         }
@@ -190,9 +190,9 @@ class MenuState extends FlxState
         Reg.gameSession.start(Reg.gameManager);
     }
 
-    function onGameSelectionClicked()
+    function onTrainingClicked()
     {
-        FlxG.switchState(new GameSelectState());
+        FlxG.switchState(new TrainingState());
     }
 
     function onCreditsClicked()
