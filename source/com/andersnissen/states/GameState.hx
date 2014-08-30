@@ -303,9 +303,6 @@ class GameState extends FlxState
         });
     }
 
-    // TODO: Make this into a pluggable system, e.g.
-    // effects.flash()
-    // effects.freeze()
     function success(?position :FlxPoint)
     {
         FlxG.sound.play("assets/sounds/success.wav", 0.5);
@@ -316,7 +313,7 @@ class GameState extends FlxState
         Sys.sleep(0.02);
         #end
         FlxG.camera.flash(0x22FFFFFF, 0.05);
-        FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
+        FlxG.camera.shake(0.015 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
 
         if (position != null) {
             emitter.setPosition(position.x, position.y);
@@ -326,12 +323,7 @@ class GameState extends FlxState
 
     /* TODO: Implement the following functions:
         success(); // freeze followed by shake + sound + flash
-        warning(); // freeze followed by shake + sound + flash
-        explosion(); // particle explosion (e.g. ball hits the paddle)
-        colorPalette(); // returns a color scheme
 
         generalize input: touch/mouse, accelerometer
-
-        // effects should be limited at first, to be unlocked through play
     */
 }
