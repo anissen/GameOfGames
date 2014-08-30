@@ -90,7 +90,7 @@ class GameSelectState extends FlxState
 
         add(gameList);
 
-        backButton = new FlxText(0, Settings.HEIGHT - 100, Settings.WIDTH, 'Back', 30);
+        backButton = new FlxText(0, Settings.HEIGHT - 80, Settings.WIDTH, 'Back', 30);
         backButton.alignment = "center";
         backButton.color = FlxColor.YELLOW;
         backButton.borderStyle = FlxTextBorderStyle.OUTLINE;

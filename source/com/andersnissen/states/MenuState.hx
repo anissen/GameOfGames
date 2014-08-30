@@ -83,9 +83,16 @@ class MenuState extends FlxState
 
         creditsButton = new FlxText(-10, 540, Settings.WIDTH, 'Credits', 24);
         creditsButton.alignment = "center";
-        creditsButton.color = ColorScheme.GRAY;
-        creditsButton.angle = -4.0;
+        creditsButton.color = ColorScheme.MAROON;
+        creditsButton.borderStyle = FlxTextBorderStyle.OUTLINE;
+        creditsButton.borderColor = ColorScheme.SILVER;
+        creditsButton.borderSize = 2.0;
+        creditsButton.angle = -2.0;
         add(creditsButton);
+
+        FlxTween.tween(creditsButton, { y: creditsButton.y + 10 }, 4, { type: FlxTween.PINGPONG });
+        FlxTween.angle(creditsButton, -2, -8, 5, options );
+
 
         #if DEBUG
         var resetButton = new FlxButton(Settings.WIDTH / 2, 600, "Reset Progress", function () {
@@ -151,6 +158,9 @@ class MenuState extends FlxState
             } else if (gameSelectionButton.overlapsPoint(touch.getWorldPosition())) {
                 onGameSelectionClicked();
                 break;
+            } else if (creditsButton.overlapsPoint(touch.getWorldPosition())) {
+                onCreditsClicked();
+                break;
             }
         }
         #else
@@ -159,6 +169,8 @@ class MenuState extends FlxState
             onPlayClicked();
         } else if (gameSelectionButton.overlapsPoint(FlxG.mouse.getWorldPosition())) {
             onGameSelectionClicked();
+        } else if (creditsButton.overlapsPoint(FlxG.mouse.getWorldPosition())) {
+            onCreditsClicked();
         }
         #end
 	}
@@ -180,5 +192,10 @@ class MenuState extends FlxState
     function onGameSelectionClicked()
     {
         FlxG.switchState(new GameSelectState());
+    }
+
+    function onCreditsClicked()
+    {
+        FlxG.switchState(new CreditsState());
     }
 }
