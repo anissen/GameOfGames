@@ -105,13 +105,14 @@ class MenuState extends FlxState
         // textfield.textColor = 0xff00ff;
         // FlxG.addChildBelowMouse(textfield);
 
+		super.create();
+
         if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
             FlxG.sound.playMusic("assets/music/Kris_Keyser_-_06_-_Nitro.ogg");
         }
 
-		super.create();
-
         // FlxG.debugger.visible = true;
+        // FlxG.sound.volume = 0.5;
 	}
 	
 	/**
@@ -120,19 +121,15 @@ class MenuState extends FlxState
 	 */
 	override public function destroy():Void
 	{
-        if (FlxG.sound.music != null) {
-            FlxG.sound.music.stop();
-        }
-
 		super.destroy();
 	}
 
 	/**
 	 * Function that is called once every frame.
 	 */
-	override public function update():Void
+	override public function update(elapsed :Float):Void
 	{
-        super.update();
+        super.update(elapsed);
 
         // var rotationSpeed :Float = 2;
         // var maxRotation :Float = 15;

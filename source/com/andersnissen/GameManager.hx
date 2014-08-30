@@ -6,16 +6,16 @@ import flixel.util.FlxSave;
 import com.andersnissen.states.GameState;
 import com.andersnissen.games.*;
 
-// import GameState;
-
 // typedef Array<Class<states.GameState>> GameList
 
 class GameManager
 {
     var gameList :Array<Class<GameState>> = [];
+
     var gamesUnlocked :Array<Class<GameState>> = [];
     var gamesPlayed :Array<Class<GameState>> = [];
     var currentGameBatch :Array<Class<GameState>> = [];
+    var newGameUnlocked :Bool = false;
 
     var _gameSave :FlxSave;
 
@@ -26,7 +26,7 @@ class GameManager
         _gameSave = new FlxSave();
         _gameSave.bind("GamesUnlocked");
 
-        gameList = [HexChain, Jump, Bounce, Overlap, CollectDots, Lasers];
+        gameList = [HexChain, /* Jump, */ Bounce, Overlap, CollectDots, Lasers];
 
         var unlockCount :Int = (_gameSave.data.unlockCount != null ? _gameSave.data.unlockCount : 0);
         gamesUnlocked = gameList.slice(0, unlockCount);
@@ -36,6 +36,8 @@ class GameManager
 
     function getNextGameClass() :Class<GameState>
     {
+        newGameUnlocked = false;
+
         // completed entire batch of games
         if (currentGameBatch.length == 0) {
             currentGameBatch = createGameBatch();
@@ -46,6 +48,7 @@ class GameManager
             if (hasMoreLockedGames && gamesPlayedThisSession >= gamesUnlocked.length) {
                 var unlockedGame = unlockNextGame();
                 currentGameBatch.unshift(unlockedGame); // Add the new game as the first in the batch
+                newGameUnlocked = true;
             }
 
             var batchString = [for (g in currentGameBatch) getGameName(g)].join(", ");
@@ -98,6 +101,11 @@ class GameManager
         return Type.createInstance(getNextGameClass(), []);
     }
 
+    public function getGame(index :Int) :GameState
+    {
+        return Type.createInstance(gameList[index], [true]);
+    }
+
     public function getGamesPlayedList() :Array<String>
     {
         return [for (g in gamesPlayed) getGameName(g)];
@@ -111,6 +119,11 @@ class GameManager
     public function getUnlockCount() :Int
     {
         return gamesUnlocked.length;
+    }
+
+    public function isNewGame() :Bool
+    {
+        return newGameUnlocked;
     }
 
     public function reset() :Void

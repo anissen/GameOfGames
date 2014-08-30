@@ -97,9 +97,9 @@ class Bounce extends GameState
         // add(accText);
 	}
 	
-	override public function update():Void
+	override public function update(elapsed :Float) :Void
 	{
-		super.update();
+		super.update(elapsed);
 		
 		_bat.velocity.x = 0;
         _ball.velocity.y += 35 * speed;

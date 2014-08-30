@@ -54,9 +54,9 @@ class Overlap extends GameState
         add(rectangles);
     }
 
-    override public function update():Void
+    override public function update(elapsed :Float) :Void
     {
-        super.update();
+        super.update(elapsed);
 
         #if !FLX_NO_TOUCH
         for (touch in FlxG.touches.list)

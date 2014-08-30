@@ -56,6 +56,11 @@ class GameState extends FlxState
     // Instructions box
     var instructions :DialogBox;
 
+    public function new() :Void
+    {
+        super();
+    }
+
     /**
      * Function that is called up when to state is created to set it up. 
      */
@@ -81,7 +86,10 @@ class GameState extends FlxState
             default: ColorScheme.random();
         };
 
-        showInstructions();
+        var isNewUnlockedGame = Reg.gameManager.isNewGame();
+        if (isNewUnlockedGame) {
+            showInstructions();
+        }
 
         var particleCount = 200;
         emitter = new FlxEmitter(Settings.WIDTH / 2, Settings.HEIGHT / 2, particleCount);
@@ -114,8 +122,11 @@ class GameState extends FlxState
 
         trace('Speed is x${Reg.speed}');
 
-        gameStartTimer = new FlxTimer(3 / Reg.speed, function(_ :FlxTimer) {
-            instructions.close();
+        var timeBeforeStarting = (isNewUnlockedGame ? 3 : 1) / Reg.speed;
+        gameStartTimer = new FlxTimer(timeBeforeStarting, function(_ :FlxTimer) {
+            if (instructions != null) {
+                instructions.close();
+            }
             start();
 
             heartBeatTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
@@ -137,10 +148,11 @@ class GameState extends FlxState
                 "RoccoW_-_09_-_Weeklybeats_2014_9_-_This_Little_Piggy_Danced.ogg",
                 "RoccoW_-_Chips_Got_Kicks.ogg",
                 "RoccoW_-_Pumped.ogg",
-                "RoccoW_-_Sea_Battles_in_Space.ogg"
+                "RoccoW_-_Sea_Battles_in_Space.ogg",
+                "Rolemusic_-_01_-_Spell.ogg"
             ];
             var track = FlxG.random.getObject(musicFiles);
-            trace('Now playing "$track"');
+            // trace('Now playing "$track"');
             FlxG.sound.playMusic("assets/music/" + track);
         }
     }
@@ -225,7 +237,7 @@ class GameState extends FlxState
     /**
      * Function that is called once every frame.
      */
-    override public function update() :Void
+    override public function update(elapsed :Float) :Void
     {
         if (gameTimer != null && gameActive) {
             blackSprite.makeGraphic(Settings.WIDTH, Math.floor(gameTimer.progress * Settings.HEIGHT) + 10, ColorScheme.BLACK);
@@ -233,7 +245,7 @@ class GameState extends FlxState
         }
 
         if (gameActive) {
-            super.update();
+            super.update(elapsed);
         }
     }
 

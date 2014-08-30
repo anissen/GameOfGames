@@ -7,6 +7,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
@@ -56,28 +57,32 @@ class GameSelectState extends FlxState
             var gameInfo = new FlxSpriteGroup(x, y);
 
             var background = new FlxSprite(0, 0);
-            background.makeGraphic(100, 195, ColorScheme.BLACK);
+            background.makeGraphic(100, 195, ColorScheme.YELLOW);
             gameInfo.add(background);
 
-            var gameIcon = new FlxSprite(5, 5, "assets/images/games/" + gameName + ".png");
+            var gameIcon = new FlxSprite(5, 5, "assets/images/small_games/" + gameName + ".png");
             gameIcon.origin.set(0, 0);
-            gameIcon.scale.set(0.2, 0.2);
+            // gameIcon.scale.set(0.2, 0.2);
             gameInfo.add(gameIcon);
 
             var gameText = new FlxText(0, 162, 100, "HI: ??", 20);
             gameText.font = "assets/fonts/kenpixel_blocks.ttf";
             gameText.color = FlxColor.BLUE;
             gameText.borderStyle = FlxTextBorderStyle.OUTLINE_FAST;
-            gameText.borderColor = FlxColor.WHITE;
+            gameText.borderColor = FlxColor.BLACK;
             gameText.alignment = FlxTextAlign.CENTER;
             gameText.alpha = 0.0;
             gameInfo.add(gameText);
 
             gameList.add(gameInfo);
+
             gameInfo.forEach(function(sprite) {
-                var originalX = sprite.x;
-                sprite.x += 40;
-                FlxTween.tween(sprite, { x: originalX, alpha: 1.0 }, 0.3, { startDelay: gameCount * 0.1 });
+                // var originalScaleX = sprite.scale.x;
+                // var originalScaleY = sprite.scale.y;
+                // sprite.scale.set(0, 0);
+                sprite.alpha = 0;
+                sprite.angle = FlxG.random.float(-360, 360);
+                FlxTween.tween(sprite, { alpha: 1, angle: 0 }, 1.3, { startDelay: gameCount * 0.5, ease: FlxEase.elasticInOut });
             });
 
             gameCount++;
@@ -102,7 +107,7 @@ class GameSelectState extends FlxState
      * Function that is called when this state is destroyed - you might want to 
      * consider setting all objects this state uses to null to help garbage collection.
      */
-    override public function destroy():Void
+    override public function destroy() :Void
     {
         super.destroy();
     }
@@ -110,9 +115,9 @@ class GameSelectState extends FlxState
     /**
      * Function that is called once every frame.
      */
-    override public function update():Void
+    override public function update(elapsed :Float) :Void
     {
-        super.update();
+        super.update(elapsed);
 
         for (swipe in FlxG.swipes) {
             // trace(swipe);
@@ -142,11 +147,28 @@ class GameSelectState extends FlxState
         if (FlxG.mouse.justPressed && backButton.overlapsPoint(FlxG.mouse.getWorldPosition())) {
             onBackClicked();
         }
+
+        if (FlxG.mouse.justPressed) {
+            for (gameIndex in 0...gameList.countLiving()) {
+                var game = gameList.members[gameIndex];
+                if (game.overlapsPoint(FlxG.mouse.getWorldPosition())) {
+                    onGameClicked(gameIndex);
+                    // return;
+                }
+            }
+        }
         #end
     }
 
     function onBackClicked()
     {
         FlxG.switchState(new MenuState());
+    }
+
+    function onGameClicked(gameIndex :Int)
+    {
+        Reg.speed = 1;
+        trace('gameIndex: $gameIndex');
+        //FlxG.switchState(Reg.gameManager.getGame(gameIndex));
     }
 }
