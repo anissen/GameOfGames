@@ -3,12 +3,10 @@ TODO:
     ☐ Persist game training highscore
     ☐ Add instruction screen before playing
     ☐ Add game over screen
-    ☐ Make credits screen
     ☐ Improve sounds
     ☐ Improve effects
     ☐ Improve instruction screen
-    ☐ Read how-to-improve-your-productivity
-    ☐ Glitch sprite?
+    ☐ Use "elapsed" to control game speed
     ☐ Remaining to high score + new game unlock after game + fun yes/no for testers
     ☐ Google Analytics: https://github.com/fbricker/haxe-ga
     ☐ Investigate more life-like animations: http://codepen.io/ayamflow/pen/LFexf?editors=001
@@ -34,11 +32,16 @@ Bugs:
     ☐ Jump: Doesn't work w. instructions dialog 
     ☐ Jump: Consider using a tilemap instead
     ☐ Hexchain: Can make invalid chain
-    ☐ Bounce: Can make ball/paddle same color as background or red/green
-    ☐ Multiple: Can be interacted with when instructions dialog is showing
+    ☐ Hexchain: Lift finger should clear the chain
+    ☐ Last game can sometime become null (when creating a new batch)
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Bounce: Can make ball/paddle same color as background or red/green @done (30-08-14 19:28) @project(Bugs)
+  ✔ Multiple: Can be interacted with when instructions dialog is showing @done (30-08-14 19:36) @project(Bugs)
+  ✔ Make credits screen @done (30-08-14 19:28) @project(TODO)
+  ✔ Read how-to-improve-your-productivity @done (30-08-14 19:28) @project(TODO)
+  ✘ Glitch sprite? @cancelled (30-08-14 19:27) @project(TODO)
   ✔ Make a GameHandler class that handles an entire game session. It must be able to handle both list of games (through GameManager) and a repeated training game (maybe through a TrainingGameManager?) @done (30-08-14 16:15) @project(TODO)
   ✔ Make a game selection screen @done (30-08-14 16:15) @project(TODO)
   ✔ Make game buttons actually work @done (30-08-14 16:15) @project(TODO)
