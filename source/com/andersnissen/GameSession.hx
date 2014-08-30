@@ -6,18 +6,20 @@ import com.andersnissen.states.MenuState;
 
 class GameSession
 {
-    var gameManager :GameManager;
+    var gameManager :GameSessionManager;
     var speed :Float;
     var score :Int;
+    var training :Bool;
 
     public function new()
     {
 
     }
 
-    public function start(manager :GameManager) :Void
+    public function start(manager :GameSessionManager, ?isTraining :Bool = false) :Void
     {
         gameManager = manager;
+        training = isTraining;
         speed = 1.0;
         score = 0;
 
@@ -36,22 +38,21 @@ class GameSession
 
     function wonGame() :Void
     {
-        trace("GameSession: Game won!");
-
         score++;
         speed += 0.1;
 
-        if (score > Reg.highscore) {
-            Reg.highscore = score;
+        if (!training) {
+            if (score > Reg.highscore) {
+                Reg.highscore = score;
+            }
+            Reg.score = score;
         }
-        Reg.score = score;
 
         startGame(gameManager.getNextGame());
     }
 
     function lostGame() :Void
     {
-        trace("GameSession: Game lost!");
         FlxG.switchState(new MenuState());
     }
 }

@@ -1,6 +1,5 @@
 package com.andersnissen;
 
-import com.andersnissen.GameManager;
 import com.andersnissen.states.GameState;
 import com.andersnissen.games.*;
 import flixel.util.FlxSave;

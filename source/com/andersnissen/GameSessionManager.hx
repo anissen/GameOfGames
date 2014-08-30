@@ -6,29 +6,7 @@ import flixel.util.FlxSave;
 import com.andersnissen.states.GameState;
 import com.andersnissen.games.*;
 
-// typedef Array<Class<states.GameState>> GameList
-
-interface GameManager
-{
-    public function getNextGame() :GameState;
-}
-
-class TrainingSessionManager implements GameManager
-{
-    var trainingGame :Class<GameState>;
-
-    public function new(game :Class<GameState>)
-    {
-        trainingGame = game;
-    }
-
-    public function getNextGame() :GameState
-    {
-        return Type.createInstance(trainingGame, []);
-    }
-}
-
-class GameSessionManager implements GameManager
+class GameSessionManager
 {
     var gameList :Array<Class<GameState>>;
 
@@ -39,20 +17,16 @@ class GameSessionManager implements GameManager
 
     var _gameSave :FlxSave;
 
-    // public var onGameUnlocked :flixel.util.FlxSignal;
-
     public function new(list :Array<Class<GameState>>) :Void
     {
         _gameSave = new FlxSave();
         _gameSave.bind("GamesUnlocked");
 
         gameList = list;
-        // gameList = [HexChain, /* Jump, */ Bounce, Overlap, CollectDots, Lasers];
 
         var unlockCount :Int = (_gameSave.data.unlockCount != null ? _gameSave.data.unlockCount : 0);
         gamesUnlocked = gameList.slice(0, unlockCount);
-        trace('Unlock count: $unlockCount');
-        // onGameUnlocked = new flixel.util.FlxSignal();
+        // trace('Unlock count: $unlockCount');
     }
 
     function getNextGameClass() :Class<GameState>

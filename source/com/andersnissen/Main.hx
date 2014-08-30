@@ -1,6 +1,5 @@
 package com.andersnissen;
 
-import com.andersnissen.GameManager;
 import com.andersnissen.Settings;
 import com.andersnissen.states.MenuState;
 import flash.display.Sprite;

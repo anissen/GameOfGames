@@ -2,7 +2,6 @@
 package com.andersnissen.states;
 
 import com.andersnissen.ColorScheme;
-import com.andersnissen.GameManager.TrainingSessionManager;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -58,7 +57,7 @@ class GameSelectState extends FlxState
             var gameInfo = new FlxSpriteGroup(x, y);
 
             var background = new FlxSprite(0, 0);
-            background.makeGraphic(100, 195, ColorScheme.YELLOW);
+            background.makeGraphic(100, 195, ColorScheme.ORANGE);
             gameInfo.add(background);
 
             var gameIcon = new FlxSprite(5, 5, "assets/images/small_games/" + gameName + ".png");
@@ -70,7 +69,7 @@ class GameSelectState extends FlxState
             gameText.font = "assets/fonts/kenpixel_blocks.ttf";
             gameText.color = FlxColor.BLUE;
             gameText.borderStyle = FlxTextBorderStyle.OUTLINE_FAST;
-            gameText.borderColor = FlxColor.BLACK;
+            gameText.borderColor = FlxColor.YELLOW;
             gameText.alignment = FlxTextAlign.CENTER;
             gameText.alpha = 0.0;
             gameInfo.add(gameText);
@@ -124,13 +123,10 @@ class GameSelectState extends FlxState
             // trace(swipe);
             if (swipe.duration < 0.5 && swipe.distance > 50) {
                 if (swipe.angle > -45 && swipe.angle < 45) {
-                    gameList.y -= 205;
-                    //trace("Should trigger swipe!");
-                    // gameList.forEach(function(obj) {
-                    //     obj.y -= 100;
-                    // });
+                    FlxTween.tween(gameList, { y: gameList.y - 205 }, 0.3, { ease: FlxEase.elasticInOut });
+                    
                 } else if (swipe.angle > -(180 - 45) && swipe.angle < (180 + 45)) {
-                    gameList.y += 205;
+                    FlxTween.tween(gameList, { y: gameList.y + 205 }, 0.3, { ease: FlxEase.elasticInOut });
                 }
             }
         }
@@ -154,7 +150,7 @@ class GameSelectState extends FlxState
                 var game = gameList.members[gameIndex];
                 if (game.overlapsPoint(FlxG.mouse.getWorldPosition())) {
                     onGameClicked(gameIndex);
-                    // return;
+                    return;
                 }
             }
         }
@@ -170,8 +166,7 @@ class GameSelectState extends FlxState
     {
         Reg.speed = 1;
         trace('gameIndex: $gameIndex');
-        //FlxG.switchState(Reg.gameManager.getGame(gameIndex));
 
-        Reg.gameSession.start(new TrainingSessionManager(Reg.gameList[gameIndex]));
+        Reg.gameSession.start(new GameSessionManager([Reg.gameList[gameIndex]]));
     }
 }
