@@ -80,6 +80,8 @@ class Lasers extends GameState
     
     override public function update(elapsed :Float) :Void
     {
+        if (!gameActive) return;
+        
         super.update(elapsed);
 
         laserSprite.y = laserPoint.getMidpoint().y;

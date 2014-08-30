@@ -104,6 +104,8 @@ class Bounce extends GameState
 	
 	override public function update(elapsed :Float) :Void
 	{
+        if (!gameActive) return;
+
 		super.update(elapsed);
 		
 		_bat.velocity.x = 0;

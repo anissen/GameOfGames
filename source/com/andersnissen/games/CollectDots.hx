@@ -62,6 +62,8 @@ class CollectDots extends GameState
 
     override public function update(elapsed :Float):Void
     {
+        if (!gameActive) return;
+        
         super.update(elapsed);
 
         #if !FLX_NO_TOUCH

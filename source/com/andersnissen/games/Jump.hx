@@ -77,6 +77,8 @@ class Jump extends GameState
   
     override public function update():Void
     {
+        if (!gameActive) return;
+        
         super.update();
 
         if (playerSprite.overlaps(obstacles)) {
