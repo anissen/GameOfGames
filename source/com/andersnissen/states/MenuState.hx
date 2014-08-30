@@ -86,12 +86,12 @@ class MenuState extends FlxState
         creditsButton.color = ColorScheme.MAROON;
         creditsButton.borderStyle = FlxTextBorderStyle.OUTLINE;
         creditsButton.borderColor = ColorScheme.SILVER;
-        creditsButton.borderSize = 2.0;
-        creditsButton.angle = -2.0;
+        creditsButton.borderSize = 1.0;
+        creditsButton.angle = 2.0;
         add(creditsButton);
 
         FlxTween.tween(creditsButton, { y: creditsButton.y + 10 }, 4, { type: FlxTween.PINGPONG });
-        FlxTween.angle(creditsButton, -2, -8, 5, options );
+        FlxTween.angle(creditsButton, 2, 8, 5, options );
 
 
         #if DEBUG
