@@ -23,7 +23,7 @@ class CreditsState extends FlxState
 
     override public function create() :Void
     {
-        var gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [FlxColor.BLUE, FlxColor.GREEN]);
+        var gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [ColorScheme.MAROON, ColorScheme.BLUE]);
         gradientSprite.alpha = 0.3;
         add(gradientSprite);
 
@@ -31,38 +31,39 @@ class CreditsState extends FlxState
 
         titleText = new FlxText(0, 20, Settings.WIDTH, "Credits", 30);
         titleText.alignment = "center";
-        titleText.color = FlxColor.RED;
+        titleText.color = ColorScheme.SILVER;
         titleText.borderStyle = FlxTextBorderStyle.OUTLINE;
-        titleText.borderColor = FlxColor.BLACK;
+        titleText.borderColor = ColorScheme.BLACK;
         titleText.borderSize = 0.0;
         add(titleText);
 
         FlxTween.tween(titleText, { borderSize: 5.0 }, 2, { type: FlxTween.PINGPONG });
 
         var lines = [
-            "DESIGN & PROGRAMMING:",
+            "=DESIGN & PROGRAMMING",
             "Anders Nissen",
             "",
-            "MUSIC:",
+            "=MUSIC",
             "\"RoccoW\"",
             "Kris Keyser",
             "\"Rolemusic\"",
             "",
-            "SOUND FX:",
+            "=SOUND FX",
             "freesounds.co.uk",
             "",
-            "THANKS TO:",
+            "=THANKS TO",
             "You, for playing!"
         ];
 
         var lineNumber = 0;
         for (line in lines) {
-            var gameText = new FlxText(0, 100 + (lineNumber++) * 30, Settings.WIDTH, line, 20);
+            var isHeading = (line.length > 0 && line.charAt(0) == "=");
+            var gameText = new FlxText(0, 90 + lineNumber * 35, Settings.WIDTH, (isHeading ? line.substr(1) : line), (isHeading ? 23 : 18));
             // gameText.font = "assets/fonts/kenpixel_blocks.ttf";
-            gameText.color = FlxColor.YELLOW;
+            gameText.color = ColorScheme.RED;
             gameText.borderStyle = FlxTextBorderStyle.OUTLINE_FAST;
             gameText.borderSize = 1;
-            gameText.borderColor = FlxColor.ORANGE;
+            gameText.borderColor = ColorScheme.YELLOW;
             gameText.alignment = FlxTextAlign.CENTER;
             gameText.alpha = 0.0;
             gameText.angle = FlxG.random.float(-90, 90);
@@ -70,14 +71,16 @@ class CreditsState extends FlxState
             add(gameText);
 
             FlxTween.tween(gameText, { alpha: 1, angle: 0, x: 0 }, 1.0, { startDelay: lineNumber * 0.2, ease: FlxEase.elasticInOut });
+
+            lineNumber++;
         }
 
         backButton = new FlxText(0, Settings.HEIGHT - 80, Settings.WIDTH, 'Back', 30);
         backButton.alignment = "center";
-        backButton.color = FlxColor.YELLOW;
+        backButton.color = ColorScheme.FUCHSIA;
         backButton.borderStyle = FlxTextBorderStyle.OUTLINE;
-        backButton.borderColor = FlxColor.BROWN;
-        backButton.borderSize = 5.0;
+        backButton.borderColor = ColorScheme.BLACK;
+        backButton.borderSize = 3.0;
         add(backButton);
 
         FlxTween.tween(backButton.scale, { x: 1.5, y: 1.5 }, 1, { type: FlxTween.PINGPONG, startDelay: 0.5 });

@@ -39,6 +39,7 @@ class MenuState extends FlxState
         titleText = new FlxText(0, 20, Settings.WIDTH, "Game\nof\nGames", 36);
         titleText.color = ColorScheme.BLUE;
         titleText.borderStyle = FlxTextBorderStyle.SHADOW;
+        titleText.borderSize = 2;
         titleText.borderColor = ColorScheme.GRAY;
         titleText.alignment = "center";
         add(titleText);
@@ -85,7 +86,7 @@ class MenuState extends FlxState
         creditsButton.alignment = "center";
         creditsButton.color = ColorScheme.MAROON;
         creditsButton.borderStyle = FlxTextBorderStyle.OUTLINE;
-        creditsButton.borderColor = ColorScheme.SILVER;
+        creditsButton.borderColor = ColorScheme.OLIVE;
         creditsButton.borderSize = 1.0;
         creditsButton.angle = 2.0;
         add(creditsButton);

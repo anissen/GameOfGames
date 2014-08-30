@@ -45,7 +45,8 @@ class Bounce extends GameState
         trailArea.antialiasing = true;
         
 		_bat = new FlxSprite(360 / 2 - _batWidth / 2, 600);
-		_bat.makeGraphic(_batWidth, 12, colorPool.pickColor());
+        _bat.makeGraphic(_batWidth, 12, ColorScheme.BLACK);
+		_bat.drawRect(1, 1, _batWidth - 2, 10, colorPool.pickColor());
 		_bat.immovable = true;
 		
 		_ball = new FlxSprite(360 / 2, 500);

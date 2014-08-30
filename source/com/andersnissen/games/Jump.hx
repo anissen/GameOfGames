@@ -75,11 +75,11 @@ class Jump extends GameState
         playerSprite.velocity.x = 0;
     }
   
-    override public function update():Void
+    override public function update(elapsed :Float) :Void
     {
         if (!gameActive) return;
-        
-        super.update();
+
+        super.update(elapsed);
 
         if (playerSprite.overlaps(obstacles)) {
             lose(playerSprite.getMidpoint());

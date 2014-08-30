@@ -32,7 +32,7 @@ class GameSelectState extends FlxState
      */
     override public function create():Void
     {
-        var gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [FlxColor.YELLOW, FlxColor.RED]);
+        var gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [ColorScheme.PURPLE, ColorScheme.AQUA]);
         gradientSprite.alpha = 0.3;
         add(gradientSprite);
 
@@ -40,9 +40,9 @@ class GameSelectState extends FlxState
 
         titleText = new FlxText(0, 20, Settings.WIDTH, "Training", 30);
         titleText.alignment = "center";
-        titleText.color = FlxColor.CYAN;
+        titleText.color = ColorScheme.FUCHSIA;
         titleText.borderStyle = FlxTextBorderStyle.OUTLINE;
-        titleText.borderColor = FlxColor.BLACK;
+        titleText.borderColor = ColorScheme.BLACK;
         titleText.borderSize = 0.0;
         add(titleText);
 
@@ -61,15 +61,15 @@ class GameSelectState extends FlxState
             gameInfo.add(background);
 
             var gameIcon = new FlxSprite(5, 5, "assets/images/small_games/" + gameName + ".png");
-            gameIcon.origin.set(0, 0);
+            // gameIcon.origin.set(0, 0);
             // gameIcon.scale.set(0.2, 0.2);
             gameInfo.add(gameIcon);
 
             var gameText = new FlxText(0, 162, 100, "HI: ??", 20);
             gameText.font = "assets/fonts/kenpixel_blocks.ttf";
-            gameText.color = FlxColor.BLUE;
+            gameText.color = ColorScheme.BLUE;
             gameText.borderStyle = FlxTextBorderStyle.OUTLINE_FAST;
-            gameText.borderColor = FlxColor.YELLOW;
+            gameText.borderColor = ColorScheme.YELLOW;
             gameText.alignment = FlxTextAlign.CENTER;
             gameText.alpha = 0.0;
             gameInfo.add(gameText);
@@ -81,8 +81,8 @@ class GameSelectState extends FlxState
                 // var originalScaleY = sprite.scale.y;
                 // sprite.scale.set(0, 0);
                 sprite.alpha = 0;
-                sprite.angle = FlxG.random.float(-360, 360);
-                FlxTween.tween(sprite, { alpha: 1, angle: 0 }, 1.3, { startDelay: gameCount * 0.5, ease: FlxEase.elasticInOut });
+                sprite.angle = FlxG.random.float(-36, 36);
+                FlxTween.tween(sprite, { alpha: 1, angle: 0 }, 0.4, { startDelay: gameCount * 0.3, ease: FlxEase.elasticInOut });
             });
 
             gameCount++;
@@ -92,10 +92,10 @@ class GameSelectState extends FlxState
 
         backButton = new FlxText(0, Settings.HEIGHT - 80, Settings.WIDTH, 'Back', 30);
         backButton.alignment = "center";
-        backButton.color = FlxColor.YELLOW;
+        backButton.color = ColorScheme.ORANGE;
         backButton.borderStyle = FlxTextBorderStyle.OUTLINE;
-        backButton.borderColor = FlxColor.BROWN;
-        backButton.borderSize = 5.0;
+        backButton.borderColor = ColorScheme.MAROON;
+        backButton.borderSize = 3.0;
         add(backButton);
 
         FlxTween.tween(backButton.scale, { x: 1.5, y: 1.5 }, 1, { type: FlxTween.PINGPONG, startDelay: 0.5 });
