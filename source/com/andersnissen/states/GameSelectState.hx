@@ -2,6 +2,7 @@
 package com.andersnissen.states;
 
 import com.andersnissen.ColorScheme;
+import com.andersnissen.GameManager.TrainingSessionManager;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -170,5 +171,7 @@ class GameSelectState extends FlxState
         Reg.speed = 1;
         trace('gameIndex: $gameIndex');
         //FlxG.switchState(Reg.gameManager.getGame(gameIndex));
+
+        Reg.gameSession.start(new TrainingSessionManager(Reg.gameList[gameIndex]));
     }
 }

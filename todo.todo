@@ -1,5 +1,6 @@
 
 TODO:
+    ☐ Make a GameHandler class that handles an entire game session. It must be able to handle both list of games (through GameManager) and a repeated training game (maybe through a TrainingGameManager?)
     ☐ Make a game selection screen
         ☐ Make game buttons actually work
         ☐ Persist train highscore

@@ -173,7 +173,8 @@ class MenuState extends FlxState
             FlxG.sound.music.stop();
         }
 
-        FlxG.switchState(Reg.gameManager.getNextGame());
+        // FlxG.switchState(Reg.gameManager.getNextGame());
+        Reg.gameSession.start(Reg.gameManager);
     }
 
     function onGameSelectionClicked()

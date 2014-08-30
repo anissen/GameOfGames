@@ -1,5 +1,8 @@
 package com.andersnissen;
 
+import com.andersnissen.GameManager;
+import com.andersnissen.states.GameState;
+import com.andersnissen.games.*;
 import flixel.util.FlxSave;
 
 /**
@@ -38,6 +41,9 @@ class Reg
 	 */
 	public static var saves :Array<FlxSave> = [];
 
-    public static var gameManager :GameManager;
+    public static var gameManager :GameSessionManager;
     public static var networkManager :NetworkManager;
+    public static var gameSession :GameSession;
+
+    public static var gameList :Array<Class<GameState>> = [HexChain, /* Jump, */ Bounce, Overlap, CollectDots, Lasers];
 }

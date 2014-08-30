@@ -16,6 +16,7 @@ import flixel.util.FlxGradient;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRandom;
+import flixel.util.FlxSignal;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
@@ -56,9 +57,14 @@ class GameState extends FlxState
     // Instructions box
     var instructions :DialogBox;
 
+    public var onWin :FlxSignal;
+    public var onLose :FlxSignal;
+
     public function new() :Void
     {
         super();
+        onWin = new FlxSignal();
+        onLose = new FlxSignal();
     }
 
     /**
@@ -119,8 +125,6 @@ class GameState extends FlxState
             fo.close();
             #end
         }
-
-        trace('Speed is x${Reg.speed}');
 
         var timeBeforeStarting = (isNewUnlockedGame ? 3 : 1) / Reg.speed;
         gameStartTimer = new FlxTimer(timeBeforeStarting, function(_ :FlxTimer) {
@@ -275,8 +279,9 @@ class GameState extends FlxState
 
         // Reg.networkManager.send({ "games": Reg.gameManager.getGamesPlayedList() });
 
+        // TODO: Replace with transition
         gameEndTimer = new FlxTimer(2, function(_ :FlxTimer) {
-            FlxG.switchState(new MenuState());
+            onLose.dispatch();
         });
     }
 
@@ -290,17 +295,10 @@ class GameState extends FlxState
 
         end();
 
-        Reg.score++;
-        if (Reg.score > Reg.highscore)
-        {
-            Reg.highscore = Reg.score;
-        }
-        Reg.speed += 0.1;
-        speed = Reg.speed;
-        
+        // TODO: Replace with transition
         gameEndTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
             FlxG.cameras.fade(ColorScheme.BLACK, 0.1, false, function () {
-                FlxG.switchState(Reg.gameManager.getNextGame());
+                onWin.dispatch();
             });
         });
     }

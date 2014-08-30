@@ -8,9 +8,29 @@ import com.andersnissen.games.*;
 
 // typedef Array<Class<states.GameState>> GameList
 
-class GameManager
+interface GameManager
 {
-    var gameList :Array<Class<GameState>> = [];
+    public function getNextGame() :GameState;
+}
+
+class TrainingSessionManager implements GameManager
+{
+    var trainingGame :Class<GameState>;
+
+    public function new(game :Class<GameState>)
+    {
+        trainingGame = game;
+    }
+
+    public function getNextGame() :GameState
+    {
+        return Type.createInstance(trainingGame, []);
+    }
+}
+
+class GameSessionManager implements GameManager
+{
+    var gameList :Array<Class<GameState>>;
 
     var gamesUnlocked :Array<Class<GameState>> = [];
     var gamesPlayed :Array<Class<GameState>> = [];
@@ -21,12 +41,13 @@ class GameManager
 
     // public var onGameUnlocked :flixel.util.FlxSignal;
 
-    public function new() :Void
+    public function new(list :Array<Class<GameState>>) :Void
     {
         _gameSave = new FlxSave();
         _gameSave.bind("GamesUnlocked");
 
-        gameList = [HexChain, /* Jump, */ Bounce, Overlap, CollectDots, Lasers];
+        gameList = list;
+        // gameList = [HexChain, /* Jump, */ Bounce, Overlap, CollectDots, Lasers];
 
         var unlockCount :Int = (_gameSave.data.unlockCount != null ? _gameSave.data.unlockCount : 0);
         gamesUnlocked = gameList.slice(0, unlockCount);

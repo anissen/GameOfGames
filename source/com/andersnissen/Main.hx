@@ -1,5 +1,6 @@
 package com.andersnissen;
 
+import com.andersnissen.GameManager;
 import com.andersnissen.Settings;
 import com.andersnissen.states.MenuState;
 import flash.display.Sprite;
@@ -73,8 +74,9 @@ class Main extends Sprite
         openfl.text.Font.registerFont(DefaultFont);
         flixel.system.FlxAssets.FONT_DEFAULT = new DefaultFont().fontName;
 
-        Reg.gameManager = new GameManager();
+        Reg.gameManager = new GameSessionManager(Reg.gameList);
         Reg.networkManager = new NetworkManager();
+        Reg.gameSession = new GameSession();
         Reg.networkManager.connect();
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 	}
