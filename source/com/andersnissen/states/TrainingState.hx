@@ -139,7 +139,17 @@ class TrainingState extends FlxState
             if (touch.justPressed && backButton.overlapsPoint(touch.getWorldPosition()))
             {
                onBackClicked();
-               break; 
+               break;
+            }
+
+            if (touch.justPressed) {
+                for (gameIndex in 0...gameList.countLiving()) {
+                    var game = gameList.members[gameIndex];
+                    if (game.overlapsPoint(touch.getWorldPosition())) {
+                        onGameClicked(gameIndex);
+                        return;
+                    }
+                }
             }
         }
         #else

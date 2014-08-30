@@ -44,5 +44,5 @@ class Reg
     public static var networkManager :NetworkManager;
     public static var gameSession :GameSession;
 
-    public static var gameList :Array<Class<GameState>> = [HexChain, Jump, Bounce, Overlap, CollectDots, Lasers];
+    public static var gameList :Array<Class<GameState>> = [HexChain, Jump, MultiTouch, Bounce, Overlap, CollectDots, Lasers];
 }
