@@ -58,7 +58,7 @@ class CreditsState extends FlxState
         var lineNumber = 0;
         for (line in lines) {
             var isHeading = (line.length > 0 && line.charAt(0) == "=");
-            var gameText = new FlxText(0, 90 + lineNumber * 35, Settings.WIDTH, (isHeading ? line.substr(1) : line), (isHeading ? 23 : 18));
+            var gameText = new FlxText(0, 80 + lineNumber * 35, Settings.WIDTH, (isHeading ? line.substr(1) : line), (isHeading ? 23 : 18));
             // gameText.font = "assets/fonts/kenpixel_blocks.ttf";
             gameText.color = ColorScheme.RED;
             gameText.borderStyle = FlxTextBorderStyle.OUTLINE_FAST;
@@ -70,7 +70,7 @@ class CreditsState extends FlxState
             gameText.x += - Settings.WIDTH / 2 + FlxG.random.float(Settings.WIDTH);
             add(gameText);
 
-            FlxTween.tween(gameText, { alpha: 1, angle: 0, x: 0 }, 1.0, { startDelay: lineNumber * 0.2, ease: FlxEase.elasticInOut });
+            FlxTween.tween(gameText, { alpha: 1, angle: 0, x: 0 }, 0.8, { startDelay: lineNumber * 0.15, ease: FlxEase.elasticInOut });
 
             lineNumber++;
         }

@@ -86,7 +86,7 @@ class MenuState extends FlxState
         creditsButton.alignment = "center";
         creditsButton.color = ColorScheme.MAROON;
         creditsButton.borderStyle = FlxTextBorderStyle.OUTLINE;
-        creditsButton.borderColor = ColorScheme.OLIVE;
+        creditsButton.borderColor = ColorScheme.NAVY;
         creditsButton.borderSize = 1.0;
         creditsButton.angle = 2.0;
         add(creditsButton);
