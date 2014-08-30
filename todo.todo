@@ -1,11 +1,14 @@
 
 TODO:
-    ☐ Make a GameHandler class that handles an entire game session. It must be able to handle both list of games (through GameManager) and a repeated training game (maybe through a TrainingGameManager?)
-    ☐ Make a game selection screen
-        ☐ Make game buttons actually work
-        ☐ Persist train highscore
+    ☐ Persist game training highscore
     ☐ Add instruction screen before playing
     ☐ Add game over screen
+    ☐ Make credits screen
+    ☐ Improve sounds
+    ☐ Improve effects
+    ☐ Improve instruction screen
+    ☐ Read how-to-improve-your-productivity
+    ☐ Glitch sprite?
     ☐ Remaining to high score + new game unlock after game + fun yes/no for testers
     ☐ Google Analytics: https://github.com/fbricker/haxe-ga
     ☐ Investigate more life-like animations: http://codepen.io/ayamflow/pen/LFexf?editors=001
@@ -25,6 +28,7 @@ Games:
     ☐ Untangle game
     ☐ Multi-touch game (place fingers in the correct order)
     ☐ Click at the right time (like many games in WarioWare Inc.)
+    ☐ Tic-tac-toe (maybe stupid idea w.r.t faster speeds?)
 
 Bugs:
     ☐ Jump: Doesn't work w. instructions dialog 
@@ -32,10 +36,13 @@ Bugs:
     ☐ Hexchain: Can make invalid chain
     ☐ Bounce: Can make ball/paddle same color as background or red/green
     ☐ Multiple: Can be interacted with when instructions dialog is showing
-    ✘ Unlocked count is being reset sometimes (when not playing any games maybe?) @cancelled (18-08-14 22:48)
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Make a GameHandler class that handles an entire game session. It must be able to handle both list of games (through GameManager) and a repeated training game (maybe through a TrainingGameManager?) @done (30-08-14 16:15) @project(TODO)
+  ✔ Make a game selection screen @done (30-08-14 16:15) @project(TODO)
+  ✔ Make game buttons actually work @done (30-08-14 16:15) @project(TODO)
+  ✘ Unlocked count is being reset sometimes (when not playing any games maybe?) @cancelled (18-08-14 22:48) @project(Bugs)
     ✔ Make list of game buttons @done (18-08-14 22:39) @project(TODO)
     ✔ Title screen @done (02-08-14 21:31) @project(TODO)
     ✔ Make a background animation @done (02-08-14 21:31) @project(TODO)

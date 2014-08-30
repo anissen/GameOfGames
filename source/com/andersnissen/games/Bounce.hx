@@ -14,6 +14,8 @@ import flixel.addons.effects.FlxTrailArea;
 
 import com.andersnissen.states.GameState;
 
+using flixel.util.FlxSpriteUtil;
+
 class Bounce extends GameState
 {
 	static inline var BAT_SPEED :Int = 1500;
@@ -37,22 +39,25 @@ class Bounce extends GameState
         description = "Bounce the ball";
         controls = "Tilt";
 
+        var colorPool = new ColorPool([this.backgroundColor, ColorScheme.RED, ColorScheme.GREEN]);
+
         var trailArea = new FlxTrailArea(0, 0, 360, 640);
         trailArea.antialiasing = true;
         
 		_bat = new FlxSprite(360 / 2 - _batWidth / 2, 600);
-		_bat.makeGraphic(_batWidth, 12, ColorScheme.randomExcept([this.backgroundColor]));
+		_bat.makeGraphic(_batWidth, 12, colorPool.pickColor());
 		_bat.immovable = true;
 		
 		_ball = new FlxSprite(360 / 2, 500);
-		_ball.makeGraphic(12, 12, ColorScheme.randomExcept([this.backgroundColor]));
+        _ball.makeGraphic(12, 12, ColorScheme.BLACK);
+		_ball.drawRect(1, 1, 10, 10, colorPool.pickColor());
 		_ball.elasticity = 1;
 		_ball.maxVelocity.set(350, 1500);
 		_ball.velocity.y = -1500;
 		
 		walls = new FlxGroup();
 
-        var wallColor = ColorScheme.random();
+        var wallColor = colorPool.pickColor();
 		
         var wallWidth :Int = 10;
 		var leftWall = new FlxSprite(0, 0);

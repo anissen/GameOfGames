@@ -70,18 +70,38 @@ class ColorScheme
     public static var SILVER :Int = getColor(Color.SILVER);
     public static var BLACK :Int = getColor(Color.BLACK);
 
-    static var list :Array<Int> = [NAVY, BLUE, AQUA, TEAL, OLIVE, GREEN, LIME, YELLOW, ORANGE, RED, FUCHSIA, PURPLE, MAROON, WHITE, GRAY, SILVER, BLACK];
+    public static var allColors :Array<Int> = [NAVY, BLUE, AQUA, TEAL, OLIVE, GREEN, LIME, YELLOW, ORANGE, RED, FUCHSIA, PURPLE, MAROON, WHITE, GRAY, SILVER, BLACK];
 
     public static function random() :Int
     {
-        return FlxG.random.getObject(list);
+        return FlxG.random.getObject(allColors);
     }
 
     public static function randomExcept(colors :Array<Int>) :Int
     {
-        var newList = list.copy();
+        var newList = allColors.copy();
         for (c in colors) newList.remove(c);
         return FlxG.random.getObject(newList);
+    }
+}
+
+class ColorPool
+{
+    var colors :Array<Int>;
+
+    public function new(?exceptColors :Array<Int>)
+    {
+        colors = ColorScheme.allColors.copy();
+        if (exceptColors != null)
+            for (c in exceptColors) colors.remove(c);
+    }
+
+    public function pickColor() :Int
+    {
+        var index = FlxG.random.int(0, colors.length);
+        var color = colors[index];
+        colors.remove(color);
+        return color;
     }
 }
 
