@@ -16,7 +16,7 @@ class MultiTouch extends GameState
 {
     var circles :FlxSpriteGroup;
     var texts :FlxSpriteGroup;
-    var radius :Int = 60;
+    var radius :Int = 50;
     var touchedCircles :Array<Bool>;
     var MAX_CIRCLES :Int;
 
@@ -40,10 +40,10 @@ class MultiTouch extends GameState
             var validPosition = true;
             circles.forEach(function(c) {
                 if (!validPosition) return;
-                if (c.toPoint().distanceTo(new FlxPoint(x, y)) < radius * 3)
+                if (c.toPoint().distanceTo(new FlxPoint(x, y)) < radius * 2)
                     validPosition = false;
             });
-            if (!validPosition) continue;
+            if (!validPosition) { trace("invalid position!"); continue; }
 
             var circle = new FlxSprite(x, y);
             circle.makeGraphic(radius * 2, radius * 2, ColorScheme.TRANSPARENT, true);
@@ -52,8 +52,9 @@ class MultiTouch extends GameState
             circles.add(circle);
             circleCount++;
 
-            var text = new FlxText(x + radius / 3, y + radius / 3, radius * 2, '#$circleCount', 20);
+            var text = new FlxText(x, y + radius / 3, radius * 2, '#$circleCount', 30);
             text.color = ColorScheme.WHITE;
+            text.alignment = FlxTextAlign.CENTER;
             text.borderColor = ColorScheme.BLACK;
             text.borderStyle = FlxTextBorderStyle.OUTLINE;
             text.borderSize = 1;
