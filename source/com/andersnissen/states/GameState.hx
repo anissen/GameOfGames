@@ -4,6 +4,7 @@ import com.andersnissen.ColorScheme;
 import com.andersnissen.DialogBox;
 import com.andersnissen.Settings;
 import flixel.effects.particles.*;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -30,7 +31,7 @@ enum WinningCondition
     CompleteObjective;
 }
 
-class GameState extends FlxState
+class GameState extends FlxTransitionableState
 {
     var name :String = "Nameless Game";
     var description :String = "???";
@@ -65,6 +66,9 @@ class GameState extends FlxState
         super();
         onWin = new FlxSignal();
         onLose = new FlxSignal();
+
+        this.transIn = FlxTransitionableState.defaultTransIn;
+        this.transOut = FlxTransitionableState.defaultTransOut;
     }
 
     /**
@@ -74,7 +78,7 @@ class GameState extends FlxState
     {
         add(new FlxText(100, 100, 200, description));
 
-        FlxG.cameras.fade(ColorScheme.BLACK, 0.1, true);
+        // FlxG.cameras.fade(ColorScheme.BLACK, 0.1, true);
 
         gradientSprite = new FlxSprite(0, 0);
         gradientSprite.makeGraphic(Settings.WIDTH, Settings.HEIGHT, ColorScheme.randomExcept([ColorScheme.GREEN, ColorScheme.RED]));
@@ -280,9 +284,9 @@ class GameState extends FlxState
         // Reg.networkManager.send({ "games": Reg.gameManager.getGamesPlayedList() });
 
         // TODO: Replace with transition
-        gameEndTimer = new FlxTimer(2, function(_ :FlxTimer) {
+        // gameEndTimer = new FlxTimer(2, function(_ :FlxTimer) {
             onLose.dispatch();
-        });
+        // });
     }
 
     function win(?position :FlxPoint) {
@@ -296,11 +300,11 @@ class GameState extends FlxState
         end();
 
         // TODO: Replace with transition
-        gameEndTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
-            FlxG.cameras.fade(ColorScheme.BLACK, 0.1, false, function () {
+        // gameEndTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
+            // FlxG.cameras.fade(ColorScheme.BLACK, 0.1, false, function () {
                 onWin.dispatch();
-            });
-        });
+            // });
+        // });
     }
 
     function success(?position :FlxPoint)

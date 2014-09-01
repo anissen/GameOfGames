@@ -7,9 +7,14 @@ import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.Lib;
+import flixel.addons.transition.TransitionData;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
+import flixel.addons.transition.FlxTransitionableState;
+import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileCircle;
+import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
+import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileSquare;
 
 @:font("assets/fonts/kenvector_future.ttf") private class DefaultFont extends openfl.text.Font {}
 
@@ -72,6 +77,15 @@ class Main extends Sprite
 
         openfl.text.Font.registerFont(DefaultFont);
         flixel.system.FlxAssets.FONT_DEFAULT = new DefaultFont().fontName;
+
+        FlxTransitionableState.defaultTransIn = new TransitionData();
+        FlxTransitionableState.defaultTransOut = new TransitionData();
+        FlxTransitionableState.defaultTransIn.type = TransitionType.TILES;
+        FlxTransitionableState.defaultTransIn.color = com.andersnissen.ColorScheme.random();
+        FlxTransitionableState.defaultTransOut.type = TransitionType.TILES;
+        FlxTransitionableState.defaultTransOut.color = com.andersnissen.ColorScheme.random();
+        FlxTransitionableState.defaultTransIn.tileData = { asset:GraphicTransTileDiamond, width:32, height:32 };
+        FlxTransitionableState.defaultTransOut.tileData = { asset:GraphicTransTileDiamond, width:32, height:32 };
 
         Reg.gameManager = new GameSessionManager(Reg.gameList);
         Reg.networkManager = new NetworkManager();
