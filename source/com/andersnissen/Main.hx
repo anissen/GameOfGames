@@ -79,12 +79,17 @@ class Main extends Sprite
         flixel.system.FlxAssets.FONT_DEFAULT = new DefaultFont().fontName;
 
         FlxTransitionableState.defaultTransIn = new TransitionData();
-        FlxTransitionableState.defaultTransOut = new TransitionData();
         FlxTransitionableState.defaultTransIn.type = TransitionType.TILES;
         FlxTransitionableState.defaultTransIn.color = com.andersnissen.ColorScheme.random();
+        FlxTransitionableState.defaultTransIn.direction = new flixel.math.FlxPoint(-1, 0);
+        FlxTransitionableState.defaultTransIn.tweenOptions.ease = flixel.tweens.FlxEase.elasticInOut;
+        FlxTransitionableState.defaultTransIn.tileData = { asset:GraphicTransTileDiamond, width:32, height:32 };
+        
+        FlxTransitionableState.defaultTransOut = new TransitionData();
         FlxTransitionableState.defaultTransOut.type = TransitionType.TILES;
         FlxTransitionableState.defaultTransOut.color = com.andersnissen.ColorScheme.random();
-        FlxTransitionableState.defaultTransIn.tileData = { asset:GraphicTransTileDiamond, width:32, height:32 };
+        FlxTransitionableState.defaultTransOut.direction = new flixel.math.FlxPoint(1, 0);
+        FlxTransitionableState.defaultTransOut.tweenOptions.ease = flixel.tweens.FlxEase.elasticInOut;
         FlxTransitionableState.defaultTransOut.tileData = { asset:GraphicTransTileDiamond, width:32, height:32 };
 
         Reg.gameManager = new GameSessionManager(Reg.gameList);
