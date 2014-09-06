@@ -34,6 +34,8 @@ class GameSession
         var game :GameState = gameManager.getNextGame();
         game.onWin.addOnce(wonGame);
         game.onLose.addOnce(lostGame);
+
+        Reg.vignette.setUniform("amount", Settings.VIGNETTE_DEFAULT);
         FlxG.switchState(game);
     }
 
@@ -57,6 +59,7 @@ class GameSession
     function lostGame() :Void
     {
         new FlxTimer(2, function(_ :FlxTimer) {
+            Reg.vignette.setUniform("amount", Settings.VIGNETTE_DEFAULT);
             FlxG.switchState(new MenuState());
         });
     }

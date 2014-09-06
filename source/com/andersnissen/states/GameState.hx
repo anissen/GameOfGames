@@ -255,6 +255,8 @@ class GameState extends FlxTransitionableState
         if (gameTimer != null && gameActive) {
             timerSprite.makeGraphic(Settings.WIDTH, Math.floor(gameTimer.progress * Settings.HEIGHT) + 10, ColorScheme.BLACK);
             timerSprite.drawRect(0, 0, Settings.WIDTH, Math.floor(gameTimer.progress * Settings.HEIGHT), timerSpriteColor);
+            var vignette = Settings.VIGNETTE_DEFAULT + (Settings.VIGNETTE_MAX - Settings.VIGNETTE_DEFAULT) * gameTimer.progress;
+            Reg.vignette.setUniform("amount", vignette);
         }
 
         if (gameActive) {

@@ -103,5 +103,7 @@ class Main extends Sprite
         // scanline.setUniform("interval", 5.0);
         // scanline.setUniform("scale", 2.0);
         // scanline.setUniform("alpha", 0.8);
+        Reg.vignette = FlxG.addPostProcess(new PostProcess("assets/shaders/vignette.frag"));
+        Reg.vignette.setUniform("amount", Settings.VIGNETTE_DEFAULT);
 	}
 }

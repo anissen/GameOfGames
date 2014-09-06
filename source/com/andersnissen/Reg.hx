@@ -2,6 +2,7 @@ package com.andersnissen;
 
 import com.andersnissen.states.GameState;
 import com.andersnissen.games.*;
+import flixel.effects.postprocess.PostProcess;
 import flixel.util.FlxSave;
 
 /**
@@ -45,4 +46,6 @@ class Reg
     public static var gameSession :GameSession;
 
     public static var gameList :Array<Class<GameState>> = [HexChain, Jump, MultiTouch, Bounce, Overlap, CollectDots, Lasers];
+
+    public static var vignette :PostProcess;
 }

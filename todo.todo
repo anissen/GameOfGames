@@ -10,10 +10,7 @@ TODO:
     ☐ Title screen background animation
     ☐ "Tutorial" screen
     ☐ New training games unlocked indication (e.g. (2 new) symbol)
-    ☐ Vignette shader
-    ☐ Grain shader
-    ☐ Scanline shader
-    ☐ (Reload shader functionality?)
+    ☐ Add game complexity setting (easy, medium, hard -- hard to begin with)
     ☐ Remaining to high score + new game unlock after game + fun yes/no for testers
     ☐ Google Analytics: https://github.com/fbricker/haxe-ga
     ☐ Investigate more life-like animations: http://codepen.io/ayamflow/pen/LFexf?editors=001
@@ -43,6 +40,10 @@ Bugs:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Vignette shader @done (06-09-14 18:48) @project(TODO)
+  ✔ Grain shader @done (06-09-14 18:11) @project(TODO)
+  ✔ Scanline shader @done (06-09-14 18:11) @project(TODO)
+  ✘ (Reload shader functionality?) @cancelled (06-09-14 18:48) @project(TODO)
   ✘ Jump: Doesn't work w. instructions dialog @cancelled (06-09-14 16:35) @project(Bugs)
   ✔ Bounce: Can make ball/paddle same color as background or red/green @done (30-08-14 19:28) @project(Bugs)
   ✔ Multiple: Can be interacted with when instructions dialog is showing @done (30-08-14 19:36) @project(Bugs)
