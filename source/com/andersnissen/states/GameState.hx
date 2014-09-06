@@ -5,6 +5,7 @@ import com.andersnissen.DialogBox;
 import com.andersnissen.Settings;
 import flixel.effects.particles.*;
 import flixel.addons.transition.FlxTransitionableState;
+import flixel.effects.postprocess.PostProcess;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -47,9 +48,11 @@ class GameState extends FlxTransitionableState
 
     var speed :Float = 1;
 
+    var backgroundSprite :FlxSprite;
     var backgroundColor :Int;
-    var gradientSprite :FlxSprite;
-    var blackSprite :FlxSprite;
+    
+    var timerSprite :FlxSprite;
+    var timerSpriteColor :Int;
 
     // Particles
     var emitter :FlxEmitter;
@@ -79,22 +82,24 @@ class GameState extends FlxTransitionableState
         add(new FlxText(100, 100, 200, description));
 
         // FlxG.cameras.fade(ColorScheme.BLACK, 0.1, true);
+        backgroundColor = ColorScheme.randomExcept([ColorScheme.GREEN, ColorScheme.RED]);
+        backgroundSprite = new FlxSprite(0, 0);
+        backgroundSprite.makeGraphic(Settings.WIDTH, Settings.HEIGHT, backgroundColor);
+        add(backgroundSprite);
 
-        gradientSprite = new FlxSprite(0, 0);
-        gradientSprite.makeGraphic(Settings.WIDTH, Settings.HEIGHT, ColorScheme.randomExcept([ColorScheme.GREEN, ColorScheme.RED]));
-        add(gradientSprite);
-
-        blackSprite = new FlxSprite(0, 0);
-        blackSprite.makeGraphic(Settings.WIDTH, 0);
-        add(blackSprite);
+        timerSprite = new FlxSprite(0, 0);
+        timerSprite.makeGraphic(Settings.WIDTH, 0);
+        add(timerSprite);
         
         setup();
 
-        backgroundColor = switch (winningCondition) {
+        timerSpriteColor = switch (winningCondition) {
             case Survive: ColorScheme.GREEN;
             case CompleteObjective: ColorScheme.RED;
             default: ColorScheme.random();
         };
+
+        this.transIn.color = backgroundColor; //ColorScheme.random();
 
         var isNewUnlockedGame = Reg.gameManager.isNewGame();
         if (isNewUnlockedGame) {
@@ -130,7 +135,7 @@ class GameState extends FlxTransitionableState
             #end
         }
 
-        var timeBeforeStarting = (isNewUnlockedGame ? 3 : 1) / Reg.speed;
+        var timeBeforeStarting = this.transIn.duration + (isNewUnlockedGame ? 3 : 1) / Reg.speed;
         gameStartTimer = new FlxTimer(timeBeforeStarting, function(_ :FlxTimer) {
             if (instructions != null) {
                 instructions.close();
@@ -248,8 +253,8 @@ class GameState extends FlxTransitionableState
     override public function update(elapsed :Float) :Void
     {
         if (gameTimer != null && gameActive) {
-            blackSprite.makeGraphic(Settings.WIDTH, Math.floor(gameTimer.progress * Settings.HEIGHT) + 10, ColorScheme.BLACK);
-            blackSprite.drawRect(0, 0, Settings.WIDTH, Math.floor(gameTimer.progress * Settings.HEIGHT), backgroundColor);
+            timerSprite.makeGraphic(Settings.WIDTH, Math.floor(gameTimer.progress * Settings.HEIGHT) + 10, ColorScheme.BLACK);
+            timerSprite.drawRect(0, 0, Settings.WIDTH, Math.floor(gameTimer.progress * Settings.HEIGHT), timerSpriteColor);
         }
 
         if (gameActive) {
@@ -277,16 +282,15 @@ class GameState extends FlxTransitionableState
         FlxG.camera.shake();
         FlxG.camera.flash(ColorScheme.RED);
 
+        this.transOut.color = ColorScheme.RED;
+
         end();
 
         showLoseScreen();
 
         // Reg.networkManager.send({ "games": Reg.gameManager.getGamesPlayedList() });
 
-        // TODO: Replace with transition
-        // gameEndTimer = new FlxTimer(2, function(_ :FlxTimer) {
-            onLose.dispatch();
-        // });
+        onLose.dispatch();
     }
 
     function win(?position :FlxPoint) {
@@ -297,14 +301,11 @@ class GameState extends FlxTransitionableState
 
         // showWinScreen();
 
+        this.transOut.color = ColorScheme.GREEN;
+
         end();
 
-        // TODO: Replace with transition
-        // gameEndTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
-            // FlxG.cameras.fade(ColorScheme.BLACK, 0.1, false, function () {
-                onWin.dispatch();
-            // });
-        // });
+        onWin.dispatch();
     }
 
     function success(?position :FlxPoint)

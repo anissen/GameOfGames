@@ -52,7 +52,7 @@ class Lasers extends GameState
 
         playerSprite = new FlxSprite(Settings.WIDTH / 2 - 32, Settings.HEIGHT / 2 - 32);
         playerSprite.makeGraphic(64, 64, ColorScheme.BLACK, true);
-        playerSprite.drawRect(2, 2, 60, 60, ColorScheme.randomExcept([this.backgroundColor]));
+        playerSprite.drawRect(2, 2, 60, 60, ColorScheme.randomExcept([this.backgroundColor, this.timerSpriteColor]));
         playerSprite.centerOffsets();
         add(playerSprite);
 

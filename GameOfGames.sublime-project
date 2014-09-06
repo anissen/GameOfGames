@@ -4,7 +4,11 @@
 		{
 			"follow_symlinks": true,
 			"name": "Game of Games",
-			"path": "/Users/nissen/code/GameOfGames"
+			"path": "/Users/nissen/code/GameOfGames",
+            "folder_exclude_patterns": [
+                "export",
+                "screenshots"
+            ]
 		},
 		{
 			"follow_symlinks": true,

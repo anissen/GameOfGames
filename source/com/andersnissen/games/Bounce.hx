@@ -39,7 +39,7 @@ class Bounce extends GameState
         description = "Bounce the ball";
         controls = "Tilt";
 
-        var colorPool = new ColorPool([this.backgroundColor, ColorScheme.RED, ColorScheme.GREEN]);
+        var colorPool = new ColorPool([this.backgroundColor, this.timerSpriteColor]);
 
         var trailArea = new FlxTrailArea(0, 0, 360, 640);
         trailArea.antialiasing = true;

@@ -3,6 +3,7 @@ package com.andersnissen;
 import flixel.FlxG;
 import com.andersnissen.states.GameState;
 import com.andersnissen.states.MenuState;
+import flixel.util.FlxTimer;
 
 class GameSession
 {
@@ -48,11 +49,15 @@ class GameSession
             Reg.score = score;
         }
 
-        startGame(gameManager.getNextGame());
+        new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
+            startGame(gameManager.getNextGame());
+        });
     }
 
     function lostGame() :Void
     {
-        FlxG.switchState(new MenuState());
+        new FlxTimer(2, function(_ :FlxTimer) {
+            FlxG.switchState(new MenuState());
+        });
     }
 }
