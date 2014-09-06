@@ -5,7 +5,6 @@ import com.andersnissen.DialogBox;
 import com.andersnissen.Settings;
 import flixel.effects.particles.*;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.effects.postprocess.PostProcess;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -135,11 +134,12 @@ class GameState extends FlxTransitionableState
             #end
         }
 
-        var timeBeforeStarting = this.transIn.duration + (isNewUnlockedGame ? 3 : 1) / Reg.speed;
+        var timeBeforeStarting = this.transIn.duration + (isNewUnlockedGame ? 3 : 0) / Reg.speed;
         gameStartTimer = new FlxTimer(timeBeforeStarting, function(_ :FlxTimer) {
             if (instructions != null) {
                 instructions.close();
             }
+            FlxG.camera.flash(0x22FFFFFF, 0.05);
             start();
 
             heartBeatTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {

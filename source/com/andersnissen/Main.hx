@@ -15,6 +15,7 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileCircle;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileSquare;
+import flixel.effects.postprocess.PostProcess;
 
 @:font("assets/fonts/kenvector_future.ttf") private class DefaultFont extends openfl.text.Font {}
 
@@ -30,7 +31,7 @@ class Main extends Sprite
 	
 	// You can pretty much ignore everything from here on - your code should go in your states.
 	
-	public static function main():Void
+	public static function main() :Void
 	{	
 		Lib.current.addChild(new Main());
 	}
@@ -49,7 +50,7 @@ class Main extends Sprite
 		}
 	}
 	
-	private function init(?E:Event):Void 
+	private function init(?E:Event) :Void 
 	{
 		if (hasEventListener(Event.ADDED_TO_STAGE))
 		{
@@ -59,13 +60,12 @@ class Main extends Sprite
 		setupGame();
 	}
 	
-	private function setupGame():Void
+	private function setupGame() :Void
 	{
 		var stageWidth :Int = Lib.current.stage.stageWidth;
 		var stageHeight :Int = Lib.current.stage.stageHeight;
 
-		if (zoom == -1)
-		{
+		if (zoom == -1) {
 			var ratioX :Float = stageWidth / gameWidth;
 			var ratioY :Float = stageHeight / gameHeight;
 			zoom = Math.min(ratioX, ratioY);
@@ -80,7 +80,6 @@ class Main extends Sprite
 
         FlxTransitionableState.defaultTransIn = new TransitionData();
         FlxTransitionableState.defaultTransIn.type = TransitionType.TILES;
-        // FlxTransitionableState.defaultTransIn.color = com.andersnissen.ColorScheme.GREEN;
         FlxTransitionableState.defaultTransIn.duration = 0.5;
         FlxTransitionableState.defaultTransIn.direction = new flixel.math.FlxPoint(-1, 0);
         FlxTransitionableState.defaultTransIn.tweenOptions.ease = flixel.tweens.FlxEase.elasticInOut;
@@ -89,7 +88,6 @@ class Main extends Sprite
         FlxTransitionableState.defaultTransOut = new TransitionData();
         FlxTransitionableState.defaultTransOut.type = TransitionType.TILES;
         FlxTransitionableState.defaultTransOut.duration = 0.5;
-        // FlxTransitionableState.defaultTransOut.color = com.andersnissen.ColorScheme.BLUE;
         FlxTransitionableState.defaultTransOut.direction = new flixel.math.FlxPoint(1, 0);
         FlxTransitionableState.defaultTransOut.tweenOptions.ease = flixel.tweens.FlxEase.elasticInOut;
         FlxTransitionableState.defaultTransOut.tileData = { asset: GraphicTransTileDiamond, width:32, height:32 };
@@ -99,5 +97,11 @@ class Main extends Sprite
         Reg.gameSession = new GameSession();
         Reg.networkManager.connect();
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
+
+        FlxG.addPostProcess(new PostProcess("assets/shaders/grain.frag"));
+        // var scanline = FlxG.addPostProcess(new PostProcess("assets/shaders/scanline.frag"));
+        // scanline.setUniform("interval", 5.0);
+        // scanline.setUniform("scale", 2.0);
+        // scanline.setUniform("alpha", 0.8);
 	}
 }
