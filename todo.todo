@@ -3,10 +3,17 @@ TODO:
     ☐ Persist game training highscore
     ☐ Add instruction screen before playing
     ☐ Add game over screen
-    ☐ Improve sounds
-    ☐ Improve effects
+    ☐ Put sounds on everything 
+    ☐ Improve sprite start-up/end effects
     ☐ Improve instruction screen
     ☐ Use "elapsed" to control game speed
+    ☐ Title screen background animation
+    ☐ "Tutorial" screen
+    ☐ New training games unlocked indication (e.g. (2 new) symbol)
+    ☐ Vignette shader
+    ☐ Grain shader
+    ☐ Scanline shader
+    ☐ (Reload shader functionality?)
     ☐ Remaining to high score + new game unlock after game + fun yes/no for testers
     ☐ Google Analytics: https://github.com/fbricker/haxe-ga
     ☐ Investigate more life-like animations: http://codepen.io/ayamflow/pen/LFexf?editors=001
@@ -29,7 +36,6 @@ Games:
     ☐ Tic-tac-toe (maybe stupid idea w.r.t faster speeds?)
 
 Bugs:
-    ☐ Jump: Doesn't work w. instructions dialog 
     ☐ Jump: Consider using a tilemap instead
     ☐ Hexchain: Can make invalid chain
     ☐ Hexchain: Lift finger should clear the chain
@@ -37,6 +43,7 @@ Bugs:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✘ Jump: Doesn't work w. instructions dialog @cancelled (06-09-14 16:35) @project(Bugs)
   ✔ Bounce: Can make ball/paddle same color as background or red/green @done (30-08-14 19:28) @project(Bugs)
   ✔ Multiple: Can be interacted with when instructions dialog is showing @done (30-08-14 19:36) @project(Bugs)
   ✔ Make credits screen @done (30-08-14 19:28) @project(TODO)
