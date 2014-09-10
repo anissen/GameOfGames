@@ -1,16 +1,17 @@
 
 TODO:
-    ☐ Persist game training highscore
-    ☐ Add instruction screen before playing
     ☐ Add game over screen
-    ☐ Put sounds on everything 
-    ☐ Improve sprite start-up/end effects
     ☐ Improve instruction screen
+    ☐ Persist game training highscore
+    ☐ Improve sprite start-up/end effects
+    ☐ Put sounds on everything 
     ☐ Use "elapsed" to control game speed
     ☐ Title screen background animation
+    ☐ Clean up TOUCH where there is no multi-touch (use mouse click)
     ☐ "Tutorial" screen
     ☐ New training games unlocked indication (e.g. (2 new) symbol)
     ☐ Add game complexity setting (easy, medium, hard -- hard to begin with)
+    ☐ Improve vignette shader (see comments)
     ☐ Remaining to high score + new game unlock after game + fun yes/no for testers
     ☐ Google Analytics: https://github.com/fbricker/haxe-ga
     ☐ Investigate more life-like animations: http://codepen.io/ayamflow/pen/LFexf?editors=001

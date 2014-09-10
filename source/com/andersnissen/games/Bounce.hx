@@ -41,7 +41,7 @@ class Bounce extends GameState
 
         var colorPool = new ColorPool([this.backgroundColor, this.timerSpriteColor]);
 
-        var trailArea = new FlxTrailArea(0, 0, 360, 640);
+        var trailArea = new FlxTrailArea(0, 0, Settings.WIDTH, Settings.HEIGHT);
         trailArea.antialiasing = true;
         
 		_bat = new FlxSprite(360 / 2 - _batWidth / 2, 600);
@@ -124,32 +124,26 @@ class Bounce extends GameState
         #end
 
 		#if !FLX_NO_TOUCH
-		for (touch in FlxG.touches.list)
-		{
-			if (touch.pressed)
-			{
+		for (touch in FlxG.touches.list) {
+			if (touch.pressed) {
 				if (touch.x > 10 && touch.x < 290)
 				_bat.x = touch.x;
 			}
 		}
         #else
-        if (FlxG.keys.anyPressed(["LEFT", "A"]) && _bat.x > 10)
-        {
+        if (FlxG.keys.anyPressed(["LEFT", "A"]) && _bat.x > 10) {
             _bat.velocity.x = - BAT_SPEED;
         }
-        else if (FlxG.keys.anyPressed(["RIGHT", "D"]) && _bat.x < 290)
-        {
+        else if (FlxG.keys.anyPressed(["RIGHT", "D"]) && _bat.x < 290) {
             _bat.velocity.x = BAT_SPEED;
         }
 		#end
 		
-		if (_bat.x < 10)
-		{
+		if (_bat.x < 10) {
 			_bat.x = 10;
 		}
 		
-		if (_bat.x > 340 - _batWidth)
-		{
+		if (_bat.x > 340 - _batWidth) {
 			_bat.x = 340 - _batWidth;
 		}
 		
