@@ -80,14 +80,14 @@ class Main extends Sprite
 
         FlxTransitionableState.defaultTransIn = new TransitionData();
         FlxTransitionableState.defaultTransIn.type = TransitionType.TILES;
-        FlxTransitionableState.defaultTransIn.duration = 0.5;
+        FlxTransitionableState.defaultTransIn.duration = 0.4;
         FlxTransitionableState.defaultTransIn.direction = new flixel.math.FlxPoint(-1, 0);
         FlxTransitionableState.defaultTransIn.tweenOptions.ease = flixel.tweens.FlxEase.elasticInOut;
         FlxTransitionableState.defaultTransIn.tileData = { asset:GraphicTransTileDiamond, width:32, height:32 };
         
         FlxTransitionableState.defaultTransOut = new TransitionData();
         FlxTransitionableState.defaultTransOut.type = TransitionType.TILES;
-        FlxTransitionableState.defaultTransOut.duration = 0.5;
+        FlxTransitionableState.defaultTransOut.duration = 0.4;
         FlxTransitionableState.defaultTransOut.direction = new flixel.math.FlxPoint(1, 0);
         FlxTransitionableState.defaultTransOut.tweenOptions.ease = flixel.tweens.FlxEase.elasticInOut;
         FlxTransitionableState.defaultTransOut.tileData = { asset: GraphicTransTileDiamond, width:32, height:32 };
@@ -98,7 +98,9 @@ class Main extends Sprite
         Reg.networkManager.connect();
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 
+        #if (mac) // very GPU-intensive
         FlxG.addPostProcess(new PostProcess("assets/shaders/grain.frag"));
+        #end
         // var scanline = FlxG.addPostProcess(new PostProcess("assets/shaders/scanline.frag"));
         // scanline.setUniform("interval", 5.0);
         // scanline.setUniform("scale", 2.0);

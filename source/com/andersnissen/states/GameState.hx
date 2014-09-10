@@ -41,7 +41,6 @@ class GameState extends FlxTransitionableState
     var gameTimer :FlxTimer;
     var heartBeatTimer :FlxTimer;
     var gameStartTimer :FlxTimer;
-    var gameEndTimer :FlxTimer;
 
     var gameActive :Bool = false;
 
@@ -134,7 +133,7 @@ class GameState extends FlxTransitionableState
             #end
         }
 
-        var timeBeforeStarting = this.transIn.duration + (isNewUnlockedGame ? 3 : 0) / Reg.speed;
+        var timeBeforeStarting = this.transIn.duration / 2 + (isNewUnlockedGame ? 3 : 0) / Reg.speed;
         gameStartTimer = new FlxTimer(timeBeforeStarting, function(_ :FlxTimer) {
             if (instructions != null) {
                 instructions.close();
@@ -242,7 +241,6 @@ class GameState extends FlxTransitionableState
         gameTimer = FlxDestroyUtil.destroy(gameTimer);
         heartBeatTimer = FlxDestroyUtil.destroy(heartBeatTimer);
         gameStartTimer = FlxDestroyUtil.destroy(gameStartTimer);
-        gameEndTimer = FlxDestroyUtil.destroy(gameEndTimer);
 
         super.destroy();
     }

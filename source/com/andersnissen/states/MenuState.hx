@@ -12,6 +12,7 @@ import flixel.text.FlxText.FlxTextBorderStyle;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxTween.TweenOptions;
 import com.andersnissen.ColorScheme;
+import flixel.effects.postprocess.PostProcess;
 
 /**
  * A FlxState which can be used for the game's menu.
@@ -142,7 +143,7 @@ class MenuState extends FlxState
         // var rotationSpeed :Float = 2;
         // var maxRotation :Float = 15;
         // highScoreText.angle = Math.sin(Sys.time() * rotationSpeed) * maxRotation;
-        
+
         #if (neko || cpp)
         playButton.borderSize = Math.abs(Math.cos(Sys.time() * 3) * 4);
         #end
