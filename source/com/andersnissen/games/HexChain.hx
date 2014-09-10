@@ -136,25 +136,19 @@ class HexChain extends GameState
 
         super.update(elapsed);
 
-        #if !FLX_NO_TOUCH
-        for (touch in FlxG.touches.list)
-        {
-            if (touch.pressed)
-            {
-                hexSprites.forEachAlive(function(hex :FlxSprite) {
-                    if (!touch.overlaps(hex)) return;
-                    hexTouched(hex, touch.getWorldPosition());
-                });
-            }
-        }
-        #else
         if (FlxG.mouse.pressed) {
             hexSprites.forEachAlive(function(hex :FlxSprite) {
                 if (!hex.overlapsPoint(FlxG.mouse.getWorldPosition())) return;
                 hexTouched(hex, FlxG.mouse.getWorldPosition());
             });
+        } else if (FlxG.mouse.justReleased) {
+            chainSprite.fill(ColorScheme.TRANSPARENT);
+            while (chain.length > 0) {
+                var hex = chain.pop();
+                FlxTween.tween(hex, { alpha: 1 }, 0.4);
+                FlxTween.tween(hex.scale, { x: 1, y: 1 }, 0.4);
+            }
         }
-        #end
     }
 
     function hexTouched(hex :FlxSprite, point :FlxPoint)

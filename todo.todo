@@ -34,13 +34,13 @@ Games:
     ☐ Tic-tac-toe (maybe stupid idea w.r.t faster speeds?)
 
 Bugs:
-    ☐ Jump: Consider using a tilemap instead
     ☐ Hexchain: Can make invalid chain
-    ☐ Hexchain: Lift finger should clear the chain
     ☐ Last game can sometime become null (when creating a new batch)
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Hexchain: Lift finger should clear the chain @done (10-09-14 21:13) @project(Bugs)
+  ✘ Jump: Consider using a tilemap instead @cancelled (10-09-14 20:52) @project(Bugs)
   ✔ Vignette shader @done (06-09-14 18:48) @project(TODO)
   ✔ Grain shader @done (06-09-14 18:11) @project(TODO)
   ✔ Scanline shader @done (06-09-14 18:11) @project(TODO)

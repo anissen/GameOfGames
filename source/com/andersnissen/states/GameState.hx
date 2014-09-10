@@ -185,7 +185,12 @@ class GameState extends FlxTransitionableState
 
     function showLoseScreen() :Void
     {
-        var loseScreen = new DialogBox("Game Over", 'Score: ${Reg.score}', 'Highcore: ${Reg.highscore}', ColorScheme.RED);
+        var title = switch (winningCondition) {
+            case WinningCondition.Survive: "Time's Up!";
+            case WinningCondition.CompleteObjective: "You Failed!";
+            default: "Game Over";
+        };
+        var loseScreen = new DialogBox(title, 'Score: ${Reg.score}', 'Highcore: ${Reg.highscore}', ColorScheme.RED);
         add(loseScreen);
         loseScreen.open();
     }
