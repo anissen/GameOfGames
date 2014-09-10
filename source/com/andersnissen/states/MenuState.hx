@@ -8,6 +8,7 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxGradient;
 import flixel.math.FlxMath;
 import flixel.text.FlxText.FlxTextBorderStyle;
+import flixel.effects.particles.*;
 
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxTween.TweenOptions;
@@ -36,6 +37,25 @@ class MenuState extends FlxState
         add(gradientSprite);
 
         FlxTween.tween(gradientSprite, { alpha: 0.7 }, 5, { type: FlxTween.PINGPONG });
+
+        var particleCount = 200;
+        var emitter = new FlxEmitter(Settings.WIDTH / 2, Settings.HEIGHT / 2, particleCount);
+        add(emitter);
+
+        for (i in 0...(Std.int(particleCount / 2))) {
+            var whitePixel = new FlxParticle();
+            whitePixel.makeGraphic(25, 25, ColorScheme.random());
+            whitePixel.visible = false; 
+            emitter.add(whitePixel);
+
+            whitePixel = new FlxParticle();
+            whitePixel.makeGraphic(5, 5, ColorScheme.random());
+            whitePixel.visible = false;
+            emitter.add(whitePixel);
+        }
+
+        emitter.alpha.set(0.3, 0.8, 0.0, 0.2);
+        emitter.start(false, 0.2, 0);
 
         titleText = new FlxText(0, 20, Settings.WIDTH, "Game\nof\nGames", 36);
         titleText.color = ColorScheme.BLUE;

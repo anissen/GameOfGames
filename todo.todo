@@ -6,7 +6,6 @@ TODO:
     ☐ Improve sprite start-up/end effects
     ☐ Put sounds on everything 
     ☐ Use "elapsed" to control game speed
-    ☐ Title screen background animation
     ☐ Clean up TOUCH where there is no multi-touch (use mouse click)
     ☐ "Tutorial" screen
     ☐ New training games unlocked indication (e.g. (2 new) symbol)
@@ -34,11 +33,13 @@ Games:
     ☐ Tic-tac-toe (maybe stupid idea w.r.t faster speeds?)
 
 Bugs:
+    ☐ Crash on exit!
     ☐ Hexchain: Can make invalid chain
     ☐ Last game can sometime become null (when creating a new batch)
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Title screen background animation @done (10-09-14 21:26) @project(TODO)
   ✔ Hexchain: Lift finger should clear the chain @done (10-09-14 21:13) @project(Bugs)
   ✘ Jump: Consider using a tilemap instead @cancelled (10-09-14 20:52) @project(Bugs)
   ✔ Vignette shader @done (06-09-14 18:48) @project(TODO)
