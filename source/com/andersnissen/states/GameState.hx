@@ -77,9 +77,6 @@ class GameState extends FlxTransitionableState
      */
     override public function create() :Void
     {
-        add(new FlxText(100, 100, 200, description));
-
-        // FlxG.cameras.fade(ColorScheme.BLACK, 0.1, true);
         backgroundColor = ColorScheme.randomExcept([ColorScheme.GREEN, ColorScheme.RED]);
         backgroundSprite = new FlxSprite(0, 0);
         backgroundSprite.makeGraphic(Settings.WIDTH, Settings.HEIGHT, backgroundColor);
@@ -183,18 +180,6 @@ class GameState extends FlxTransitionableState
         winScreen.open();
     }
 
-    function showLoseScreen() :Void
-    {
-        var title = switch (winningCondition) {
-            case WinningCondition.Survive: "Time's Up!";
-            case WinningCondition.CompleteObjective: "You Failed!";
-            default: "Game Over";
-        };
-        var loseScreen = new DialogBox(title, 'Score: ${Reg.score}', 'Highcore: ${Reg.highscore}', ColorScheme.RED);
-        add(loseScreen);
-        loseScreen.open();
-    }
-
     function setup() :Void
     {
         // overridden by inheriting class
@@ -290,8 +275,6 @@ class GameState extends FlxTransitionableState
         this.transOut.color = ColorScheme.RED;
 
         end();
-
-        showLoseScreen();
 
         // Reg.networkManager.send({ "games": Reg.gameManager.getGamesPlayedList() });
 

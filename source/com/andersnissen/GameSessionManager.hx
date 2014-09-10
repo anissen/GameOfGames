@@ -47,7 +47,7 @@ class GameSessionManager
             }
 
             var batchString = [for (g in currentGameBatch) getGameName(g)].join(", ");
-            trace('currentGameBatch: [$batchString]');
+            // trace('currentGameBatch: [$batchString]');
         }
 
         var nextGame = currentGameBatch.shift();
@@ -60,7 +60,7 @@ class GameSessionManager
         if (currentGameBatch.length > 0) throw "currentGameBatch is non-empty";
 
         var lastPlayedGame = gamesPlayed[gamesPlayed.length - 1];
-        trace('lastPlayedGame: ${Type.getClassName(lastPlayedGame)}');
+        // trace('lastPlayedGame: ${Type.getClassName(lastPlayedGame)}');
         var gameBatch :Array<Class<GameState>> = FlxG.random.shuffleArray(gamesUnlocked.copy(), gamesUnlocked.length * 3);
         if (gameBatch.length > 0 && gameBatch[0] == lastPlayedGame) {
             gameBatch.shift();

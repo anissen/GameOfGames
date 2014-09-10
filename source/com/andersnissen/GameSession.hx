@@ -1,5 +1,7 @@
 package com.andersnissen;
 
+import com.andersnissen.ColorScheme;
+import com.andersnissen.states.InfoState;
 import flixel.FlxG;
 import com.andersnissen.states.GameState;
 import com.andersnissen.states.MenuState;
@@ -51,16 +53,18 @@ class GameSession
             Reg.score = score;
         }
 
-        new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
-            startGame(gameManager.getNextGame());
-        });
+        startGame(gameManager.getNextGame());
     }
 
     function lostGame() :Void
     {
-        new FlxTimer(2, function(_ :FlxTimer) {
+        var infoState = new InfoState(4);
+        infoState.bgColor = ColorScheme.RED;
+        infoState.onDone.addOnce(function() {
             Reg.vignette.setUniform("amount", Settings.VIGNETTE_DEFAULT);
             FlxG.switchState(new MenuState());
         });
+        Reg.vignette.setUniform("amount", Settings.VIGNETTE_MAX);
+        FlxG.switchState(infoState);
     }
 }
