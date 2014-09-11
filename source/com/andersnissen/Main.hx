@@ -98,14 +98,13 @@ class Main extends Sprite
         Reg.networkManager.connect();
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 
-        #if (mac) // very GPU-intensive
-        FlxG.addPostProcess(new PostProcess("assets/shaders/grain.frag"));
-        #end
-        // var scanline = FlxG.addPostProcess(new PostProcess("assets/shaders/scanline.frag"));
-        // scanline.setUniform("interval", 5.0);
-        // scanline.setUniform("scale", 2.0);
-        // scanline.setUniform("alpha", 0.8);
-        Reg.vignette = FlxG.addPostProcess(new PostProcess("assets/shaders/vignette.frag"));
-        Reg.vignette.setUniform("amount", Settings.VIGNETTE_DEFAULT);
+        // FlxG.addPostProcess(new PostProcess("assets/shaders/scanlines.frag"));
+        Reg.vignette = FlxG.addPostProcess(new PostProcess("assets/shaders/cheapretard.frag"));
+        // FlxG.addPostProcess(new PostProcess("assets/shaders/simplegrain.frag"))
+        //     .setUniform("strength", 10.0);
+        // FlxG.addPostProcess(new PostProcess("assets/shaders/bloom.frag"))
+        //     .setUniform("strength", 0.5);
+        // Reg.vignette = FlxG.addPostProcess(new PostProcess("assets/shaders/vignette.frag"));
+        // Reg.vignette.setUniform("amount", Settings.VIGNETTE_DEFAULT);
 	}
 }
