@@ -65,7 +65,7 @@ class GameSession
 
     function lostGame() :Void
     {
-        var infoState = new InfoState(4);
+        var infoState = new InfoState(1);
         infoState.bgColor = ColorScheme.RED;
         infoState.onDone.addOnce(function() {
             Reg.setPostprocessingAmount(0.0);

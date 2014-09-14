@@ -118,16 +118,16 @@ class MenuState extends FlxState
 
             function highscoreBigDone(_) {
                 FlxG.camera.shake(0.03, 0.15, null, true, FlxCameraShakeDirection.X_AXIS);
-                FlxG.sound.play(AssetPaths.sfx_player_bounce__ogg, 1);
+                FlxG.sound.play(AssetPaths.bump__ogg, 1);
                 highScoreText.text = 'Highscore\n${Reg.highscore}';
-                FlxTween.tween(highScoreText.scale, { x: 1.0, y: 1.0 }, 0.5, { type: FlxTween.ONESHOT, onComplete: highscoreSmallDone});
+                var highScorePos = highScoreText.getMidpoint();
+                emitter.setPosition(highScorePos.x, highScorePos.y);
+                emitter.start(true);
+                FlxTween.tween(highScoreText.scale, { x: 1.0, y: 1.0 }, 0.7, { type: FlxTween.ONESHOT, onComplete: highscoreSmallDone});
             }
 
-            highScoreText.text = 'NEW HIGHSCORE!';
-            var highScorePos = highScoreText.getMidpoint();
-            emitter.setPosition(highScorePos.x, highScorePos.y);
-            emitter.start(true);
-            FlxTween.tween(highScoreText.scale, { x: 3, y: 3 }, 0.5, { type: FlxTween.ONESHOT, ease: FlxEase.elasticIn, onComplete: highscoreBigDone});
+            highScoreText.text = 'NEW\nHIGHSCORE!';
+            FlxTween.tween(highScoreText.scale, { x: 3, y: 3 }, 0.7, { type: FlxTween.ONESHOT, ease: FlxEase.elasticIn, onComplete: highscoreBigDone});
         } else {
             FlxTween.tween(highScoreText.scale, { x: 1.2, y: 1.2 }, 1.5, { type: FlxTween.PINGPONG });
             playMusic();
@@ -260,7 +260,6 @@ class MenuState extends FlxState
             FlxG.sound.music.stop();
         }
 
-        // FlxG.switchState(Reg.gameManager.getNextGame());
         Reg.gameSession.start(Reg.gameManager);
     }
 

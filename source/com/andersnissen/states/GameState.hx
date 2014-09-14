@@ -270,7 +270,7 @@ class GameState extends FlxTransitionableState
         if (!gameActive) return;
         gameActive = false;
 
-        FlxG.sound.play("assets/sounds/scratch.ogg");
+        FlxG.sound.play("assets/sounds/scratch" + FlxG.random.int(1, 3) + ".ogg");
         if (FlxG.sound.music != null && FlxG.sound.music.playing) {
             FlxG.sound.music.stop();
         }
@@ -291,7 +291,8 @@ class GameState extends FlxTransitionableState
         if (!gameActive) return;
         gameActive = false;
 
-        FlxG.sound.play("assets/sounds/yeah.ogg");
+        // FlxG.sound.play("assets/sounds/yeah.ogg");
+        FlxG.sound.play(AssetPaths.start__ogg);
 
         // showWinScreen();
 
@@ -305,6 +306,7 @@ class GameState extends FlxTransitionableState
     function success(?position :FlxPoint)
     {
         FlxG.sound.play("assets/sounds/success.wav", 0.5);
+
 
         #if android
         Sys.sleep(0.02);
