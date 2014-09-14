@@ -37,7 +37,7 @@ class GameSession
         game.onWin.addOnce(wonGame);
         game.onLose.addOnce(lostGame);
 
-        Reg.vignette.setUniform("amount", Settings.VIGNETTE_DEFAULT);
+        Reg.setPostprocessingAmount(0.0);
         FlxG.switchState(game);
     }
 
@@ -61,10 +61,10 @@ class GameSession
         var infoState = new InfoState(4);
         infoState.bgColor = ColorScheme.RED;
         infoState.onDone.addOnce(function() {
-            Reg.vignette.setUniform("amount", Settings.VIGNETTE_DEFAULT);
+            Reg.setPostprocessingAmount(0.0);
             FlxG.switchState(new MenuState());
         });
-        Reg.vignette.setUniform("amount", Settings.VIGNETTE_MAX);
+        Reg.setPostprocessingAmount(1.0);
         FlxG.switchState(infoState);
     }
 }

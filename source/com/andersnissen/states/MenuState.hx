@@ -67,12 +67,15 @@ class MenuState extends FlxState
 
         FlxTween.tween(titleText, { y: 30 }, 2, { type: FlxTween.PINGPONG });
 
-        highScoreText = new FlxText(0, 230, Settings.WIDTH, 'Highscore: ${Reg.highscore}', 30);
+        highScoreText = new FlxText(0, 230, Settings.WIDTH, 'Highscore\n${Reg.highscore}', 30);
         highScoreText.alignment = "center";
         highScoreText.color = ColorScheme.RED;
+        highScoreText.borderStyle = FlxTextBorderStyle.OUTLINE;
+        highScoreText.borderColor = ColorScheme.BLACK;
+        highScoreText.borderSize = 3.0;
         add(highScoreText);
 
-        gameText = new FlxText(0, 390, Settings.WIDTH, 'Games Unlocked: ${Reg.gameManager.getUnlockCount()}', 16);
+        gameText = new FlxText(0, 390, Settings.WIDTH, '${Reg.gameManager.getUnlockCount()} Games Unlocked', 16);
         gameText.alignment = "center";
         gameText.color = ColorScheme.BLUE;
         gameText.alpha = 0.5;
@@ -90,7 +93,7 @@ class MenuState extends FlxState
         trainingButton.alignment = "center";
         trainingButton.color = ColorScheme.TEAL;
         trainingButton.borderStyle = FlxTextBorderStyle.OUTLINE;
-        trainingButton.borderColor = ColorScheme.NAVY;
+        trainingButton.borderColor = ColorScheme.LIME;
         trainingButton.borderSize = 2.0;
         add(trainingButton);
 
@@ -105,9 +108,9 @@ class MenuState extends FlxState
 
         creditsButton = new FlxText(-10, 540, Settings.WIDTH, 'Credits', 24);
         creditsButton.alignment = "center";
-        creditsButton.color = ColorScheme.MAROON;
+        creditsButton.color = ColorScheme.ORANGE;
         creditsButton.borderStyle = FlxTextBorderStyle.OUTLINE;
-        creditsButton.borderColor = ColorScheme.BLUE;
+        creditsButton.borderColor = ColorScheme.NAVY;
         creditsButton.borderSize = 1.0;
         creditsButton.angle = 2.0;
         add(creditsButton);
@@ -137,7 +140,7 @@ class MenuState extends FlxState
 		super.create();
 
         if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
-            FlxG.sound.playMusic("assets/music/Kris_Keyser_-_06_-_Nitro.ogg");
+            FlxG.sound.playMusic(AssetPaths.Kris_Keyser___06___Nitro__ogg); 
         }
 
         // FlxG.debugger.visible = true;
@@ -163,6 +166,12 @@ class MenuState extends FlxState
         // var rotationSpeed :Float = 2;
         // var maxRotation :Float = 15;
         // highScoreText.angle = Math.sin(Sys.time() * rotationSpeed) * maxRotation;
+
+        #if (android)
+        // if (FlxG.android.anyJustPressed([27])) {
+        //     trace('Trying to exit?!');
+        // }
+        #end
 
         #if (neko || cpp)
         playButton.borderSize = Math.abs(Math.cos(Sys.time() * 3) * 4);

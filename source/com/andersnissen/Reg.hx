@@ -47,5 +47,11 @@ class Reg
 
     public static var gameList :Array<Class<GameState>> = [HexChain, Jump, MultiTouch, Bounce, Overlap, CollectDots, Lasers];
 
-    public static var vignette :PostProcess;
+    // public static var vignette :PostProcess;
+
+    public static function setPostprocessingAmount(amount :Float) {
+        // placeholder
+        // amount = Math.clamp(amount, 0.0, 1.0));
+        // vignette.setUniform("amount", Settings.VIGNETTE_DEFAULT + (Settings.VIGNETTE_MAX - Settings.VIGNETTE_DEFAULT) * amount);
+    }
 }

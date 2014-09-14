@@ -240,11 +240,17 @@ class GameState extends FlxTransitionableState
      */
     override public function update(elapsed :Float) :Void
     {
+        #if (android)
+        // if (FlxG.android.anyJustPressed([27])) {
+        //     lose();
+        //     return;
+        // }
+        #end
+
         if (gameTimer != null && gameActive) {
             timerSprite.makeGraphic(Settings.WIDTH, Math.floor(gameTimer.progress * Settings.HEIGHT) + 10, ColorScheme.BLACK);
             timerSprite.drawRect(0, 0, Settings.WIDTH, Math.floor(gameTimer.progress * Settings.HEIGHT), timerSpriteColor);
-            var vignette = Settings.VIGNETTE_DEFAULT + (Settings.VIGNETTE_MAX - Settings.VIGNETTE_DEFAULT) * gameTimer.progress;
-            Reg.vignette.setUniform("amount", vignette);
+            Reg.setPostprocessingAmount(gameTimer.progress);
         }
 
         if (gameActive) {

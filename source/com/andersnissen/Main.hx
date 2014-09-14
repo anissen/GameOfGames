@@ -92,6 +92,10 @@ class Main extends Sprite
         FlxTransitionableState.defaultTransOut.tweenOptions.ease = flixel.tweens.FlxEase.elasticInOut;
         FlxTransitionableState.defaultTransOut.tileData = { asset: GraphicTransTileDiamond, width:32, height:32 };
 
+        #if (android)
+        // FlxG.android.preventDefaultKeys.push(27);
+        #end
+
         Reg.gameManager = new GameSessionManager(Reg.gameList);
         Reg.networkManager = new NetworkManager();
         Reg.gameSession = new GameSession();
@@ -99,7 +103,7 @@ class Main extends Sprite
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 
         // FlxG.addPostProcess(new PostProcess("assets/shaders/scanlines.frag"));
-        Reg.vignette = FlxG.addPostProcess(new PostProcess("assets/shaders/cheapretard.frag"));
+        FlxG.addPostProcess(new PostProcess("assets/shaders/cheapretard.frag"));
         // FlxG.addPostProcess(new PostProcess("assets/shaders/simplegrain.frag"))
         //     .setUniform("strength", 10.0);
         // FlxG.addPostProcess(new PostProcess("assets/shaders/bloom.frag"))
