@@ -93,7 +93,7 @@ class Main extends Sprite
         FlxTransitionableState.defaultTransOut.tileData = { asset: GraphicTransTileDiamond, width:32, height:32 };
 
         #if (android)
-        // FlxG.android.preventDefaultKeys.push(27);
+        // FlxG.android.preventDefaultKeys = [BACK];
         #end
 
         Reg.gameManager = new GameSessionManager(Reg.gameList);

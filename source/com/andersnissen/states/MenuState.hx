@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
+import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
 import flixel.math.FlxMath;
 import flixel.text.FlxText.FlxTextBorderStyle;
@@ -26,11 +27,34 @@ class MenuState extends FlxState
     var trainingButton :FlxText;
     var playButton :FlxText;
     var creditsButton :FlxText;
+    var emitter :FlxEmitter;
+
+    var newHighscore :Bool;
+    var newGameUnlocked :Bool;
+
+    function createTextButton(text :String, y :Float, textSize :Int, color :Int, borderStyle :FlxTextBorderStyle, borderColor :Int = FlxColor.BLACK, ?borderSize :Float = 0.0)
+    {
+        var textButton = new FlxText(0, y, Settings.WIDTH, text, textSize);
+        textButton.alignment = "center";
+        textButton.color = color;
+        textButton.borderStyle = borderStyle;
+        textButton.borderColor = borderColor;
+        textButton.borderSize = borderSize;
+        return textButton;
+    }
+
+    override public function new(?newHighscore :Bool = false, ?newGameUnlocked :Bool = false) :Void
+    {
+        super();
+
+        this.newHighscore = newHighscore;
+        this.newGameUnlocked = newGameUnlocked;
+    }
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
-	override public function create():Void
+	override public function create() :Void
 	{
         var gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [ColorScheme.RED, ColorScheme.BLUE]);
         gradientSprite.alpha = 0.3;
@@ -39,7 +63,7 @@ class MenuState extends FlxState
         FlxTween.tween(gradientSprite, { alpha: 0.7 }, 5, { type: FlxTween.PINGPONG });
 
         var particleCount = 200;
-        var emitter = new FlxEmitter(Settings.WIDTH / 2, Settings.HEIGHT / 2, particleCount);
+        emitter = new FlxEmitter(Settings.WIDTH / 2, Settings.HEIGHT / 2, particleCount);
         add(emitter);
 
         for (i in 0...(Std.int(particleCount / 2))) {
@@ -57,45 +81,33 @@ class MenuState extends FlxState
         emitter.alpha.set(0.3, 0.8, 0.0, 0.2);
         emitter.start(false, 0.2, 0);
 
-        titleText = new FlxText(0, 20, Settings.WIDTH, "Game\nof\nGames", 36);
-        titleText.color = ColorScheme.BLUE;
-        titleText.borderStyle = FlxTextBorderStyle.SHADOW;
-        titleText.borderSize = 2;
-        titleText.borderColor = ColorScheme.GRAY;
-        titleText.alignment = "center";
+        titleText = createTextButton("Game\nof\nGames", 25, 36, ColorScheme.BLUE, FlxTextBorderStyle.SHADOW, ColorScheme.GRAY, 2);
         add(titleText);
-
         FlxTween.tween(titleText, { y: 30 }, 2, { type: FlxTween.PINGPONG });
 
-        highScoreText = new FlxText(0, 230, Settings.WIDTH, 'Highscore\n${Reg.highscore}', 30);
-        highScoreText.alignment = "center";
-        highScoreText.color = ColorScheme.RED;
-        highScoreText.borderStyle = FlxTextBorderStyle.OUTLINE;
-        highScoreText.borderColor = ColorScheme.BLACK;
-        highScoreText.borderSize = 3.0;
+        highScoreText = createTextButton('Highscore\n${Reg.highscore}', 230, 30, ColorScheme.RED, FlxTextBorderStyle.OUTLINE, ColorScheme.BLACK, 3.0);
         add(highScoreText);
 
-        gameText = new FlxText(0, 390, Settings.WIDTH, '${Reg.gameManager.getUnlockCount()} Games Unlocked', 16);
-        gameText.alignment = "center";
-        gameText.color = ColorScheme.BLUE;
+        if (newHighscore) {
+            trace("Should handle new highscore!");
+            // FlxG.camera.shake(0.03, 0.15, null, true, FlxCamera.SHAKE_VERTICAL_ONLY);
+            // BAM! sound plays;
+            // sound.play(true);
+        }
+
+        gameText = createTextButton('${Reg.gameManager.getUnlockCount()} Games Unlocked', 390, 16, ColorScheme.BLUE, FlxTextBorderStyle.NONE);
         gameText.alpha = 0.5;
         add(gameText);
 
-        playButton = new FlxText(0, 350, Settings.WIDTH, 'Play', 30);
-        playButton.alignment = "center";
-        playButton.color = ColorScheme.YELLOW;
-        playButton.borderStyle = FlxTextBorderStyle.OUTLINE;
-        playButton.borderColor = ColorScheme.MAROON;
-        playButton.borderSize = 5.0;
+        playButton = createTextButton('Play', 350, 30, ColorScheme.YELLOW, FlxTextBorderStyle.OUTLINE, ColorScheme.MAROON, 5.0);
         add(playButton);
 
-        trainingButton = new FlxText(-10, 480, Settings.WIDTH, 'Training', 24);
-        trainingButton.alignment = "center";
-        trainingButton.color = ColorScheme.TEAL;
-        trainingButton.borderStyle = FlxTextBorderStyle.OUTLINE;
-        trainingButton.borderColor = ColorScheme.LIME;
-        trainingButton.borderSize = 2.0;
+        trainingButton = createTextButton('Training', 480, 24, ColorScheme.TEAL, FlxTextBorderStyle.OUTLINE, ColorScheme.LIME, 2.0);
         add(trainingButton);
+
+        if (newGameUnlocked) {
+            trace("Should handle new game unlocked!");
+        }
 
         FlxTween.tween(trainingButton, { x: 10 }, 3, { type: FlxTween.PINGPONG });
 
@@ -106,12 +118,7 @@ class MenuState extends FlxState
         FlxTween.tween(highScoreText.scale, { x: 1.2, y: 1.2 }, 1.5, { type: FlxTween.PINGPONG });
         FlxTween.tween(playButton.scale, { x: 1.5, y: 1.5 }, 1, { type: FlxTween.PINGPONG, startDelay: 0.5 });
 
-        creditsButton = new FlxText(-10, 540, Settings.WIDTH, 'Credits', 24);
-        creditsButton.alignment = "center";
-        creditsButton.color = ColorScheme.ORANGE;
-        creditsButton.borderStyle = FlxTextBorderStyle.OUTLINE;
-        creditsButton.borderColor = ColorScheme.NAVY;
-        creditsButton.borderSize = 1.0;
+        creditsButton = createTextButton('Credits', 540, 24, ColorScheme.ORANGE, FlxTextBorderStyle.OUTLINE, ColorScheme.NAVY, 1.0);
         creditsButton.angle = 2.0;
         add(creditsButton);
 
@@ -172,6 +179,9 @@ class MenuState extends FlxState
         //     trace('Trying to exit?!');
         // }
         #end
+
+        var emitterMargin = 20;
+        emitter.setPosition(FlxG.random.float(emitterMargin, Settings.WIDTH - emitterMargin), FlxG.random.float(emitterMargin, Settings.HEIGHT - emitterMargin));
 
         #if (neko || cpp)
         playButton.borderSize = Math.abs(Math.cos(Sys.time() * 3) * 4);
