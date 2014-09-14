@@ -46,7 +46,7 @@ class GameSessionManager
                 newGameUnlocked = true;
             }
 
-            var batchString = [for (g in currentGameBatch) getGameName(g)].join(", ");
+            // var batchString = [for (g in currentGameBatch) getGameName(g)].join(", ");
             // trace('currentGameBatch: [$batchString]');
         }
 

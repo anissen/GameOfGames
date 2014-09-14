@@ -2,6 +2,7 @@
 TODO:
     ☐ Add game over screen
     ☐ Improve instruction screen
+    ☐ Persist highscore
     ☐ Persist game training highscore
     ☐ Improve sprite start-up/end effects
     ☐ Put sounds on everything 
@@ -36,6 +37,7 @@ Bugs:
     ☐ Crash on exit!
     ☐ Hexchain: Can make invalid chain
     ☐ Last game can sometime become null (when creating a new batch)
+    ☐ High score in training is counted as regular highscore
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:

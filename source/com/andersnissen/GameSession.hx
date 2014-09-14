@@ -13,6 +13,8 @@ class GameSession
     var speed :Float;
     var score :Int;
     var training :Bool;
+    var newHighscore :Bool;
+    var newGamesUnlocked :Int;
 
     public function new()
     {
@@ -25,6 +27,8 @@ class GameSession
         training = isTraining;
         speed = 1.0;
         score = 0;
+        newHighscore = false;
+        newGamesUnlocked = 0;
 
         startGame(gameManager.getNextGame());
     }
@@ -33,7 +37,9 @@ class GameSession
     {
         Reg.speed = speed;
 
-        var game :GameState = gameManager.getNextGame();
+        if (gameManager.isNewGame())
+            newGamesUnlocked++;
+
         game.onWin.addOnce(wonGame);
         game.onLose.addOnce(lostGame);
 
@@ -48,6 +54,7 @@ class GameSession
 
         if (!training) {
             if (score > Reg.highscore) {
+                newHighscore = true;
                 Reg.highscore = score;
             }
             Reg.score = score;
@@ -62,7 +69,7 @@ class GameSession
         infoState.bgColor = ColorScheme.RED;
         infoState.onDone.addOnce(function() {
             Reg.setPostprocessingAmount(0.0);
-            FlxG.switchState(new MenuState());
+            FlxG.switchState(new MenuState(newHighscore, newGamesUnlocked));
         });
         Reg.setPostprocessingAmount(1.0);
         FlxG.switchState(infoState);

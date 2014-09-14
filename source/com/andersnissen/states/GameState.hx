@@ -140,7 +140,7 @@ class GameState extends FlxTransitionableState
 
             heartBeatTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
                 if (!gameActive) return;
-                FlxG.sound.play("assets/sounds/heartbeat.ogg");
+                FlxG.sound.play("assets/sounds/heartbeat.ogg", 1);
             }, 0);
             new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
                 takeScreenshot();
