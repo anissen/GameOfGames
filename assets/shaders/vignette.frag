@@ -21,7 +21,7 @@ void main() {
 }
 
 
-
+// https://github.com/mattdesl/lwjgl-basics/wiki/ShaderLesson3
 // //RADIUS of our vignette, where 0.5 results in a circle fitting the screen
 // const float RADIUS = 0.75;
 

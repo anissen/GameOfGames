@@ -3,8 +3,22 @@ uniform vec2 uResolution;
 uniform float uTime;
 uniform sampler2D uImage0;
 
-float rand(vec2 co) {
-    return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
+// Does not work on Android (OpenGL ES)!
+// http://stackoverflow.com/questions/4200224/random-noise-functions-for-glsl#comment22549967_4275343
+// float rand(vec2 co) {
+//     return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
+// }
+
+// Does not work on Android either...
+// Source: http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
+float rand(vec2 co)
+{
+    float a = 12.9898;
+    float b = 78.233;
+    float c = 43758.5453;
+    float dt= dot(co.xy ,vec2(a,b));
+    float sn= mod(dt,3.14);
+    return fract(sin(sn) * c);
 }
 
 const float bloom = 0.35;  // TODO make uniform input (bloom = good / points)
