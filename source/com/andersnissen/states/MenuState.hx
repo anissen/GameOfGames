@@ -53,26 +53,19 @@ class MenuState extends FlxState
         this.newGamesUnlocked = newGamesUnlocked;
     }
 
-	/**
-	 * Function that is called up when to state is created to set it up. 
-	 */
-	override public function create() :Void
-	{
-        #if (debug)
-        if (FlxG.sound != null) {
-            FlxG.sound.changeVolume(0.5);
-        }
-        #end
-
+    function createBackground() {
         var gradientSprite = FlxGradient.createGradientFlxSprite(Settings.WIDTH, Settings.HEIGHT, [ColorScheme.RED, ColorScheme.BLUE]);
         gradientSprite.alpha = 0.3;
         add(gradientSprite);
 
         FlxTween.tween(gradientSprite, { alpha: 0.7 }, 5, { type: FlxTween.PINGPONG });
+    }
 
+    function createEmitter() {
         var particleCount = 200;
         emitter = new FlxEmitter(Settings.WIDTH / 2, Settings.HEIGHT / 2, particleCount);
-        add(emitter);
+        emitter.alpha.set(0.3, 0.8, 0.0, 0.2);
+        emitter.start(false, 0.2, 0);
 
         for (i in 0...(Std.int(particleCount / 2))) {
             var whitePixel = new FlxParticle();
@@ -85,29 +78,44 @@ class MenuState extends FlxState
             whitePixel.visible = false;
             emitter.add(whitePixel);
         }
+        add(emitter);
+    }
 
-        emitter.alpha.set(0.3, 0.8, 0.0, 0.2);
-        emitter.start(false, 0.2, 0);
-
+    function createTitleText() {
         titleText = createTextButton("Game\nof\nGames", 25, 36, ColorScheme.BLUE, FlxTextBorderStyle.SHADOW, ColorScheme.GRAY, 2);
         add(titleText);
         FlxTween.tween(titleText, { y: 30 }, 2, { type: FlxTween.PINGPONG });
+    }
 
-        gameText = createTextButton('${Reg.gameManager.getUnlockCount()} Games Unlocked', 385, 16, ColorScheme.BLUE, FlxTextBorderStyle.OUTLINE, ColorScheme.BLACK, 1.0);
+    function createPlayButton() {
+        playButton = createTextButton("Play", 350, 30, ColorScheme.YELLOW, FlxTextBorderStyle.OUTLINE, ColorScheme.MAROON, 5.0);
+        add(playButton);
+        FlxTween.tween(playButton.scale, { x: 1.5, y: 1.5 }, 1, { type: FlxTween.PINGPONG, startDelay: 0.5 });
+    }
+
+    function createTrainingButton() {
+        gameText = createTextButton('${Reg.gameManager.getUnlockCount()} Games Unlocked', 485, 16, ColorScheme.BLUE, FlxTextBorderStyle.OUTLINE, ColorScheme.BLACK, 1.0);
         gameText.alpha = 0.7;
-        add(gameText);
         if (newGamesUnlocked > 0) {
             // trace("Should handle new game unlocked!");
             var format = new FlxTextFormat(ColorScheme.RED, true, true, ColorScheme.WHITE);
             var markup = new FlxTextFormatMarkerPair(format, "*");
             gameText.applyMarkup(gameText.text + '\n*$newGamesUnlocked NEW!*', [markup]);
         }
+        add(gameText);
+        FlxTween.angle(gameText, -5, -10, 2.2, { type: FlxTween.PINGPONG });
 
-        playButton = createTextButton("Play", 350, 30, ColorScheme.YELLOW, FlxTextBorderStyle.OUTLINE, ColorScheme.MAROON, 5.0);
-        add(playButton);
 
+        trainingButton = createTextButton("Training", 460, 24, ColorScheme.TEAL, FlxTextBorderStyle.OUTLINE, ColorScheme.LIME, 2.0);
+        add(trainingButton);
+        FlxTween.tween(trainingButton, { x: 10 }, 3, { type: FlxTween.PINGPONG });
+    }
+
+    function createHighscoreText() {
         highScoreText = createTextButton('Highscore\n${Reg.highscore}', 230, 32, ColorScheme.RED, FlxTextBorderStyle.OUTLINE, ColorScheme.BLACK, 3.0);
         add(highScoreText);
+
+        FlxTween.angle(highScoreText, -12, 12, 1, { type: FlxTween.PINGPONG });
 
         if (newHighscore) {
             function highscoreSmallDone(_) {
@@ -132,26 +140,35 @@ class MenuState extends FlxState
             FlxTween.tween(highScoreText.scale, { x: 1.2, y: 1.2 }, 1.5, { type: FlxTween.PINGPONG });
             playMusic();
         }
+    }
 
-        trainingButton = createTextButton("Training", 470, 24, ColorScheme.TEAL, FlxTextBorderStyle.OUTLINE, ColorScheme.LIME, 2.0);
-        add(trainingButton);
-
-        FlxTween.tween(trainingButton, { x: 10 }, 3, { type: FlxTween.PINGPONG });
-
-        var options :TweenOptions = { type: FlxTween.PINGPONG };
-        FlxTween.angle(highScoreText, -12, 12, 1, options );
-        FlxTween.angle(gameText, -5, -10, 2.2, options );
-
-        
-        FlxTween.tween(playButton.scale, { x: 1.5, y: 1.5 }, 1, { type: FlxTween.PINGPONG, startDelay: 0.5 });
-
+    function createCreditsButton() {
         creditsButton = createTextButton("Credits", 540, 24, ColorScheme.ORANGE, FlxTextBorderStyle.OUTLINE, ColorScheme.NAVY, 1.0);
         creditsButton.angle = 2.0;
         add(creditsButton);
 
         FlxTween.tween(creditsButton, { y: creditsButton.y + 10 }, 4, { type: FlxTween.PINGPONG });
-        FlxTween.angle(creditsButton, 2, 8, 5, options );
+        FlxTween.angle(creditsButton, 2, 8, 5, { type: FlxTween.PINGPONG });
+    }
 
+	/**
+	 * Function that is called up when to state is created to set it up. 
+	 */
+	override public function create() :Void
+    {
+        #if (debug)
+        if (FlxG.sound != null) {
+            FlxG.sound.volume = 0.5;
+        }
+        #end
+
+        createBackground();
+        createEmitter();
+        createTitleText();
+        createPlayButton();
+        createHighscoreText();
+        createTrainingButton();
+        createCreditsButton();
 
         #if (debug)
         var resetButton = new FlxButton(Settings.WIDTH / 2, 600, "Reset Progress", function () {
@@ -172,19 +189,17 @@ class MenuState extends FlxState
         // FlxG.addChildBelowMouse(textfield);
 
 		super.create();
-
-        // if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
-        //     FlxG.sound.playMusic(AssetPaths.Kris_Keyser___06___Nitro__ogg); 
-        // }
-
-        // FlxG.debugger.visible = true;
-        // FlxG.sound.volume = 0.5;
 	}
 
     function playMusic() :Void
     {
         if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
-            FlxG.sound.playMusic(AssetPaths.Kris_Keyser___06___Nitro__ogg); 
+            #if (neko)
+            // Attempt to fix looping music crash bug on neko
+            FlxG.sound.playMusic(AssetPaths.Kris_Keyser___06___Nitro__ogg, null, false);
+            #else
+            FlxG.sound.playMusic(AssetPaths.Kris_Keyser___06___Nitro__ogg);
+            #end
         }
     }
 	
