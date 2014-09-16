@@ -18,7 +18,7 @@ class GameSession
 
     public function new()
     {
-
+        
     }
 
     public function start(manager :GameSessionManager, ?isTraining :Bool = false) :Void

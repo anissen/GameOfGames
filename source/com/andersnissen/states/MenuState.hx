@@ -105,7 +105,6 @@ class MenuState extends FlxState
         add(gameText);
         FlxTween.angle(gameText, -5, -10, 2.2, { type: FlxTween.PINGPONG });
 
-
         trainingButton = createTextButton("Training", 460, 24, ColorScheme.TEAL, FlxTextBorderStyle.OUTLINE, ColorScheme.LIME, 2.0);
         add(trainingButton);
         FlxTween.tween(trainingButton, { x: 10 }, 3, { type: FlxTween.PINGPONG });

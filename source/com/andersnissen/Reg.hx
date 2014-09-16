@@ -12,6 +12,18 @@ import flixel.util.FlxSave;
  */
 class Reg
 {
+    public static function init() {
+        saves.push(new FlxSave());
+        Reg.save.bind("save1");
+        highscore = Reg.save.data.highscore;
+
+        gameManager = new GameSessionManager(gameList);
+        // networkManager = new NetworkManager();
+        gameSession = new GameSession();
+        // networkManager.connect();
+
+    }
+
 	/**
 	 * Generic levels Array that can be used for cross-state stuff.
 	 * Example usage: Storing the levels of a platformer.
@@ -32,14 +44,28 @@ class Reg
 	 * Example usage: Storing the current score.
 	 */
     public static var score :Int = 0;
-    public static var highscore :Int = 0;
+    public static var highscore(default, set) :Int = 0;
+
+    public static function set_highscore(s :Int) :Int {
+        trace('highscore: $s');
+        highscore = s;
+        Reg.save.data.highscore = s;
+        Reg.save.flush();
+        return s;
+    }
 
     public static var speed :Float = 0;
 	/**
 	 * Generic bucket for storing different FlxSaves.
 	 * Especially useful for setting up multiple save slots.
 	 */
-	public static var saves :Array<FlxSave> = [];
+	private static var saves :Array<FlxSave> = [];
+
+    public static var save(get, null) :FlxSave;
+
+    public static function get_save() {
+        return saves[0];
+    }
 
     public static var gameManager :GameSessionManager;
     public static var networkManager :NetworkManager;

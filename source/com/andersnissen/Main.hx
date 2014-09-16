@@ -96,10 +96,7 @@ class Main extends Sprite
         // FlxG.android.preventDefaultKeys = [BACK];
         #end
 
-        Reg.gameManager = new GameSessionManager(Reg.gameList);
-        Reg.networkManager = new NetworkManager();
-        Reg.gameSession = new GameSession();
-        Reg.networkManager.connect();
+        Reg.init();
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 
         // FlxG.addPostProcess(new PostProcess("assets/shaders/scanlines.frag"));

@@ -15,16 +15,11 @@ class GameSessionManager
     var currentGameBatch :Array<Class<GameState>> = [];
     var newGameUnlocked :Bool = false;
 
-    var _gameSave :FlxSave;
-
     public function new(list :Array<Class<GameState>>) :Void
     {
-        _gameSave = new FlxSave();
-        _gameSave.bind("GamesUnlocked");
-
         gameList = list;
 
-        var unlockCount :Int = (_gameSave.data.unlockCount != null ? _gameSave.data.unlockCount : 0);
+        var unlockCount :Int = (Reg.save.data.unlockCount != null ? Reg.save.data.unlockCount : 0);
         gamesUnlocked = gameList.slice(0, unlockCount);
         // trace('Unlock count: $unlockCount');
     }
@@ -75,8 +70,8 @@ class GameSessionManager
         var unlockedGame = gameList[gamesUnlocked.length];
         gamesUnlocked.push(unlockedGame);
 
-        _gameSave.data.unlockCount = gamesUnlocked.length;
-        _gameSave.flush();
+        Reg.save.data.unlockCount = gamesUnlocked.length;
+        Reg.save.flush();
         trace('Unlocked new game: ${getGameName(unlockedGame)}');
         // onGameUnlocked.dispatch();
 
@@ -126,7 +121,7 @@ class GameSessionManager
         gamesPlayed = [];
         currentGameBatch = [];
 
-        _gameSave.data.unlockCount = 0;
-        _gameSave.flush();
+        Reg.save.data.unlockCount = 0;
+        Reg.save.flush();
     }
 }

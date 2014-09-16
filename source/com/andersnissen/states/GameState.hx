@@ -162,7 +162,11 @@ class GameState extends FlxTransitionableState
             ];
             var track = FlxG.random.getObject(musicFiles);
             // trace('Now playing "$track"');
+            #if (neko)
+            FlxG.sound.playMusic("assets/music/" + track, null, false);
+            #else
             FlxG.sound.playMusic("assets/music/" + track);
+            #end
         }
     }
 
