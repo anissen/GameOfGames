@@ -27,7 +27,7 @@ class MultiTouch extends GameState
         controls = "???";
         winningCondition = WinningCondition.CompleteObjective;
 
-        MAX_CIRCLES = FlxG.random.int(2, 5);
+        MAX_CIRCLES = FlxG.random.int(2, 4);
 
         touchedCircles = [for (i in 0...MAX_CIRCLES) false];
         circles = new FlxSpriteGroup();
@@ -43,12 +43,12 @@ class MultiTouch extends GameState
                 if (c.toPoint().distanceTo(new FlxPoint(x, y)) < radius * 2)
                     validPosition = false;
             });
-            if (!validPosition) { trace("invalid position!"); continue; }
+            if (!validPosition) continue;
 
             var circle = new FlxSprite(x, y);
             circle.makeGraphic(radius * 2, radius * 2, ColorScheme.TRANSPARENT, true);
             circle.drawCircle(radius, radius, radius, ColorScheme.BLACK);
-            circle.drawCircle(radius, radius, radius - 2, ColorScheme.random());
+            circle.drawCircle(radius, radius, radius - 2, ColorScheme.randomExcept([ColorScheme.GREEN]));
             circles.add(circle);
             circleCount++;
 
@@ -74,14 +74,17 @@ class MultiTouch extends GameState
         #if !FLX_NO_TOUCH
         for (touch in FlxG.touches.list)
         {
+            if (touch.touchPointID >= circles.countAlive()) return;
+            var circle = circles.members[touch.touchPointID];
+
             if (touch.justPressed)
             {
-                var circle = circles.members[touch.touchPointID];
                 if (touch.getWorldPosition().distanceTo(circle.getMidpoint()) <= radius) {
-                    circleTouched(touch.touchPointID, touch.getWorldPosition());
+                    circleTouched(circle, touch.touchPointID, touch.getWorldPosition());
                 }
             } else if (touch.justReleased) {
                 touchedCircles[touch.touchPointID] = false;
+                circle.drawCircle(radius, radius, radius - 2, ColorScheme.RED);
             }
         }
         #else
@@ -89,7 +92,7 @@ class MultiTouch extends GameState
             var circleIndex = 0;
             circles.forEachAlive(function(circle :FlxSprite) {
                 if (FlxG.mouse.getWorldPosition().distanceTo(circle.getMidpoint()) <= radius) {
-                    circleTouched(circleIndex, FlxG.mouse.getWorldPosition());
+                    circleTouched(circle, circleIndex, FlxG.mouse.getWorldPosition());
                 }
                 circleIndex++;
             });
@@ -97,7 +100,7 @@ class MultiTouch extends GameState
         #end
     }
 
-    function circleTouched(index :Int, point :FlxPoint)
+    function circleTouched(circle: FlxSprite, index :Int, point :FlxPoint)
     {
         // already touched
         if (touchedCircles[index]) return;
@@ -107,6 +110,7 @@ class MultiTouch extends GameState
             if (!touchedCircles[touchIndex]) return;
         }
         touchedCircles[index] = true;
+        circle.drawCircle(radius, radius, radius - 2, ColorScheme.GREEN);
 
         success(point);
 
