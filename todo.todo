@@ -2,7 +2,6 @@
 TODO:
     ☐ Add game over screen
     ☐ Improve instruction screen
-    ☐ Persist game training highscore
     ☐ Improve sprite start-up/end effects
     ☐ Put sounds on everything 
     ☐ Use "elapsed" to control game speed
@@ -36,6 +35,7 @@ Bugs:
     ☐ Crash on exit!
     ☐ Hexchain: Can make invalid chain
     ☐ High score in training is counted as regular highscore
+    ☐ Heart beat sound not playing on Android
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
@@ -47,6 +47,7 @@ Archive:
   ✔ Make game buttons actually work @done (30-08-14 16:15) @project(TODO)
   ✔ Make a game selection screen @done (30-08-14 16:15) @project(TODO)
   ✔ Make a GameHandler class that handles an entire game session. It must be able to handle both list of games (through GameManager) and a repeated training game (maybe through a TrainingGameManager?) @done (30-08-14 16:15) @project(TODO)
+  ✔ Persist game training highscore @done (18-09-14 21:16) @project(TODO)
   ✘ Unlocked count is being reset sometimes (when not playing any games maybe?) @cancelled (18-08-14 22:48) @project(Bugs)
     ✔ Make list of game buttons @done (18-08-14 22:39) @project(TODO)
   ✔ Persist highscore @done (16-09-14 22:12) @project(TODO)

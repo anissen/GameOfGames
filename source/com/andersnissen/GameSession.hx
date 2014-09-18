@@ -2,6 +2,7 @@ package com.andersnissen;
 
 import com.andersnissen.ColorScheme;
 import com.andersnissen.states.InfoState;
+import com.andersnissen.states.TrainingState;
 import flixel.FlxG;
 import com.andersnissen.states.GameState;
 import com.andersnissen.states.MenuState;
@@ -18,7 +19,7 @@ class GameSession
 
     public function new()
     {
-        
+
     }
 
     public function start(manager :GameSessionManager, ?isTraining :Bool = false) :Void
@@ -52,7 +53,18 @@ class GameSession
         score++;
         speed += 0.1;
 
-        if (!training) {
+        startGame(gameManager.getNextGame());
+    }
+
+    function lostGame() :Void
+    {
+        if (training) {
+            var gameName = gameManager.getGamesUnlockedList()[0]; // HACK
+            var highscore = Reg.getTrainingHighscore(gameName);
+            if (highscore == null || score > highscore) {
+                Reg.setTrainingHighscore(gameName, score);
+            }
+        } else {
             if (score > Reg.highscore) {
                 newHighscore = true;
                 Reg.highscore = score;
@@ -60,16 +72,16 @@ class GameSession
             Reg.score = score;
         }
 
-        startGame(gameManager.getNextGame());
-    }
-
-    function lostGame() :Void
-    {
+        // TODO: Pass text, score, highscore to InfoState
         var infoState = new InfoState(1);
         infoState.bgColor = ColorScheme.RED;
         infoState.onDone.addOnce(function() {
             Reg.setPostprocessingAmount(0.0);
-            FlxG.switchState(new MenuState(newHighscore, newGamesUnlocked));
+            if (training) {
+                FlxG.switchState(new TrainingState());
+            } else {
+                FlxG.switchState(new MenuState(newHighscore, newGamesUnlocked));
+            }
         });
         Reg.setPostprocessingAmount(1.0);
         FlxG.switchState(infoState);

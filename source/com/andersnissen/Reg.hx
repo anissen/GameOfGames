@@ -12,9 +12,16 @@ import flixel.util.FlxSave;
  */
 class Reg
 {
+    static var trainingScoresMap :Map<String, Int>;
+
     public static function init() {
         saves.push(new FlxSave());
         Reg.save.bind("save1");
+        if (Reg.save.data.trainingHighscores == null) {
+            trainingScoresMap = new Map<String, Int>();
+        } else {
+            trainingScoresMap = Reg.save.data.trainingHighscores;
+        }
         highscore = Reg.save.data.highscore;
 
         gameManager = new GameSessionManager(gameList);
@@ -25,21 +32,6 @@ class Reg
     }
 
 	/**
-	 * Generic levels Array that can be used for cross-state stuff.
-	 * Example usage: Storing the levels of a platformer.
-	 */
-	public static var levels :Array<Dynamic> = [];
-	/**
-	 * Generic level variable that can be used for cross-state stuff.
-	 * Example usage: Storing the current level number.
-	 */
-	public static var level :Int = 0;
-	/**
-	 * Generic scores Array that can be used for cross-state stuff.
-	 * Example usage: Storing the scores for level.
-	 */
-	public static var scores :Array<Dynamic> = [];
-	/**
 	 * Generic score variable that can be used for cross-state stuff.
 	 * Example usage: Storing the current score.
 	 */
@@ -47,14 +39,27 @@ class Reg
     public static var highscore(default, set) :Int = 0;
 
     public static function set_highscore(s :Int) :Int {
-        trace('highscore: $s');
+        // trace('highscore: $s');
         highscore = s;
         Reg.save.data.highscore = s;
         Reg.save.flush();
         return s;
     }
 
+    public static function getTrainingHighscore(gameId :String) :Int {
+        return trainingScoresMap.get(gameId);
+    }
+
+    public static function setTrainingHighscore(gameId :String, s :Int) {
+        trace('Setting $gameId to $s');
+        trainingScoresMap.set(gameId, s);
+        Reg.save.data.trainingHighscores = trainingScoresMap;
+        Reg.save.flush();
+    }
+
     public static var speed :Float = 0;
+
+
 	/**
 	 * Generic bucket for storing different FlxSaves.
 	 * Especially useful for setting up multiple save slots.
@@ -74,7 +79,6 @@ class Reg
     public static var gameList :Array<Class<GameState>> = [HexChain, Jump, MultiTouch, Bounce, Overlap, CollectDots, Lasers];
 
     // public static var vignette :PostProcess;
-
     public static function setPostprocessingAmount(amount :Float) {
         // placeholder
         // amount = Math.clamp(amount, 0.0, 1.0));

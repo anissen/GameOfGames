@@ -65,7 +65,13 @@ class TrainingState extends FlxState
             // gameIcon.scale.set(0.2, 0.2);
             gameInfo.add(gameIcon);
 
-            var gameText = new FlxText(0, 162, 100, "HI: ??", 20);
+            var highscore = Reg.getTrainingHighscore(gameName);
+            // trace('[TrainingState] Highscore for $gameName is $highscore');
+            var highscoreText = "HI: ??";
+            if (highscore != null)
+                highscoreText = "HI: " + highscore;
+
+            var gameText = new FlxText(0, 162, 100, highscoreText, 20);
             gameText.font = "assets/fonts/kenpixel_blocks.ttf";
             gameText.color = ColorScheme.BLUE;
             gameText.borderStyle = FlxTextBorderStyle.OUTLINE_FAST;
@@ -179,6 +185,6 @@ class TrainingState extends FlxState
         Reg.speed = 1;
         trace('gameIndex: $gameIndex');
 
-        Reg.gameSession.start(new GameSessionManager([Reg.gameList[gameIndex]]));
+        Reg.gameSession.start(new GameSessionManager([Reg.gameList[gameIndex]]), true);
     }
 }
