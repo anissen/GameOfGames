@@ -29,6 +29,7 @@ class InfoState extends FlxTransitionableState
 
         super.create();
 
+        // TODO: Text should be customizable through the constructor!
         var loseScreen = new DialogBox("Game Over", 'Score: ${Reg.score}', 'Highcore: ${Reg.highscore}', ColorScheme.RED);
         add(loseScreen);
         loseScreen.open();
