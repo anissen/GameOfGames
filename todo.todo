@@ -34,11 +34,11 @@ Games:
 Bugs:
     ☐ Crash on exit!
     ☐ Hexchain: Can make invalid chain
-    ☐ High score in training is counted as regular highscore
     ☐ Heart beat sound not playing on Android
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ High score in training is counted as regular highscore @done (18-09-14 21:17) @project(Bugs)
   ✔ Multiple: Can be interacted with when instructions dialog is showing @done (30-08-14 19:36) @project(Bugs)
   ✔ Read how-to-improve-your-productivity @done (30-08-14 19:28) @project(TODO)
   ✔ Make credits screen @done (30-08-14 19:28) @project(TODO)
