@@ -53,6 +53,7 @@ class Bounce extends GameState
         _ball.drawRect(1, 1, 10, 10, colorPool.pickColor());
         _ball.elasticity = 1;
         _ball.maxVelocity.set(350, 1500);
+        _ball.velocity.x = FlxG.random.float(-100, 100);
         _ball.velocity.y = -1500;
         
         walls = new FlxSpriteGroup();
