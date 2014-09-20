@@ -121,7 +121,7 @@ class ColorPool
         do {
             var index = FlxG.random.int(0, colors.length);
             color = colors[index];
-        } while (color != exceptColor);
+        } while (color == exceptColor);
         colors.remove(color);
         return color;
     }
