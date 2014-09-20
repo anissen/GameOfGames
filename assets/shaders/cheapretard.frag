@@ -64,7 +64,7 @@ void main(void)
     // col = clamp(col*0.5+0.5*col*col*1.2,0.0,1.0);          // tone curve
     col *= 0.3 + 0.7 * vignetteAmount * uv.x * uv.y * (1.0 - uv.x) * (1.0 - uv.y); // vignette
     // col *= vec3(0.7,1.0,0.6);                              // green tint
-    col *= 0.9 + 0.1 * sin(scanlinesScrollSpeed * uTime + uv.y * scanlinesScale);        // scanlines
+    col *= 0.95 + 0.05 * sin(scanlinesScrollSpeed * uTime + uv.y * scanlinesScale);        // scanlines
     col *= 1.0 - 0.05 * rand(vec2(uTime, tan(uTime)));          // random flicker
 
     // bloom
