@@ -60,17 +60,19 @@ class CreditsState extends FlxState
             var isHeading = (line.length > 0 && line.charAt(0) == "=");
             var gameText = new FlxText(0, 80 + lineNumber * 35, Settings.WIDTH, (isHeading ? line.substr(1) : line), (isHeading ? 23 : 18));
             // gameText.font = "assets/fonts/kenpixel_blocks.ttf";
-            gameText.color = ColorScheme.RED;
+            gameText.color = ColorScheme.randomExcept([ColorScheme.BLACK]);
             gameText.borderStyle = FlxTextBorderStyle.OUTLINE_FAST;
             gameText.borderSize = 1;
-            gameText.borderColor = ColorScheme.YELLOW;
+            gameText.borderColor = ColorScheme.BLACK;
             gameText.alignment = FlxTextAlign.CENTER;
             gameText.alpha = 0.0;
-            gameText.angle = FlxG.random.float(-90, 90);
-            gameText.x += - Settings.WIDTH / 2 + FlxG.random.float(Settings.WIDTH);
+            gameText.angle = FlxG.random.float(-5, 5);
+            gameText.scale.y = -1;
+            // gameText.x += - Settings.WIDTH / 2 + FlxG.random.float(Settings.WIDTH);
             add(gameText);
 
             FlxTween.tween(gameText, { alpha: 1, angle: 0, x: 0 }, 0.8, { startDelay: lineNumber * 0.15, ease: FlxEase.elasticInOut });
+            FlxTween.tween(gameText.scale, { y: 1 }, 0.8, { startDelay: lineNumber * 0.15, ease: FlxEase.elasticInOut });
 
             lineNumber++;
         }
@@ -92,20 +94,9 @@ class CreditsState extends FlxState
     {
         super.update(elapsed);
 
-        #if !FLX_NO_TOUCH
-        for (touch in FlxG.touches.list)
-        {
-            if (touch.justPressed && backButton.overlapsPoint(touch.getWorldPosition()))
-            {
-               onBackClicked();
-               break; 
-            }
-        }
-        #else
         if (FlxG.mouse.justPressed && backButton.overlapsPoint(FlxG.mouse.getWorldPosition())) {
             onBackClicked();
         }
-        #end
     }
 
     function onBackClicked()

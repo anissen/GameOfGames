@@ -100,6 +100,10 @@ class MultiTouch extends GameState
         #end
     }
 
+    function colorCircle(circle :FlxSprite, color :Int) {
+        circle.drawCircle(radius, radius, radius - 2, color);
+    }
+
     function circleTouched(circle: FlxSprite, index :Int, point :FlxPoint)
     {
         // already touched
@@ -107,10 +111,15 @@ class MultiTouch extends GameState
 
         // if any previous circle is missing, abort
         for (touchIndex in 0...index) {
-            if (!touchedCircles[touchIndex]) return;
+            if (!touchedCircles[touchIndex]) {
+                for (t in 0...index) { // color all touched circles red
+                    colorCircle(circles.members[t], ColorScheme.RED);
+                }
+                return;
+            }
         }
         touchedCircles[index] = true;
-        circle.drawCircle(radius, radius, radius - 2, ColorScheme.GREEN);
+        colorCircle(circle, ColorScheme.GREEN);
 
         success(point);
 
