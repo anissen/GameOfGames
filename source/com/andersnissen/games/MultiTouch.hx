@@ -74,7 +74,7 @@ class MultiTouch extends GameState
         #if !FLX_NO_TOUCH
         for (touch in FlxG.touches.list)
         {
-            if (touch.touchPointID >= circles.countAlive()) return;
+            if (touch.touchPointID >= circles.countLiving()) return;
             var circle = circles.members[touch.touchPointID];
 
             if (touch.justPressed)
