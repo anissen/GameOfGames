@@ -65,7 +65,7 @@ class TrainingState extends FlxState
             // gameIcon.scale.set(0.2, 0.2);
             gameInfo.add(gameIcon);
 
-            var highscore = Reg.getTrainingHighscore(gameName);
+            var highscore :Null<Int> = Reg.getTrainingHighscore(gameName);
             // trace('[TrainingState] Highscore for $gameName is $highscore');
             var highscoreText = "HI: ??";
             if (highscore != null)

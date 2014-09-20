@@ -46,7 +46,7 @@ class Reg
         return s;
     }
 
-    public static function getTrainingHighscore(gameId :String) :Int {
+    public static function getTrainingHighscore(gameId :String) :Null<Int> {
         return trainingScoresMap.get(gameId);
     }
 

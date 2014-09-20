@@ -60,7 +60,7 @@ class GameSession
     {
         if (training) {
             var gameName = gameManager.getGamesUnlockedList()[0]; // HACK
-            var highscore = Reg.getTrainingHighscore(gameName);
+            var highscore :Null<Int> = Reg.getTrainingHighscore(gameName);
             if (highscore == null || score > highscore) {
                 Reg.setTrainingHighscore(gameName, score);
             }
