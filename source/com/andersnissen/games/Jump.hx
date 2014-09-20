@@ -51,7 +51,7 @@ class Jump extends GameState
             obstacles.add(ShapeBuilder.createRect(x, y, width, height, color));
         } while (x < (3500 * speed));
 
-        add(obstacles);
+        addSpriteGroup(obstacles);
     }
 
     override function start() :Void

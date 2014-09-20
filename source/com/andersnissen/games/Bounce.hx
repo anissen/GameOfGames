@@ -4,6 +4,7 @@ import com.andersnissen.ColorScheme;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.math.FlxMath;
 import flixel.FlxState;
@@ -24,7 +25,7 @@ class Bounce extends GameState
 	var _ball :FlxSprite;
 	
     var bottomWall :FlxSprite;
-	var walls :FlxGroup;
+	var walls :FlxSpriteGroup;
     
     var _batWidth :Int = 100;
 
@@ -56,7 +57,7 @@ class Bounce extends GameState
 		_ball.maxVelocity.set(350, 1500);
 		_ball.velocity.y = -1500;
 		
-		walls = new FlxGroup();
+		walls = new FlxSpriteGroup();
 
         var wallColor = colorPool.pickColor();
 		
@@ -85,7 +86,7 @@ class Bounce extends GameState
 
         add(trailArea);
         add(_ball);
-        add(walls);
+        addSpriteGroup(walls);
 		add(_bat);
 
         // xText = new FlxText(0, 20, Settings.WIDTH, "x", 30);

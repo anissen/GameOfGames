@@ -51,7 +51,7 @@ class Overlap extends GameState
             }
         }
 
-        add(rectangles);
+        addSpriteGroup(rectangles);
     }
 
     override public function update(elapsed :Float) :Void

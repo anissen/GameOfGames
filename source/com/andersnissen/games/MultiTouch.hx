@@ -52,7 +52,7 @@ class MultiTouch extends GameState
             circles.add(circle);
             circleCount++;
 
-            var text = new FlxText(x, y + radius / 3, radius * 2, '#$circleCount', 30);
+            var text = new FlxText(x, y + radius / 2, radius * 2, '#$circleCount', 30);
             text.color = ColorScheme.WHITE;
             text.alignment = FlxTextAlign.CENTER;
             text.borderColor = ColorScheme.BLACK;
@@ -61,8 +61,8 @@ class MultiTouch extends GameState
             texts.add(text);
         }
 
-        add(circles);
-        add(texts);
+        addSpriteGroup(circles);
+        addSpriteGroup(texts);
     }
 
     override public function update(elapsed :Float):Void

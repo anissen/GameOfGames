@@ -57,7 +57,7 @@ class CollectDots extends GameState
             }
         }
 
-        add(dotSprites);
+        addSpriteGroup(dotSprites);
     }
 
     override public function update(elapsed :Float):Void
