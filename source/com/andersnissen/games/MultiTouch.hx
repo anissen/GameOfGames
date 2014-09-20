@@ -1,11 +1,11 @@
 package com.andersnissen.games;
 
 import com.andersnissen.ColorScheme;
+import com.andersnissen.ShapeBuilder;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.math.FlxPoint;
-import flixel.math.FlxRandom;
 import flixel.group.FlxSpriteGroup;
 import com.andersnissen.states.GameState;
 import flixel.text.FlxText;
@@ -45,10 +45,7 @@ class MultiTouch extends GameState
             });
             if (!validPosition) continue;
 
-            var circle = new FlxSprite(x, y);
-            circle.makeGraphic(radius * 2, radius * 2, ColorScheme.TRANSPARENT, true);
-            circle.drawCircle(radius, radius, radius, ColorScheme.BLACK);
-            circle.drawCircle(radius, radius, radius - 2, ColorScheme.randomExcept([ColorScheme.GREEN]));
+            var circle = ShapeBuilder.createCircle(x, y, radius, ColorScheme.randomExcept([ColorScheme.GREEN]));
             circles.add(circle);
             circleCount++;
 

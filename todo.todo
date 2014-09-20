@@ -7,12 +7,13 @@ TODO:
     ☐ Use "elapsed" to control game speed
     ☐ "Tutorial" screen
     --- ✄ -----------------------
-    ☐ Add game complexity setting (easy, medium, hard -- hard to begin with)
-    ☐ Improve vignette shader (see comments)
-    ☐ Remaining to high score + new game unlock after game + fun yes/no for testers
-    ☐ Google Analytics: https://github.com/fbricker/haxe-ga
-    ☐ Investigate more life-like animations: http://codepen.io/ayamflow/pen/LFexf?editors=001
-    ☐ Send data to Google docs
+    Maybe:
+        ☐ Add game complexity setting (easy, medium, hard -- hard to begin with)
+        ☐ Improve vignette shader (see comments)
+        ☐ Remaining to high score + new game unlock after game + fun yes/no for testers
+        ☐ Google Analytics: https://github.com/fbricker/haxe-ga
+        ☐ Investigate more life-like animations: http://codepen.io/ayamflow/pen/LFexf?editors=001
+        ☐ Send data to Google docs
 
 Games:
     ☐ Rope swinging (http://www.emanueleferonato.com/2013/09/10/creation-of-a-box2d-hook-like-the-one-seen-on-ios-mikey-hooks-game/)
@@ -28,7 +29,6 @@ Games:
     ☐ Untangle game (http://johntantalo.com/wiki/Planarity/)
     ☐ Multi-touch game (place fingers in the correct order)
     ☐ Click at the right time (like many games in WarioWare Inc.)
-    ☐ Tic-tac-toe (maybe stupid idea w.r.t faster speeds?)
 
 Bugs:
     ☐ Crash on exit!
@@ -38,6 +38,7 @@ Bugs:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✘ Tic-tac-toe (maybe stupid idea w.r.t faster speeds?) @cancelled (20-09-14 21:11) @project(Games)
   ✔ Clean up TOUCH where there is no multi-touch (use mouse click) @done (20-09-14 19:04) @project(TODO)
   ✔ High score in training is counted as regular highscore @done (18-09-14 21:17) @project(Bugs)
   ✔ Multiple: Can be interacted with when instructions dialog is showing @done (30-08-14 19:36) @project(Bugs)
