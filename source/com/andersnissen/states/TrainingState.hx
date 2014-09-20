@@ -102,13 +102,17 @@ class TrainingState extends FlxState
         backButton.alignment = "center";
         backButton.color = ColorScheme.ORANGE;
         backButton.borderStyle = FlxTextBorderStyle.OUTLINE;
-        backButton.borderColor = ColorScheme.MAROON;
+        backButton.borderColor = ColorScheme.BLACK;
         backButton.borderSize = 3.0;
         add(backButton);
 
         FlxTween.tween(backButton.scale, { x: 1.5, y: 1.5 }, 1, { type: FlxTween.PINGPONG, startDelay: 0.5 });
 
         super.create();
+
+        if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
+            FlxG.sound.playMusic(AssetPaths.Kris_Keyser___06___Nitro__ogg);
+        }
     }
     
     /**
