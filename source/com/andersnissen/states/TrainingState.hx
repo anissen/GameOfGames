@@ -73,8 +73,9 @@ class TrainingState extends FlxState
 
             var gameText = new FlxText(0, 162, 100, highscoreText, 20);
             gameText.font = "assets/fonts/kenpixel_blocks.ttf";
-            gameText.color = ColorScheme.BLUE;
-            gameText.borderStyle = FlxTextBorderStyle.OUTLINE_FAST;
+            gameText.color = ColorScheme.BLACK;
+            gameText.borderStyle = FlxTextBorderStyle.OUTLINE;
+            gameText.borderSize = 1;
             gameText.borderColor = ColorScheme.YELLOW;
             gameText.alignment = FlxTextAlign.CENTER;
             gameText.alpha = 0.0;
@@ -102,7 +103,7 @@ class TrainingState extends FlxState
         backButton.alignment = "center";
         backButton.color = ColorScheme.ORANGE;
         backButton.borderStyle = FlxTextBorderStyle.OUTLINE;
-        backButton.borderColor = ColorScheme.BLACK;
+        backButton.borderColor = ColorScheme.MAROON;
         backButton.borderSize = 3.0;
         add(backButton);
 

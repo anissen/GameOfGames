@@ -117,8 +117,6 @@ class HexChain extends GameState
                 }
 
                 hex.drawPolygon(polys.copy(), color, { color: ColorScheme.BLACK, thickness: 2.0 });
-
-                // flixel.tweens.FlxTween.tween(hex.scale, { x: -1 }, 1, { startDelay: (y + x) / 10 });
                 hexSprites.add(hex);
             }
         }

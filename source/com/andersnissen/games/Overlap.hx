@@ -1,6 +1,7 @@
 package com.andersnissen.games;
 
 import com.andersnissen.ColorScheme;
+import com.andersnissen.ShapeBuilder;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -12,7 +13,6 @@ import flixel.group.FlxGroup;
 
 using flixel.util.FlxSpriteUtil;
 
-import flixel.math.FlxRandom;
 import com.andersnissen.states.GameState;
 
 class Overlap extends GameState
@@ -40,11 +40,7 @@ class Overlap extends GameState
                     rectMap[x][y]++;
                     rectCount++;
 
-                    var rect = new FlxSprite(x * 96 + FlxG.random.float(-10, 10), y * 96 + FlxG.random.float(-10, 10));
-                    var width = FlxG.random.getObject([64, 96]);
-                    var height = FlxG.random.getObject([96, 128]);
-                    rect.makeGraphic(width, height, ColorScheme.TRANSPARENT, true);
-                    rect.drawRect(2, 2, width - 4, height - 4, ColorScheme.random(), { color: ColorScheme.BLACK, thickness: 2.0 });
+                    var rect = ShapeBuilder.createRect(x * 96 + FlxG.random.float(-10, 10), y * 96 + FlxG.random.float(-10, 10), FlxG.random.int(64, 96), FlxG.random.int(96, 128), colorPool.pickColorExcept(ColorScheme.GREEN));
                     rect.alpha = 0.7;
                     rectangles.add(rect);
                 }
@@ -60,34 +56,6 @@ class Overlap extends GameState
         
         super.update(elapsed);
 
-        #if !FLX_NO_TOUCH
-        for (touch in FlxG.touches.list)
-        {
-            if (touch.pressed)
-            {
-                if (movingRect == null) {
-                    rectangles.forEach(function (rect) {
-                        if (movingRect != null) return;
-                        if (rect.overlapsPoint(touch.getWorldPosition())) {
-                            movingRect = rect;
-                        }
-                    });
-                }
-                if (movingRect != null) {
-                    movingRect.setPosition(touch.getWorldPosition().x - movingRect.width / 2, touch.getWorldPosition().y - movingRect.height / 2);
-                    if (FlxG.overlap(movingRect, rectangles)) {
-                        FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
-                    }
-                }
-            } else if (touch.justReleased) {
-                if (!FlxG.overlap(movingRect, rectangles)) {
-                    success(movingRect.getMidpoint());
-                }
-
-                movingRect = null;
-            }
-        }
-        #else
         if (FlxG.mouse.pressed) {
             var pos = FlxG.mouse.getWorldPosition();
             if (movingRect == null) {
@@ -101,17 +69,17 @@ class Overlap extends GameState
             if (movingRect != null) {
                 movingRect.setPosition(pos.x - movingRect.width / 2, pos.y - movingRect.height / 2);
                 if (FlxG.overlap(movingRect, rectangles)) {
-                    FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
+                    FlxG.camera.shake(0.01, 0.05);
+                } else {
+                    movingRect.drawRect(2, 2, movingRect.width - 4, movingRect.height - 4, ColorScheme.GREEN);
                 }
             }
         } else if (FlxG.mouse.justReleased) {
             if (!FlxG.overlap(movingRect, rectangles)) {
                 success(movingRect.getMidpoint());
             }
-
             movingRect = null;
         }
-        #end
 
         var overlaps = FlxG.overlap(rectangles, rectangles);
         if (!overlaps && movingRect == null) {

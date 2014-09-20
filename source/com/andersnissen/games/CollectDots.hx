@@ -67,23 +67,23 @@ class CollectDots extends GameState
         super.update(elapsed);
 
         #if !FLX_NO_TOUCH
-        for (touch in FlxG.touches.list)
-        {
-            if (touch.pressed)
+            for (touch in FlxG.touches.list)
             {
+                if (touch.pressed)
+                {
+                    dotSprites.forEachAlive(function(dot :FlxSprite) {
+                        if (!touch.overlaps(dot)) return;
+                        dotTouched(dot, touch.getWorldPosition());
+                    });
+                }
+            }
+        #else
+            if (FlxG.mouse.pressed) {
                 dotSprites.forEachAlive(function(dot :FlxSprite) {
-                    if (!touch.overlaps(dot)) return;
-                    dotTouched(dot, touch.getWorldPosition());
+                    if (!dot.overlapsPoint(FlxG.mouse.getWorldPosition())) return;
+                    dotTouched(dot, FlxG.mouse.getWorldPosition());
                 });
             }
-        }
-        #else
-        if (FlxG.mouse.pressed) {
-            dotSprites.forEachAlive(function(dot :FlxSprite) {
-                if (!dot.overlapsPoint(FlxG.mouse.getWorldPosition())) return;
-                dotTouched(dot, FlxG.mouse.getWorldPosition());
-            });
-        }
         #end
     }
 
@@ -101,7 +101,6 @@ class CollectDots extends GameState
         dot.kill();
 
         success(point);
-        // FlxG.camera.shake(0.01 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
 
         if (dotsToCollect.length == 0) {
             win();

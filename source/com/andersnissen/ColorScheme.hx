@@ -98,10 +98,36 @@ class ColorPool
 
     public function pickColor() :Int
     {
+        if (colors.length == 0) {
+            trace("Warning: Color pool is out of colors!");
+            return ColorScheme.BLACK;
+        }
         var index = FlxG.random.int(0, colors.length);
         var color = colors[index];
         colors.remove(color);
         return color;
+    }
+
+    public function pickColorExcept(exceptColor :Int) :Int
+    {
+        if (colors.length == 0) {
+            trace("Warning: Color pool is out of colors!");
+            return ColorScheme.BLACK;
+        } else if (colors.length == 1 && colors[0] == exceptColor) {
+            trace("Warning: Color pool only has forbidden color!");
+            return ColorScheme.BLACK;
+        }
+        var color;
+        do {
+            var index = FlxG.random.int(0, colors.length);
+            color = colors[index];
+        } while (color != exceptColor);
+        colors.remove(color);
+        return color;
+    }
+
+    public function count() :Int {
+        return colors.length;
     }
 }
 

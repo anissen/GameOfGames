@@ -86,20 +86,10 @@ class Lasers extends GameState
 
         laserSprite.y = laserPoint.getMidpoint().y;
 
-        #if !FLX_NO_TOUCH
-        for (touch in FlxG.touches.list)
-        {
-            if (touch.pressed)
-            {
-                playerSprite.setPosition(touch.x - playerSprite.width / 2, touch.y - playerSprite.height / 2);
-            }
-        }
-        #else
         if (FlxG.mouse.pressed) {
             var pos = FlxG.mouse.getWorldPosition();
             playerSprite.setPosition(pos.x - playerSprite.width / 2, pos.y - playerSprite.height / 2);
         }
-        #end
     }
 
     function makeLaser(timer :FlxTimer) :Void

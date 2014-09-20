@@ -62,6 +62,8 @@ class GameState extends FlxTransitionableState
     var spriteGroupsToAdd :Array<FlxSpriteGroup>;
     var totalSpritesToAdd :Int;
 
+    var colorPool :ColorPool;
+
     public var onWin :FlxSignal;
     public var onLose :FlxSignal;
 
@@ -80,7 +82,7 @@ class GameState extends FlxTransitionableState
      */
     override public function create() :Void
     {
-        backgroundColor = ColorScheme.randomExcept([ColorScheme.GREEN, ColorScheme.RED]);
+        backgroundColor = ColorScheme.randomExcept([ColorScheme.GREEN, ColorScheme.RED, ColorScheme.BLACK, ColorScheme.WHITE]);
         backgroundSprite = new FlxSprite(0, 0);
         backgroundSprite.makeGraphic(Settings.WIDTH, Settings.HEIGHT, backgroundColor);
         add(backgroundSprite);
@@ -88,7 +90,9 @@ class GameState extends FlxTransitionableState
         timerSprite = new FlxSprite(0, 0);
         timerSprite.makeGraphic(Settings.WIDTH, 0);
         add(timerSprite);
-        
+
+        colorPool = new ColorPool([this.backgroundColor, ColorScheme.RED, ColorScheme.GREEN]);
+
         spriteGroupsToAdd = new Array<FlxSpriteGroup>();
         totalSpritesToAdd = 0;
         setup();
@@ -99,7 +103,7 @@ class GameState extends FlxTransitionableState
 
         var isNewUnlockedGame = Reg.gameManager.isNewGame();
 
-        var maxDelay = (isNewUnlockedGame ? 3.0 : 0.5) / speed; // 3.0 or 0.5 seconds, corrected by speed
+        var maxDelay = (isNewUnlockedGame ? 2.5 : 0.5) / speed; // 2.5 or 0.5 seconds, corrected by speed
         var delay :Float = 0;
         for (spriteGroup in spriteGroupsToAdd) {
             spriteGroup.visible = true;
@@ -111,8 +115,13 @@ class GameState extends FlxTransitionableState
                 var spriteEndScaleY = sprite.scale.y;
                 sprite.scale.set(0, 0);
                 FlxTween.tween(sprite.scale, { x: spriteEndScaleX, y: spriteEndScaleY }, 0.5, { startDelay: delay, ease: FlxEase.elasticInOut, onStart: playSound });
-                sprite.y += 30;
-                FlxTween.tween(sprite, { y: sprite.y - 30 }, 0.5, { startDelay: delay, ease: FlxEase.elasticInOut });
+                var originalX = sprite.x;
+                var originalY = sprite.y;
+                var originalAngle = sprite.angle;
+                sprite.x += FlxG.random.float(-40, 40);
+                sprite.y += FlxG.random.float(-40, 40);
+                sprite.angle += FlxG.random.float(-2, 2);
+                FlxTween.tween(sprite, { x: originalX, y: originalY, angle: originalAngle }, 0.7, { startDelay: delay, ease: FlxEase.elasticInOut });
                 delay += maxDelay / totalSpritesToAdd;
             }
         }
