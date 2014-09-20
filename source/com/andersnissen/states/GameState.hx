@@ -59,6 +59,9 @@ class GameState extends FlxTransitionableState
     // Instructions box
     var instructions :DialogBox;
 
+    var spriteGroupsToAdd :Array<FlxSpriteGroup>;
+    var totalSpritesToAdd :Int;
+
     public var onWin :FlxSignal;
     public var onLose :FlxSignal;
 
@@ -86,7 +89,33 @@ class GameState extends FlxTransitionableState
         timerSprite.makeGraphic(Settings.WIDTH, 0);
         add(timerSprite);
         
+        spriteGroupsToAdd = new Array<FlxSpriteGroup>();
+        totalSpritesToAdd = 0;
         setup();
+
+        function playSound(tween :FlxTween) {
+            FlxG.sound.play("assets/sounds/click" + FlxG.random.int(1, 3) + ".ogg");
+        }
+
+        var isNewUnlockedGame = Reg.gameManager.isNewGame();
+
+        var maxDelay = (isNewUnlockedGame ? 3.0 : 0.5) / speed; // 3.0 or 0.5 seconds, corrected by speed
+        var delay :Float = 0;
+        for (spriteGroup in spriteGroupsToAdd) {
+            spriteGroup.visible = true;
+            for (sprite in spriteGroup.members) {
+                sprite.antialiasing = true;
+                sprite.pixelPerfectRender = false;
+
+                var spriteEndScaleX = sprite.scale.x;
+                var spriteEndScaleY = sprite.scale.y;
+                sprite.scale.set(0, 0);
+                FlxTween.tween(sprite.scale, { x: spriteEndScaleX, y: spriteEndScaleY }, 0.5, { startDelay: delay, ease: FlxEase.elasticInOut, onStart: playSound });
+                sprite.y += 30;
+                FlxTween.tween(sprite, { y: sprite.y - 30 }, 0.5, { startDelay: delay, ease: FlxEase.elasticInOut });
+                delay += maxDelay / totalSpritesToAdd;
+            }
+        }
 
         timerSpriteColor = switch (winningCondition) {
             case Survive: ColorScheme.GREEN;
@@ -96,7 +125,6 @@ class GameState extends FlxTransitionableState
 
         this.transIn.color = backgroundColor; //ColorScheme.random();
 
-        var isNewUnlockedGame = Reg.gameManager.isNewGame();
         if (isNewUnlockedGame) {
             showInstructions();
         }
@@ -142,9 +170,9 @@ class GameState extends FlxTransitionableState
                 if (!gameActive) return;
                 FlxG.sound.play("assets/sounds/heartbeat.ogg", 1);
             }, 0);
-            new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
-                takeScreenshot();
-            });
+            // new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
+            //     takeScreenshot();
+            // });
             gameActive = true;
             gameTimer = new FlxTimer(5 / Reg.speed, timesUp);
         });
@@ -162,11 +190,7 @@ class GameState extends FlxTransitionableState
             ];
             var track = FlxG.random.getObject(musicFiles);
             // trace('Now playing "$track"');
-            #if (neko)
-            FlxG.sound.playMusic("assets/music/" + track, null, false);
-            #else
             FlxG.sound.playMusic("assets/music/" + track);
-            #end
         }
     }
 
@@ -199,29 +223,22 @@ class GameState extends FlxTransitionableState
         // overridden by inheriting class
     }
 
-    function addSprite(sprite :FlxSprite) :flixel.FlxBasic {
+    // function addSpriteAnimated(sprite :FlxSprite, ?options :TweenOptions) :FlxSprite {
+    //
+    // }
+
+    function addSprite(sprite :FlxSprite) :FlxSprite {
         sprite.antialiasing = true;
         sprite.pixelPerfectRender = false;
-        return super.add(sprite);
+        super.add(sprite);
+        return sprite;
     }
 
-    function addSpriteGroup(spriteGroup :FlxSpriteGroup) :flixel.FlxBasic {
-        function playSound(tween :FlxTween) {
-            FlxG.sound.play("assets/sounds/click" + FlxG.random.int(1, 3) + ".ogg");
-        }
-
-        var delay :Float = 0;
-        for (sprite in spriteGroup.members) {
-            sprite.antialiasing = true;
-            sprite.pixelPerfectRender = false;
-
-            var spriteEndScaleX = sprite.scale.x;
-            var spriteEndScaleY = sprite.scale.y;
-            sprite.scale.set(0, 0);
-            FlxTween.tween(sprite.scale, { x: spriteEndScaleX, y: spriteEndScaleY }, 0.4, { startDelay: delay, ease: FlxEase.elasticOut, onStart: playSound });
-            delay += 0.01;
-        }
-        return super.add(spriteGroup);
+    function addSpriteGroup(spriteGroup :FlxSpriteGroup) {
+        spriteGroupsToAdd.push(spriteGroup);
+        spriteGroup.visible = false;
+        totalSpritesToAdd += spriteGroup.members.length;
+        super.add(spriteGroup);
     }
     
     /**
