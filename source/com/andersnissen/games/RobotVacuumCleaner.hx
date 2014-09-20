@@ -31,7 +31,7 @@ class RobotVacuumCleaner extends GameState
         controls = "???";
         winningCondition = WinningCondition.CompleteObjective;
 
-        MAX_CIRCLES = FlxG.random.int(5, 10);
+        MAX_CIRCLES = FlxG.random.int(2, 6);
 
         circles = new FlxSpriteGroup();
 
@@ -70,12 +70,12 @@ class RobotVacuumCleaner extends GameState
         super.update(elapsed);
 
         if (FlxG.mouse.pressed) {
-            robotSprite.velocity.addPoint(FlxVelocity.velocityFromAngle(robotSprite.angle, 20 * Reg.speed));
+            robotSprite.velocity.addPoint(FlxVelocity.velocityFromAngle(robotSprite.angle, 60 * Reg.speed));
             robotSprite.bound(0, Settings.WIDTH, 0, Settings.HEIGHT);
             // TODO: Maybe use FlxCollision.createCameraWall
         } else {
             robotSprite.velocity.set(0, 0);
-            robotSprite.angle += 200 * elapsed * Reg.speed;
+            robotSprite.angle += 400 * elapsed * Reg.speed;
         }
 
         var directionPos = robotSprite.getMidpoint().addPoint(FlxVelocity.velocityFromAngle(robotSprite.angle, robotRadius));

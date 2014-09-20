@@ -19,7 +19,6 @@ Games:
     ☐ Rope swinging (http://www.emanueleferonato.com/2013/09/10/creation-of-a-box2d-hook-like-the-one-seen-on-ios-mikey-hooks-game/)
     ☐ Swiping (?)
     ☐ Match game
-    ☐ Vacuum game (rotating vacuum cleaners)
     ☐ Some physics game
     ☐ Color confusion (e.g. label says "green" but color is blue)
     ☐ A game about squares (http://gameaboutsquares.com/)
@@ -38,6 +37,7 @@ Bugs:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Vacuum game (rotating vacuum cleaners) @done (20-09-14 22:23) @project(Games)
   ✘ Tic-tac-toe (maybe stupid idea w.r.t faster speeds?) @cancelled (20-09-14 21:11) @project(Games)
   ✔ Clean up TOUCH where there is no multi-touch (use mouse click) @done (20-09-14 19:04) @project(TODO)
   ✔ High score in training is counted as regular highscore @done (18-09-14 21:17) @project(Bugs)
