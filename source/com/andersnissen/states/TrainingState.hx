@@ -144,26 +144,6 @@ class TrainingState extends FlxState
             }
         }
 
-        #if !FLX_NO_TOUCH
-        for (touch in FlxG.touches.list)
-        {
-            if (touch.justPressed && backButton.overlapsPoint(touch.getWorldPosition()))
-            {
-               onBackClicked();
-               break;
-            }
-
-            if (touch.justPressed) {
-                for (gameIndex in 0...gameList.countLiving()) {
-                    var game = gameList.members[gameIndex];
-                    if (game.overlapsPoint(touch.getWorldPosition())) {
-                        onGameClicked(gameIndex);
-                        return;
-                    }
-                }
-            }
-        }
-        #else
         if (FlxG.mouse.justPressed && backButton.overlapsPoint(FlxG.mouse.getWorldPosition())) {
             onBackClicked();
         }
@@ -177,7 +157,6 @@ class TrainingState extends FlxState
                 }
             }
         }
-        #end
     }
 
     function onBackClicked()

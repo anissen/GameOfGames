@@ -230,24 +230,6 @@ class MenuState extends FlxState
         playButton.borderSize = Math.abs(Math.cos(Sys.time() * 3) * 4);
         #end
 
-        #if !FLX_NO_TOUCH
-        for (touch in FlxG.touches.list)
-        {
-            if (!touch.justPressed) continue;
-
-            if (playButton.overlapsPoint(touch.getWorldPosition()))
-            {
-               onPlayClicked();
-               break; 
-            } else if (trainingButton.overlapsPoint(touch.getWorldPosition())) {
-                onTrainingClicked();
-                break;
-            } else if (creditsButton.overlapsPoint(touch.getWorldPosition())) {
-                onCreditsClicked();
-                break;
-            }
-        }
-        #else
         if (!FlxG.mouse.justPressed) return;
         if (playButton.overlapsPoint(FlxG.mouse.getWorldPosition())) {
             onPlayClicked();
@@ -256,7 +238,6 @@ class MenuState extends FlxState
         } else if (creditsButton.overlapsPoint(FlxG.mouse.getWorldPosition())) {
             onCreditsClicked();
         }
-        #end
 	}
 
     function onPlayClicked()
