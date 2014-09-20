@@ -169,15 +169,15 @@ class MenuState extends FlxState
         createTrainingButton();
         createCreditsButton();
 
-        #if (debug)
-        var resetButton = new FlxButton(Settings.WIDTH / 2, 600, "Reset Progress", function () {
-            Reg.highscore = 0;
-            Reg.speed = 1;
-            Reg.gameManager.reset();
-        });
-        resetButton.setPosition(resetButton.x - resetButton.width / 2, resetButton.y - resetButton.height / 2);
-        add(resetButton);
-        #end
+        // #if (debug)
+        // var resetButton = new FlxButton(Settings.WIDTH / 2, 600, "Reset Progress", function () {
+        //     Reg.highscore = 0;
+        //     Reg.speed = 1;
+        //     Reg.gameManager.reset();
+        // });
+        // resetButton.setPosition(resetButton.x - resetButton.width / 2, resetButton.y - resetButton.height / 2);
+        // add(resetButton);
+        // #end
 
         // var textfield = new openfl.text.TextField();
         // textfield.x = 40;
@@ -193,12 +193,7 @@ class MenuState extends FlxState
     function playMusic() :Void
     {
         if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
-            #if (neko)
-            // Attempt to fix looping music crash bug on neko
-            FlxG.sound.playMusic(AssetPaths.Kris_Keyser___06___Nitro__ogg, null, false);
-            #else
             FlxG.sound.playMusic(AssetPaths.Kris_Keyser___06___Nitro__ogg);
-            #end
         }
     }
 	
