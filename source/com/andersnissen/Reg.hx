@@ -76,7 +76,7 @@ class Reg
     public static var networkManager :NetworkManager;
     public static var gameSession :GameSession;
 
-    public static var gameList :Array<Class<GameState>> = [HexChain, Jump, MultiTouch, Bounce, Overlap, CollectDots, Lasers];
+    public static var gameList :Array<Class<GameState>> = [HexChain, Jump, MultiTouch, Bounce, Overlap, CollectDots, /* Lasers, */ RobotVacuumCleaner];
 
     // public static var vignette :PostProcess;
     public static function setPostprocessingAmount(amount :Float) {
