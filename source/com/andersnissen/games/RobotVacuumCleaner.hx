@@ -12,8 +12,6 @@ import com.andersnissen.states.GameState;
 import flixel.math.FlxVelocity;
 import flixel.text.FlxText;
 
-using flixel.util.FlxSpriteUtil;
-
 class RobotVacuumCleaner extends GameState
 {
     var robotSprite :FlxSprite;
@@ -70,9 +68,8 @@ class RobotVacuumCleaner extends GameState
         super.update(elapsed);
 
         if (FlxG.mouse.pressed) {
-            robotSprite.velocity.addPoint(FlxVelocity.velocityFromAngle(robotSprite.angle, 60 * Reg.speed));
-            robotSprite.bound(0, Settings.WIDTH, 0, Settings.HEIGHT);
-            // TODO: Maybe use FlxCollision.createCameraWall
+            robotSprite.velocity.addPoint(FlxVelocity.velocityFromAngle(robotSprite.angle, 700 * elapsed * Reg.speed));
+            wallBounce(robotSprite);
         } else {
             robotSprite.velocity.set(0, 0);
             robotSprite.angle += 400 * elapsed * Reg.speed;
@@ -91,5 +88,24 @@ class RobotVacuumCleaner extends GameState
         if (circles.countLiving() == 0) {
             win();
         }
+    }
+
+    function wallBounce(sprite :FlxSprite) {
+        if (sprite.x <= 0) {
+            sprite.x = 0;
+            sprite.velocity.x *= -0.5;
+        }
+        if (sprite.y <= 0) {
+            sprite.y = 0;
+            sprite.velocity.y *= -0.5;
+        }
+        if (sprite.x >= Settings.WIDTH - sprite.width) {
+            sprite.x = Settings.WIDTH - sprite.width;
+            sprite.velocity.x *= -0.5;
+        }
+        if (sprite.y >= Settings.HEIGHT - sprite.height) {
+            sprite.y = Settings.HEIGHT - sprite.height;
+            sprite.velocity.y *= -0.5;
+        }    
     }
 }
