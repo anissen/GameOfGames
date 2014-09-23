@@ -68,7 +68,7 @@ class RobotVacuumCleaner extends GameState
         super.update(elapsed);
 
         if (FlxG.mouse.pressed) {
-            robotSprite.velocity.addPoint(FlxVelocity.velocityFromAngle(robotSprite.angle, 700 * elapsed * Reg.speed));
+            robotSprite.velocity.addPoint(FlxVelocity.velocityFromAngle(robotSprite.angle, 1000 * elapsed * Reg.speed));
             wallBounce(robotSprite);
         } else {
             robotSprite.velocity.set(0, 0);
@@ -79,7 +79,9 @@ class RobotVacuumCleaner extends GameState
         directionSprite.setPosition(directionPos.x - 4, directionPos.y - 4);
 
         circles.forEachAlive(function(circle) {
-            if (robotSprite.toPoint().distanceTo(circle.toPoint()) <= vacuumRange) {
+            var moveSpeed = (1 / circle.toPoint().distanceTo(robotSprite.toPoint())) * 300000 * elapsed * Reg.speed;
+            FlxVelocity.moveTowardsObject(circle, robotSprite, moveSpeed);
+            if (robotSprite.toPoint().distanceTo(circle.toPoint()) <= robotRadius) {
                 success(circle.toPoint());
                 circle.kill();
             }
