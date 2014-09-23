@@ -6,7 +6,6 @@ TODO:
     ☐ Put sounds on everything 
     ☐ Use "elapsed" to control game speed
     ☐ "Tutorial" screen
-    ☐ Robot vacuum game: Move faster, debris move toward vacuum
     ☐ Game quick-info screen:
              Game 5/6
         C H A I N   R E D !
@@ -32,7 +31,6 @@ Games:
     ☐ Game mechanics (http://gamemechanicexplorer.com)
     ☐ Game mechanics - HaxeFlixel (http://gme.kasoki.de/)
     ☐ Untangle game (http://johntantalo.com/wiki/Planarity/)
-    ☐ Multi-touch game (place fingers in the correct order)
     ☐ Click at the right time (like many games in WarioWare Inc.)
 
 Bugs:
@@ -43,6 +41,8 @@ Bugs:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Robot vacuum game: Move faster, debris move toward vacuum @done (23-09-14 19:32) @project(TODO)
+  ✔ Multi-touch game (place fingers in the correct order) @done (23-09-14 19:32) @project(Games)
   ✔ Vacuum game (rotating vacuum cleaners) @done (20-09-14 22:23) @project(Games)
   ✘ Tic-tac-toe (maybe stupid idea w.r.t faster speeds?) @cancelled (20-09-14 21:11) @project(Games)
   ✔ Clean up TOUCH where there is no multi-touch (use mouse click) @done (20-09-14 19:04) @project(TODO)
