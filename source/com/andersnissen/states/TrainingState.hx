@@ -24,7 +24,6 @@ class TrainingState extends FlxState
 {
     var titleText :FlxText;
     var backButton :FlxText;
-
     var gameList :FlxSpriteGroup;
 
     /**
@@ -61,12 +60,9 @@ class TrainingState extends FlxState
             gameInfo.add(background);
 
             var gameIcon = new FlxSprite(5, 5, "assets/images/small_games/" + gameName + ".png");
-            // gameIcon.origin.set(0, 0);
-            // gameIcon.scale.set(0.2, 0.2);
             gameInfo.add(gameIcon);
 
             var highscore :Null<Int> = Reg.getTrainingHighscore(gameName);
-            // trace('[TrainingState] Highscore for $gameName is $highscore');
             var highscoreText = "HI: ??";
             if (highscore != null)
                 highscoreText = "HI: " + highscore;
@@ -84,19 +80,15 @@ class TrainingState extends FlxState
             gameList.add(gameInfo);
 
             gameInfo.forEach(function(sprite) {
-                // var originalScaleX = sprite.scale.x;
-                // var originalScaleY = sprite.scale.y;
-                // sprite.scale.set(0, 0);
                 sprite.alpha = 0;
                 sprite.angle = FlxG.random.float(-18, 18);
                 sprite.y += 30;
-                FlxTween.tween(sprite, { alpha: 1, y: sprite.y - 30 }, 0.4, { startDelay: gameCount * 0.2, ease: FlxEase.elasticInOut });
-                FlxTween.angle(sprite, sprite.angle, 0.1, { startDelay: gameCount * 0.2 - 0.1, ease: FlxEase.elasticInOut });
+                FlxTween.tween(sprite, { alpha: 1, y: sprite.y - 30 }, 0.4, { startDelay: gameCount * 0.1, ease: FlxEase.elasticInOut });
+                FlxTween.angle(sprite, sprite.angle, 0.1, { startDelay: gameCount * 0.1 - 0.1, ease: FlxEase.elasticInOut });
             });
 
             gameCount++;
         }
-
         add(gameList);
 
         backButton = new FlxText(0, Settings.HEIGHT - 80, Settings.WIDTH, 'Back', 30);
@@ -133,11 +125,9 @@ class TrainingState extends FlxState
         super.update(elapsed);
 
         for (swipe in FlxG.swipes) {
-            // trace(swipe);
             if (swipe.duration < 0.5 && swipe.distance > 50) {
                 if (swipe.angle > -45 && swipe.angle < 45) {
                     FlxTween.tween(gameList, { y: gameList.y - 205 }, 0.3, { ease: FlxEase.elasticInOut });
-                    
                 } else if (swipe.angle > -(180 - 45) && swipe.angle < (180 + 45)) {
                     FlxTween.tween(gameList, { y: gameList.y + 205 }, 0.3, { ease: FlxEase.elasticInOut });
                 }
@@ -166,9 +156,6 @@ class TrainingState extends FlxState
 
     function onGameClicked(gameIndex :Int)
     {
-        Reg.speed = 1;
-        trace('gameIndex: $gameIndex');
-
         Reg.gameSession.start(new GameSessionManager([Reg.gameList[gameIndex]]), true);
     }
 }
