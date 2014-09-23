@@ -4,13 +4,13 @@ TODO:
     ☐ Improve instruction screen
     ☐ Improve sprite start-up/end effects
     ☐ Put sounds on everything 
-    ☐ Use "elapsed" to control game speed
     ☐ "Tutorial" screen
     ☐ Game quick-info screen:
              Game 5/6
         C H A I N   R E D !
     ☐ Fix colors in "Avoid Overlap"
     ☐ Fix colors in "MultiTouch"
+    ☐ Refactor GameSessionManager (e.g. unit test?)
     --- ✄ -----------------------
     Maybe:
         ☐ Add game complexity setting (easy, medium, hard -- hard to begin with)
@@ -41,6 +41,7 @@ Bugs:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Use "elapsed" to control game speed @done (23-09-14 20:19) @project(TODO)
   ✔ Robot vacuum game: Move faster, debris move toward vacuum @done (23-09-14 19:32) @project(TODO)
   ✔ Multi-touch game (place fingers in the correct order) @done (23-09-14 19:32) @project(Games)
   ✔ Vacuum game (rotating vacuum cleaners) @done (20-09-14 22:23) @project(Games)

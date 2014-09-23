@@ -106,7 +106,7 @@ class Bounce extends GameState
     override function updateGame(elapsed :Float) :Void
     {
         _bat.velocity.x = 0;
-        _ball.velocity.y += 35 * elapsed;
+        _ball.velocity.y += 200 * elapsed;
 
         #if mobile
         if (FlxG.accelerometer.isSupported) {
@@ -175,7 +175,7 @@ class Bounce extends GameState
             ball.velocity.x = 2 + FlxG.random.int(0, 8);
             ball.angularVelocity = 0;
         }
-        ball.velocity.y = -1500 * speed;
+        ball.velocity.y = -1000 - 500 * speed;
         success(ball.getMidpoint());
     }
 }
