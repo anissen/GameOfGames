@@ -6,6 +6,14 @@ import flixel.util.FlxSave;
 import com.andersnissen.states.GameState;
 import com.andersnissen.games.*;
 
+typedef GameInfo = {
+    game: GameState,
+    gameName: String,
+    unlockedGame: Bool,
+    gameIndex :Int,
+    batchSize :Int
+};
+
 class GameSessionManager
 {
     var gameList :Array<Class<GameState>>;
@@ -13,6 +21,7 @@ class GameSessionManager
     var gamesUnlocked :Array<Class<GameState>> = [];
     var gamesPlayed :Array<Class<GameState>> = [];
     var currentGameBatch :Array<Class<GameState>> = [];
+    var batchSize :Int;
     var newGameUnlocked :Bool = false;
 
     public function new(list :Array<Class<GameState>>) :Void
@@ -41,6 +50,7 @@ class GameSessionManager
                 newGameUnlocked = true;
             }
 
+            batchSize = currentGameBatch.length;
             // var batchString = [for (g in currentGameBatch) getGameName(g)].join(", ");
             // trace('currentGameBatch: [$batchString]');
         }
@@ -72,7 +82,7 @@ class GameSessionManager
 
         Reg.save.data.unlockCount = gamesUnlocked.length;
         Reg.save.flush();
-        trace('Unlocked new game: ${getGameName(unlockedGame)}');
+        // trace('Unlocked new game: ${getGameName(unlockedGame)}');
         // onGameUnlocked.dispatch();
 
         return unlockedGame;
@@ -86,9 +96,17 @@ class GameSessionManager
         return qualifiedName.substr(lastDotPos + 1);
     }
 
-    public function getNextGame() :GameState
+    public function getNext() :GameInfo
     {
-        return Type.createInstance(getNextGameClass(), []);
+        var nextGameClass = getNextGameClass();
+        var nextGame = Type.createInstance(getNextGameClass(), []);
+        return { 
+            game: nextGame,
+            gameName: getGameName(nextGameClass),
+            gameIndex: batchSize - currentGameBatch.length,
+            batchSize: batchSize,
+            unlockedGame: newGameUnlocked
+        };
     }
 
     public function getGame(index :Int) :GameState

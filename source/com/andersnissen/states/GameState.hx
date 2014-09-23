@@ -34,6 +34,7 @@ enum WinningCondition
 class GameState extends FlxTransitionableState
 {
     var name :String = "Nameless Game";
+    var hints :String = "???";
     var description :String = "???";
     var controls :String = "???";
     var winningCondition :WinningCondition = WinningCondition.Survive;
@@ -67,6 +68,11 @@ class GameState extends FlxTransitionableState
     public var onWin :FlxSignal;
     public var onLose :FlxSignal;
 
+    var introText :FlxSpriteGroup;
+
+    public var gameIndex :Int;
+    public var gameBatchSize :Int;
+
     public function new() :Void
     {
         super();
@@ -75,6 +81,38 @@ class GameState extends FlxTransitionableState
 
         this.transIn = FlxTransitionableState.defaultTransIn;
         this.transOut = FlxTransitionableState.defaultTransOut;
+    }
+
+    function createText(text :String, y :Float, textSize :Int, color :Int, borderStyle :FlxTextBorderStyle, borderColor :Int = FlxColor.BLACK, ?borderSize :Float = 0.0)
+    {
+        var textButton = new FlxText(0, y, Settings.WIDTH, text, textSize);
+        textButton.alignment = "center";
+        textButton.color = color;
+        textButton.borderStyle = borderStyle;
+        textButton.borderColor = borderColor;
+        textButton.borderSize = borderSize;
+        return textButton;
+    }
+
+    function createIntroText() :FlxSpriteGroup
+    {
+        var introGroup = new FlxSpriteGroup();
+        var titleText = createText(hints, Settings.HEIGHT / 3, 48, ColorScheme.BLACK, FlxTextBorderStyle.SHADOW, ColorScheme.SILVER, 10);
+        introGroup.add(titleText);
+        introGroup.add(createText('Game $gameIndex / $gameBatchSize', titleText.y - 20, 18, ColorScheme.BLACK, FlxTextBorderStyle.OUTLINE, ColorScheme.SILVER, 2));
+        return introGroup;
+    }
+
+    function showIntroText() {
+        introText = createIntroText();
+        introText.angle = -5;
+        FlxTween.tween(introText.scale, { x: 1, y: 1 }, 0.3 / speed, { ease: FlxEase.elasticInOut });
+        FlxTween.tween(introText, { angle: -2 }, 1.0 / speed, { type: FlxTween.PINGPONG });
+        add(introText);
+    }
+
+    function hideIntroText() {
+        FlxTween.tween(introText.scale, { x: 0, y: 0 }, 0.3 / speed, { ease: FlxEase.elasticInOut });
     }
 
     /**
@@ -103,7 +141,7 @@ class GameState extends FlxTransitionableState
 
         var isNewUnlockedGame = Reg.gameManager.isNewGame();
 
-        var maxDelay = (isNewUnlockedGame ? 2.5 : 0.5) / speed; // 2.5 or 0.5 seconds, corrected by speed
+        var maxDelay = (isNewUnlockedGame ? 2.5 : 1.5) / speed; // 2.5 or 0.5 seconds, corrected by speed
         var delay :Float = 0;
         for (spriteGroup in spriteGroupsToAdd) {
             spriteGroup.visible = true;
@@ -132,10 +170,12 @@ class GameState extends FlxTransitionableState
             default: ColorScheme.random();
         };
 
-        this.transIn.color = backgroundColor; //ColorScheme.random();
+        this.transIn.color = backgroundColor;
 
         if (isNewUnlockedGame) {
             showInstructions();
+        } else {
+            showIntroText();
         }
 
         var particleCount = 200;
@@ -167,10 +207,12 @@ class GameState extends FlxTransitionableState
             #end
         }
 
-        var timeBeforeStarting = this.transIn.duration / 2 + (isNewUnlockedGame ? 3 : 0) / speed;
+        var timeBeforeStarting = this.transIn.duration / 2 + (isNewUnlockedGame ? 3 : 2) / speed;
         gameStartTimer = new FlxTimer(timeBeforeStarting, function(_ :FlxTimer) {
             if (instructions != null) {
                 instructions.close();
+            } else { // TODO: HACK!
+                hideIntroText();
             }
             FlxG.camera.flash(0x22FFFFFF, 0.05);
 
@@ -197,7 +239,6 @@ class GameState extends FlxTransitionableState
                 "Rolemusic_-_01_-_Spell.ogg"
             ];
             var track = FlxG.random.getObject(musicFiles);
-            // trace('Now playing "$track"');
             FlxG.sound.playMusic("assets/music/" + track);
         }
     }
@@ -297,8 +338,6 @@ class GameState extends FlxTransitionableState
 
         this.transOut.color = ColorScheme.RED;
 
-        // Reg.networkManager.send({ "games": Reg.gameManager.getGamesPlayedList() });
-
         onLose.dispatch();
     }
 
@@ -306,10 +345,7 @@ class GameState extends FlxTransitionableState
         if (!gameActive) return;
         gameActive = false;
 
-        // FlxG.sound.play("assets/sounds/yeah.ogg");
         FlxG.sound.play(AssetPaths.start__ogg);
-
-        // showWinScreen();
 
         this.transOut.color = ColorScheme.GREEN;
 
@@ -320,11 +356,8 @@ class GameState extends FlxTransitionableState
     {
         FlxG.sound.play("assets/sounds/success.wav", 0.5);
 
-
-        #if android
-        Sys.sleep(0.02);
-        #elseif neko
-        Sys.sleep(0.02);
+        #if (android || neko)
+        // Sys.sleep(0.02);
         #end
         FlxG.camera.flash(0x22FFFFFF, 0.05);
         FlxG.camera.shake(0.015 /* intensity, default: 0.05 */, 0.05 /* duration, default: 0.5 */);
@@ -334,10 +367,4 @@ class GameState extends FlxTransitionableState
         }
         emitter.start(true, 0.01, 20);
     }
-
-    /* TODO: Implement the following functions:
-        success(); // freeze followed by shake + sound + flash
-
-        generalize input: touch/mouse, accelerometer
-    */
 }

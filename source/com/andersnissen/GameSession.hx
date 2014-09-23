@@ -1,6 +1,7 @@
 package com.andersnissen;
 
 import com.andersnissen.ColorScheme;
+import com.andersnissen.GameSessionManager.GameInfo;
 import com.andersnissen.states.InfoState;
 import com.andersnissen.states.TrainingState;
 import flixel.FlxG;
@@ -31,15 +32,18 @@ class GameSession
         newHighscore = false;
         newGamesUnlocked = 0;
 
-        startGame(gameManager.getNextGame());
+        startGame(gameManager.getNext());
     }
 
-    function startGame(game :GameState) :Void
+    function startGame(gameInfo :GameInfo) :Void
     {
-        if (gameManager.isNewGame())
+        if (gameInfo.unlockedGame)
             newGamesUnlocked++;
 
+        var game = gameInfo.game;
         game.speed = speed;
+        game.gameIndex = gameInfo.gameIndex;
+        game.gameBatchSize = gameInfo.batchSize;
         game.onWin.addOnce(wonGame);
         game.onLose.addOnce(lostGame);
 
@@ -51,7 +55,7 @@ class GameSession
         score++;
         speed += 0.1;
 
-        startGame(gameManager.getNextGame());
+        startGame(gameManager.getNext());
     }
 
     function lostGame() :Void
