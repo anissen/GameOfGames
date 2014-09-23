@@ -128,12 +128,8 @@ class HexChain extends GameState
         add(chainSprite);
     }
 
-    override public function update(elapsed :Float) :Void
+    override function updateGame(elapsed :Float) :Void
     {
-        if (!gameActive) return;
-
-        super.update(elapsed);
-
         if (FlxG.mouse.pressed) {
             hexSprites.forEachAlive(function(hex :FlxSprite) {
                 if (!hex.overlapsPoint(FlxG.mouse.getWorldPosition())) return;

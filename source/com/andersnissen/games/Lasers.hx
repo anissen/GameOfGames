@@ -78,12 +78,8 @@ class Lasers extends GameState
         laserTimer.destroy();
     }
     
-    override public function update(elapsed :Float) :Void
+    override function updateGame(elapsed :Float) :Void
     {
-        if (!gameActive) return;
-        
-        super.update(elapsed);
-
         laserSprite.y = laserPoint.getMidpoint().y;
 
         if (FlxG.mouse.pressed) {

@@ -62,12 +62,8 @@ class MultiTouch extends GameState
         addSpriteGroup(texts);
     }
 
-    override public function update(elapsed :Float):Void
+    override function updateGame(elapsed :Float):Void
     {
-        if (!gameActive) return;
-        
-        super.update(elapsed);
-
         #if !FLX_NO_TOUCH
         for (touch in FlxG.touches.list)
         {

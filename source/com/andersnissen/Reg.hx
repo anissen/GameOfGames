@@ -25,21 +25,13 @@ class Reg
         highscore = Reg.save.data.highscore;
 
         gameManager = new GameSessionManager(gameList);
-        // networkManager = new NetworkManager();
         gameSession = new GameSession();
-        // networkManager.connect();
-
     }
 
-	/**
-	 * Generic score variable that can be used for cross-state stuff.
-	 * Example usage: Storing the current score.
-	 */
     public static var score :Int = 0;
     public static var highscore(default, set) :Int = 0;
 
     public static function set_highscore(s :Int) :Int {
-        // trace('highscore: $s');
         highscore = s;
         Reg.save.data.highscore = s;
         Reg.save.flush();
@@ -57,9 +49,6 @@ class Reg
         Reg.save.flush();
     }
 
-    public static var speed :Float = 0;
-
-
 	/**
 	 * Generic bucket for storing different FlxSaves.
 	 * Especially useful for setting up multiple save slots.
@@ -76,12 +65,5 @@ class Reg
     public static var networkManager :NetworkManager;
     public static var gameSession :GameSession;
 
-    public static var gameList :Array<Class<GameState>> = [HexChain, Jump, MultiTouch, Bounce, Overlap, CollectDots, /* Lasers, */ RobotVacuumCleaner];
-
-    // public static var vignette :PostProcess;
-    public static function setPostprocessingAmount(amount :Float) {
-        // placeholder
-        // amount = Math.clamp(amount, 0.0, 1.0));
-        // vignette.setUniform("amount", Settings.VIGNETTE_DEFAULT + (Settings.VIGNETTE_MAX - Settings.VIGNETTE_DEFAULT) * amount);
-    }
+    public static var gameList :Array<Class<GameState>> = [RobotVacuumCleaner, HexChain, Jump, MultiTouch, Bounce, Overlap, CollectDots /* Lasers, */ ];
 }

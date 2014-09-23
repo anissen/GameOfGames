@@ -103,18 +103,14 @@ class Bounce extends GameState
         // add(accText);
     }
     
-    override public function update(elapsed :Float) :Void
+    override function updateGame(elapsed :Float) :Void
     {
-        if (!gameActive) return;
-
-        super.update(elapsed);
-        
         _bat.velocity.x = 0;
-        _ball.velocity.y += 35 * speed;
+        _ball.velocity.y += 35 * elapsed;
 
         #if mobile
         if (FlxG.accelerometer.isSupported) {
-          _bat.velocity.x = -((1 + FlxG.accelerometer.y / 2) * FlxG.accelerometer.x) * BAT_SPEED * speed;
+          _bat.velocity.x = -((1 + FlxG.accelerometer.y / 2) * FlxG.accelerometer.x) * BAT_SPEED * elapsed;
             // xText.text = "x: " + FlxMath.roundDecimal(FlxG.accelerometer.x, 1);
             // yText.text = "y: " + FlxMath.roundDecimal(FlxG.accelerometer.y, 1);
             // zText.text = "z: " + FlxMath.roundDecimal(FlxG.accelerometer.z, 1);

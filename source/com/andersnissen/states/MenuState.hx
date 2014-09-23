@@ -242,8 +242,6 @@ class MenuState extends FlxState
 
     function onPlayClicked()
     {
-        Reg.score = 0;
-        Reg.speed = 1;
         Reg.gameManager.reset();
 
         if (FlxG.sound.music != null && FlxG.sound.music.playing) {

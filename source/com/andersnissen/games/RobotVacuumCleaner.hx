@@ -61,27 +61,23 @@ class RobotVacuumCleaner extends GameState
         add(directionSprite);
     }
 
-    override public function update(elapsed :Float) :Void
+    override function updateGame(elapsed :Float) :Void
     {
-        if (!gameActive) return;
-        
-        super.update(elapsed);
-
         if (FlxG.mouse.pressed) {
-            robotSprite.velocity.addPoint(FlxVelocity.velocityFromAngle(robotSprite.angle, 1000 * elapsed * Reg.speed));
+            robotSprite.velocity.addPoint(FlxVelocity.velocityFromAngle(robotSprite.angle, 1200 * elapsed));
             wallBounce(robotSprite);
         } else {
             robotSprite.velocity.set(0, 0);
-            robotSprite.angle += 400 * elapsed * Reg.speed;
+            robotSprite.angle += 500 * elapsed;
         }
 
         var directionPos = robotSprite.getMidpoint().addPoint(FlxVelocity.velocityFromAngle(robotSprite.angle, robotRadius));
         directionSprite.setPosition(directionPos.x - 4, directionPos.y - 4);
 
         circles.forEachAlive(function(circle) {
-            var moveSpeed = (1 / circle.toPoint().distanceTo(robotSprite.toPoint())) * 300000 * elapsed * Reg.speed;
+            var moveSpeed = (1 / circle.toPoint().distanceTo(robotSprite.toPoint())) * 300000 * elapsed;
             FlxVelocity.moveTowardsObject(circle, robotSprite, moveSpeed);
-            if (robotSprite.toPoint().distanceTo(circle.toPoint()) <= robotRadius) {
+            if (robotSprite.toPoint().distanceTo(circle.toPoint()) <= robotRadius + debrisRadius) {
                 success(circle.toPoint());
                 circle.kill();
             }

@@ -36,15 +36,13 @@ class GameSession
 
     function startGame(game :GameState) :Void
     {
-        Reg.speed = speed;
-
         if (gameManager.isNewGame())
             newGamesUnlocked++;
 
+        game.speed = speed;
         game.onWin.addOnce(wonGame);
         game.onLose.addOnce(lostGame);
 
-        Reg.setPostprocessingAmount(0.0);
         FlxG.switchState(game);
     }
 
@@ -76,14 +74,12 @@ class GameSession
         var infoState = new InfoState(1);
         infoState.bgColor = ColorScheme.RED;
         infoState.onDone.addOnce(function() {
-            Reg.setPostprocessingAmount(0.0);
             if (training) {
                 FlxG.switchState(new TrainingState());
             } else {
                 FlxG.switchState(new MenuState(newHighscore, newGamesUnlocked));
             }
         });
-        Reg.setPostprocessingAmount(1.0);
         FlxG.switchState(infoState);
     }
 }

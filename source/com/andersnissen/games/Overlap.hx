@@ -50,12 +50,8 @@ class Overlap extends GameState
         addSpriteGroup(rectangles);
     }
 
-    override public function update(elapsed :Float) :Void
+    override function updateGame(elapsed :Float) :Void
     {
-        if (!gameActive) return;
-        
-        super.update(elapsed);
-
         if (FlxG.mouse.pressed) {
             var pos = FlxG.mouse.getWorldPosition();
             if (movingRect == null) {

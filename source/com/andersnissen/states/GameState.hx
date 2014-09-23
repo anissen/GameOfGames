@@ -44,7 +44,7 @@ class GameState extends FlxTransitionableState
 
     var gameActive :Bool = false;
 
-    var speed :Float = 1;
+    public var speed :Float = 1;
 
     var backgroundSprite :FlxSprite;
     var backgroundColor :Int;
@@ -167,23 +167,22 @@ class GameState extends FlxTransitionableState
             #end
         }
 
-        var timeBeforeStarting = this.transIn.duration / 2 + (isNewUnlockedGame ? 3 : 0) / Reg.speed;
+        var timeBeforeStarting = this.transIn.duration / 2 + (isNewUnlockedGame ? 3 : 0) / speed;
         gameStartTimer = new FlxTimer(timeBeforeStarting, function(_ :FlxTimer) {
             if (instructions != null) {
                 instructions.close();
             }
             FlxG.camera.flash(0x22FFFFFF, 0.05);
-            start();
 
-            heartBeatTimer = new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
+            heartBeatTimer = new FlxTimer(1 / speed, function(_ :FlxTimer) {
                 if (!gameActive) return;
                 FlxG.sound.play("assets/sounds/heartbeat.ogg", 1);
             }, 0);
-            // new FlxTimer(1 / Reg.speed, function(_ :FlxTimer) {
+            // new FlxTimer(1 / speed, function(_ :FlxTimer) {
             //     takeScreenshot();
             // });
             gameActive = true;
-            gameTimer = new FlxTimer(5 / Reg.speed, timesUp);
+            gameTimer = new FlxTimer(5 / speed, timesUp);
         });
 
         super.create();
@@ -222,20 +221,6 @@ class GameState extends FlxTransitionableState
         // overridden by inheriting class
     }
 
-    function start() :Void
-    {
-        // overridden by inheriting class
-    }
-
-    function end() :Void
-    {
-        // overridden by inheriting class
-    }
-
-    // function addSpriteAnimated(sprite :FlxSprite, ?options :TweenOptions) :FlxSprite {
-    //
-    // }
-
     function addSprite(sprite :FlxSprite) :FlxSprite {
         sprite.antialiasing = true;
         sprite.pixelPerfectRender = false;
@@ -256,8 +241,6 @@ class GameState extends FlxTransitionableState
      */
     override public function destroy() :Void
     {
-        end();
-
         gameTimer = FlxDestroyUtil.destroy(gameTimer);
         heartBeatTimer = FlxDestroyUtil.destroy(heartBeatTimer);
         gameStartTimer = FlxDestroyUtil.destroy(gameStartTimer);
@@ -280,12 +263,16 @@ class GameState extends FlxTransitionableState
         if (gameTimer != null && gameActive) {
             timerSprite.makeGraphic(Settings.WIDTH, Math.floor(gameTimer.progress * Settings.HEIGHT) + 10, ColorScheme.BLACK);
             timerSprite.drawRect(0, 0, Settings.WIDTH, Math.floor(gameTimer.progress * Settings.HEIGHT), timerSpriteColor);
-            Reg.setPostprocessingAmount(gameTimer.progress);
         }
 
         if (gameActive) {
-            super.update(elapsed);
+            super.update(elapsed * speed);
+            updateGame(elapsed * speed);
         }
+    }
+
+    function updateGame(elapsed :Float) {
+        // overridden by inheriting class
     }
 
     function timesUp(_ :FlxTimer) {
@@ -310,8 +297,6 @@ class GameState extends FlxTransitionableState
 
         this.transOut.color = ColorScheme.RED;
 
-        end();
-
         // Reg.networkManager.send({ "games": Reg.gameManager.getGamesPlayedList() });
 
         onLose.dispatch();
@@ -327,8 +312,6 @@ class GameState extends FlxTransitionableState
         // showWinScreen();
 
         this.transOut.color = ColorScheme.GREEN;
-
-        end();
 
         onWin.dispatch();
     }

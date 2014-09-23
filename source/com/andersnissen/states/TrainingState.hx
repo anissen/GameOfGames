@@ -55,8 +55,7 @@ class TrainingState extends FlxState
             var y = Math.floor(gameCount / 3) * 205;
             var gameInfo = new FlxSpriteGroup(x, y);
 
-            var background = new FlxSprite(0, 0);
-            background.makeGraphic(100, 195, ColorScheme.ORANGE);
+            var background = ShapeBuilder.createRect(0, 0, 100, 195, ColorScheme.ORANGE);
             gameInfo.add(background);
 
             var gameIcon = new FlxSprite(5, 5, "assets/images/small_games/" + gameName + ".png");
@@ -70,14 +69,11 @@ class TrainingState extends FlxState
             var gameText = new FlxText(0, 162, 100, highscoreText, 20);
             gameText.font = "assets/fonts/kenpixel_blocks.ttf";
             gameText.color = ColorScheme.BLACK;
-            gameText.borderStyle = FlxTextBorderStyle.OUTLINE;
-            gameText.borderSize = 1;
-            gameText.borderColor = ColorScheme.YELLOW;
+            gameText.borderStyle = FlxTextBorderStyle.OUTLINE_FAST;
+            gameText.borderSize = 2;
+            gameText.borderColor = ColorScheme.SILVER;
             gameText.alignment = FlxTextAlign.CENTER;
-            gameText.alpha = 0.0;
             gameInfo.add(gameText);
-
-            gameList.add(gameInfo);
 
             gameInfo.forEach(function(sprite) {
                 sprite.alpha = 0;
@@ -87,6 +83,7 @@ class TrainingState extends FlxState
                 FlxTween.angle(sprite, sprite.angle, 0.1, { startDelay: gameCount * 0.1 - 0.1, ease: FlxEase.elasticInOut });
             });
 
+            gameList.add(gameInfo);
             gameCount++;
         }
         add(gameList);
