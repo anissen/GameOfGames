@@ -31,6 +31,7 @@ class Lasers extends GameState
         name = "Lasers";
         description = "Avoid the laser";
         controls = "Drag";
+        hints = "AVOID LASER!";
 
         var margin = 0;
         var topLeft = new FlxPoint(margin, margin);

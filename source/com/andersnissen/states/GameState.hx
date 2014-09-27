@@ -1,7 +1,7 @@
 package com.andersnissen.states;
 
 import com.andersnissen.ColorScheme;
-import com.andersnissen.DialogBox;
+import com.andersnissen.GameTextOverlay;
 import com.andersnissen.Settings;
 import flixel.effects.particles.*;
 import flixel.addons.transition.FlxTransitionableState;
@@ -57,9 +57,6 @@ class GameState extends FlxTransitionableState
     var emitter :FlxEmitter;
     var whitePixel :FlxParticle;
 
-    // Instructions box
-    var instructions :DialogBox;
-
     var spriteGroupsToAdd :Array<FlxSpriteGroup>;
     var totalSpritesToAdd :Int;
 
@@ -68,7 +65,7 @@ class GameState extends FlxTransitionableState
     public var onWin :FlxSignal;
     public var onLose :FlxSignal;
 
-    var introText :FlxSpriteGroup;
+    var textOverlay :GameTextOverlay;
 
     public var gameIndex :Int;
     public var gameBatchSize :Int;
@@ -81,38 +78,6 @@ class GameState extends FlxTransitionableState
 
         this.transIn = FlxTransitionableState.defaultTransIn;
         this.transOut = FlxTransitionableState.defaultTransOut;
-    }
-
-    function createText(text :String, y :Float, textSize :Int, color :Int, borderStyle :FlxTextBorderStyle, borderColor :Int = FlxColor.BLACK, ?borderSize :Float = 0.0)
-    {
-        var textButton = new FlxText(0, y, Settings.WIDTH, text, textSize);
-        textButton.alignment = "center";
-        textButton.color = color;
-        textButton.borderStyle = borderStyle;
-        textButton.borderColor = borderColor;
-        textButton.borderSize = borderSize;
-        return textButton;
-    }
-
-    function createIntroText() :FlxSpriteGroup
-    {
-        var introGroup = new FlxSpriteGroup();
-        var titleText = createText(hints, Settings.HEIGHT / 3, 48, ColorScheme.BLACK, FlxTextBorderStyle.SHADOW, ColorScheme.SILVER, 10);
-        introGroup.add(titleText);
-        introGroup.add(createText('Game $gameIndex / $gameBatchSize', titleText.y - 20, 18, ColorScheme.BLACK, FlxTextBorderStyle.OUTLINE, ColorScheme.SILVER, 2));
-        return introGroup;
-    }
-
-    function showIntroText() {
-        introText = createIntroText();
-        introText.angle = -5;
-        FlxTween.tween(introText.scale, { x: 1, y: 1 }, 0.3 / speed, { ease: FlxEase.elasticInOut });
-        FlxTween.tween(introText, { angle: -2 }, 1.0 / speed, { type: FlxTween.PINGPONG });
-        add(introText);
-    }
-
-    function hideIntroText() {
-        FlxTween.tween(introText.scale, { x: 0, y: 0 }, 0.3 / speed, { ease: FlxEase.elasticInOut });
     }
 
     /**
@@ -141,7 +106,7 @@ class GameState extends FlxTransitionableState
 
         var isNewUnlockedGame = Reg.gameManager.isNewGame();
 
-        var maxDelay = (isNewUnlockedGame ? 2.5 : 1.5) / speed; // 2.5 or 0.5 seconds, corrected by speed
+        var maxDelay = (isNewUnlockedGame ? 3.0 : 1.0) / speed; // 2.5 or 1.0 seconds, corrected by speed
         var delay :Float = 0;
         for (spriteGroup in spriteGroupsToAdd) {
             spriteGroup.visible = true;
@@ -173,10 +138,12 @@ class GameState extends FlxTransitionableState
         this.transIn.color = backgroundColor;
 
         if (isNewUnlockedGame) {
-            showInstructions();
+            textOverlay = new GameTextOverlay("*NEW GAME*", hints, 'Controls: *$controls*');
         } else {
-            showIntroText();
+            textOverlay = new GameTextOverlay('Game $gameIndex / $gameBatchSize', hints);
         }
+        add(textOverlay);
+        textOverlay.open(0.5 / speed);
 
         var particleCount = 200;
         emitter = new FlxEmitter(Settings.WIDTH / 2, Settings.HEIGHT / 2, particleCount);
@@ -207,14 +174,10 @@ class GameState extends FlxTransitionableState
             #end
         }
 
-        var timeBeforeStarting = this.transIn.duration / 2 + (isNewUnlockedGame ? 3 : 2) / speed;
+        var timeBeforeStarting = this.transIn.duration / 2 + (isNewUnlockedGame ? 4 : 2) / speed;
         gameStartTimer = new FlxTimer(timeBeforeStarting, function(_ :FlxTimer) {
-            if (instructions != null) {
-                instructions.close();
-            } else { // TODO: HACK!
-                hideIntroText();
-            }
-            FlxG.camera.flash(0x22FFFFFF, 0.05);
+            textOverlay.close(0.3 / speed);
+            // FlxG.camera.flash(0x22FFFFFF, 0.05);
 
             heartBeatTimer = new FlxTimer(1 / speed, function(_ :FlxTimer) {
                 if (!gameActive) return;
@@ -241,20 +204,6 @@ class GameState extends FlxTransitionableState
             var track = FlxG.random.getObject(musicFiles);
             FlxG.sound.playMusic("assets/music/" + track);
         }
-    }
-
-    function showInstructions() :Void
-    {
-        instructions = new DialogBox("New Game!", this.description, 'Controls: ${this.controls}', ColorScheme.BLUE);
-        add(instructions);
-        instructions.open();
-    }
-
-    function showWinScreen() :Void
-    {
-        var winScreen = new DialogBox("You Won!", "Highscore: ??? games left", "Game unlocked: ??? games left", ColorScheme.GREEN);
-        add(winScreen);
-        winScreen.open();
     }
 
     function setup() :Void
@@ -338,7 +287,13 @@ class GameState extends FlxTransitionableState
 
         this.transOut.color = ColorScheme.RED;
 
-        onLose.dispatch();
+        textOverlay = new GameTextOverlay(null, "GAME OVER", 'Score: *${Reg.score}*');
+        add(textOverlay);
+        textOverlay.open(1.0 / speed);
+
+        new FlxTimer(2, function(_ :FlxTimer) {
+            onLose.dispatch();
+        });
     }
 
     function win(?position :FlxPoint) {

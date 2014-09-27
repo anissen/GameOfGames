@@ -27,6 +27,7 @@ class RobotVacuumCleaner extends GameState
         name = "Robot Vacuum Cleaner";
         description = "???";
         controls = "???";
+        hints = "VACUUM!";
         winningCondition = WinningCondition.CompleteObjective;
 
         MAX_CIRCLES = FlxG.random.int(2, 6);

@@ -75,15 +75,15 @@ class GameSession
         }
 
         // TODO: Pass text, score, highscore to InfoState
-        var infoState = new InfoState(1);
-        infoState.bgColor = ColorScheme.RED;
-        infoState.onDone.addOnce(function() {
+        // var infoState = new InfoState(1);
+        // infoState.bgColor = ColorScheme.RED;
+        // infoState.onDone.addOnce(function() {
             if (training) {
                 FlxG.switchState(new TrainingState());
             } else {
                 FlxG.switchState(new MenuState(newHighscore, newGamesUnlocked));
             }
         });
-        FlxG.switchState(infoState);
+        // FlxG.switchState(infoState);
     }
 }

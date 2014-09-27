@@ -28,6 +28,7 @@ class Jump extends GameState
         name = "Jump";
         description = "Jump over obstacles";
         controls = "Tap";
+        hints = "JUMP!";
 
         var colorPool = new ColorPool();
 

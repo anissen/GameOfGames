@@ -23,8 +23,9 @@ class MultiTouch extends GameState
     override function setup() :Void
     {
         name = "???";
-        description = "???";
-        controls = "???";
+        description = "Place a finger on each circle";
+        controls = "Touch and hold";
+        hints = "FINGER TWISTER";
         winningCondition = WinningCondition.CompleteObjective;
 
         MAX_CIRCLES = FlxG.random.int(2, 4);

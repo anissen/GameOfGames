@@ -39,6 +39,7 @@ class Bounce extends GameState
         name = "Breakout";
         description = "Bounce the ball";
         controls = "Tilt";
+        hints = "BOUNCE!";
 
         var trailArea = new FlxTrailArea(0, 0, Settings.WIDTH, Settings.HEIGHT);
         trailArea.antialiasing = true;

@@ -23,6 +23,7 @@ class CollectDots extends GameState
         name = "Collect The Dots";
         description = "Collect all the RED!";
         controls = "Tap/Drag";
+        hints = "COLLECT RED!";
         winningCondition = WinningCondition.CompleteObjective;
 
         dotSprites = new FlxSpriteGroup();
