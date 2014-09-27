@@ -1,13 +1,8 @@
 
 TODO:
-    ☐ Add game over screen
-    ☐ Improve instruction screen
     ☐ Improve sprite start-up/end effects
     ☐ Put sounds on everything 
     ☐ "Tutorial" screen
-    ☐ Game quick-info screen:
-             Game 5/6
-        C H A I N   R E D !
     ☐ Fix colors in "MultiTouch"
     ☐ Refactor GameSessionManager (e.g. unit test?)
     --- ✄ -----------------------
@@ -40,6 +35,9 @@ Bugs:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Add game over screen @done (27-09-14 21:48) @project(TODO)
+  ✔ Improve instruction screen @done (27-09-14 21:48) @project(TODO)
+  ✔ Game quick-info screen: @done (27-09-14 21:48) @project(TODO)
   ✔ Fix colors in "Avoid Overlap" @done (25-09-14 22:19) @project(TODO)
   ✔ Use "elapsed" to control game speed @done (23-09-14 20:19) @project(TODO)
   ✔ Robot vacuum game: Move faster, debris move toward vacuum @done (23-09-14 19:32) @project(TODO)

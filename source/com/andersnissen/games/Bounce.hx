@@ -53,9 +53,9 @@ class Bounce extends GameState
         _ball.makeGraphic(12, 12, ColorScheme.BLACK);
         _ball.drawRect(1, 1, 10, 10, colorPool.pickColor());
         _ball.elasticity = 1;
-        _ball.maxVelocity.set(350, 1500);
+        _ball.maxVelocity.set(350, 1000);
         _ball.velocity.x = FlxG.random.float(-100, 100);
-        _ball.velocity.y = -1500;
+        _ball.velocity.y = -1000;
         
         walls = new FlxSpriteGroup();
 
@@ -107,7 +107,7 @@ class Bounce extends GameState
     override function updateGame(elapsed :Float) :Void
     {
         _bat.velocity.x = 0;
-        _ball.velocity.y += 200 * elapsed;
+        _ball.velocity.y += 100 * elapsed;
 
         #if mobile
         if (FlxG.accelerometer.isSupported) {
@@ -176,7 +176,7 @@ class Bounce extends GameState
             ball.velocity.x = 2 + FlxG.random.int(0, 8);
             ball.angularVelocity = 0;
         }
-        ball.velocity.y = -1000 - 500 * speed;
+        ball.velocity.y = -500 - 200 * speed;
         success(ball.getMidpoint());
     }
 }

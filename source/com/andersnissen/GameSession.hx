@@ -2,7 +2,6 @@ package com.andersnissen;
 
 import com.andersnissen.ColorScheme;
 import com.andersnissen.GameSessionManager.GameInfo;
-import com.andersnissen.states.InfoState;
 import com.andersnissen.states.TrainingState;
 import flixel.FlxG;
 import com.andersnissen.states.GameState;
@@ -83,7 +82,7 @@ class GameSession
             } else {
                 FlxG.switchState(new MenuState(newHighscore, newGamesUnlocked));
             }
-        });
+        // });
         // FlxG.switchState(infoState);
     }
 }

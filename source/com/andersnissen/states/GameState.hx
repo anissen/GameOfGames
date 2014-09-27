@@ -137,14 +137,6 @@ class GameState extends FlxTransitionableState
 
         this.transIn.color = backgroundColor;
 
-        if (isNewUnlockedGame) {
-            textOverlay = new GameTextOverlay("*NEW GAME*", hints, 'Controls: *$controls*');
-        } else {
-            textOverlay = new GameTextOverlay('Game $gameIndex / $gameBatchSize', hints);
-        }
-        add(textOverlay);
-        textOverlay.open(0.5 / speed);
-
         var particleCount = 200;
         emitter = new FlxEmitter(Settings.WIDTH / 2, Settings.HEIGHT / 2, particleCount);
         add(emitter);
@@ -204,6 +196,14 @@ class GameState extends FlxTransitionableState
             var track = FlxG.random.getObject(musicFiles);
             FlxG.sound.playMusic("assets/music/" + track);
         }
+
+        if (isNewUnlockedGame) {
+            textOverlay = new GameTextOverlay("*NEW GAME*", hints, 'Controls: *$controls*');
+        } else {
+            textOverlay = new GameTextOverlay('Game $gameIndex / $gameBatchSize', hints);
+        }
+        add(textOverlay);
+        textOverlay.open(0.5 / speed);
     }
 
     function setup() :Void
