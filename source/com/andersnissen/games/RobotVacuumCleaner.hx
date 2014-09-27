@@ -47,7 +47,7 @@ class RobotVacuumCleaner extends GameState
             });
             if (!validPosition) continue;
 
-            var circle = ShapeBuilder.createCircle(x, y, debrisRadius, ColorScheme.randomExcept([ColorScheme.GREEN]));
+            var circle = ShapeBuilder.createCircle(x, y, debrisRadius, ColorScheme.random());
             circles.add(circle);
             circleCount++;
         }

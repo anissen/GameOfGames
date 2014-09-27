@@ -40,7 +40,7 @@ class Overlap extends GameState
                     rectMap[x][y]++;
                     rectCount++;
 
-                    var rect = ShapeBuilder.createRect(x * 96 + FlxG.random.float(-10, 10), y * 96 + FlxG.random.float(-10, 10), FlxG.random.int(64, 96), FlxG.random.int(96, 128), colorPool.pickColorExcept(ColorScheme.GREEN));
+                    var rect = ShapeBuilder.createRect(x * 96 + FlxG.random.float(-10, 10), y * 96 + FlxG.random.float(-10, 10), FlxG.random.int(64, 96), FlxG.random.int(96, 128), colorPool.pickColor());
                     rect.alpha = 0.7;
                     rectangles.add(rect);
                 }
@@ -66,8 +66,6 @@ class Overlap extends GameState
                 movingRect.setPosition(pos.x - movingRect.width / 2, pos.y - movingRect.height / 2);
                 if (FlxG.overlap(movingRect, rectangles)) {
                     FlxG.camera.shake(0.01, 0.05);
-                } else {
-                    movingRect.drawRect(2, 2, movingRect.width - 4, movingRect.height - 4, ColorScheme.GREEN);
                 }
             }
         } else if (FlxG.mouse.justReleased) {

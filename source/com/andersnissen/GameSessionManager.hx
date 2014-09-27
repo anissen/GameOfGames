@@ -1,7 +1,6 @@
 package com.andersnissen;
 
 import flixel.FlxG;
-import flixel.math.FlxRandom;
 import flixel.util.FlxSave;
 import com.andersnissen.states.GameState;
 import com.andersnissen.games.*;
