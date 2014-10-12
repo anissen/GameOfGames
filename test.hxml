@@ -1,0 +1,10 @@
+-cp source
+-lib flixel
+-lib openfl
+--macro openfl.Lib.includeBackend('flash')
+--macro allowPackage('flash')
+--macro flixel.system.macros.FlxConditionals.run()
+-main com.andersnissen.test.TestMain
+# -x export/Test.n # shortcut for compiling and running
+-swf-version 11.8
+-swf test.swf
