@@ -91,7 +91,7 @@ class GameState extends FlxTransitionableState
         add(backgroundSprite);
 
         timerSprite = new FlxSprite(0, 0);
-        timerSprite.makeGraphic(Settings.WIDTH, 0);
+        timerSprite.makeGraphic(Settings.WIDTH, 1);
         add(timerSprite);
 
         colorPool = new ColorPool([this.backgroundColor, ColorScheme.RED, ColorScheme.GREEN]);

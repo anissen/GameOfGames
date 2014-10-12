@@ -16,6 +16,7 @@ import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileCircle;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileSquare;
 import flixel.effects.postprocess.PostProcess;
+import flixel.graphics.FlxGraphic;
 
 @:font("assets/fonts/kenvector_future.ttf") private class DefaultFont extends openfl.text.Font {}
 
@@ -78,19 +79,23 @@ class Main extends Sprite
         openfl.text.Font.registerFont(DefaultFont);
         flixel.system.FlxAssets.FONT_DEFAULT = new DefaultFont().fontName;
 
+        var diamond :FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
+        diamond.persist = true;
+        diamond.destroyOnNoUse = false;
+
         FlxTransitionableState.defaultTransIn = new TransitionData();
         FlxTransitionableState.defaultTransIn.type = TransitionType.TILES;
         FlxTransitionableState.defaultTransIn.duration = 0.4;
         FlxTransitionableState.defaultTransIn.direction = new flixel.math.FlxPoint(-1, 0);
         FlxTransitionableState.defaultTransIn.tweenOptions.ease = flixel.tweens.FlxEase.elasticInOut;
-        FlxTransitionableState.defaultTransIn.tileData = { asset:GraphicTransTileDiamond, width:32, height:32 };
+        FlxTransitionableState.defaultTransIn.tileData = { asset: diamond, width:32, height:32 };
         
         FlxTransitionableState.defaultTransOut = new TransitionData();
         FlxTransitionableState.defaultTransOut.type = TransitionType.TILES;
         FlxTransitionableState.defaultTransOut.duration = 0.4;
         FlxTransitionableState.defaultTransOut.direction = new flixel.math.FlxPoint(1, 0);
         FlxTransitionableState.defaultTransOut.tweenOptions.ease = flixel.tweens.FlxEase.elasticInOut;
-        FlxTransitionableState.defaultTransOut.tileData = { asset: GraphicTransTileDiamond, width:32, height:32 };
+        FlxTransitionableState.defaultTransOut.tileData = { asset: diamond, width:32, height:32 };
 
         #if (android)
         // FlxG.android.preventDefaultKeys = [BACK];

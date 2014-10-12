@@ -5,6 +5,7 @@ TODO:
     ☐ "Tutorial" screen
     ☐ Fix colors in "MultiTouch"
     ☐ Refactor GameSessionManager (e.g. unit test?)
+    ☐ Deploy to Google Play (see http://www.steverichey.com/dev/openfl-android-tips-and-tricks/)
     --- ✄ -----------------------
     Maybe:
         ☐ Add game complexity setting (easy, medium, hard -- hard to begin with)
