@@ -13,81 +13,50 @@ typedef GameInfo = {
     batchSize :Int
 };
 
+typedef GameClass = Class<GameState>
+
 class GameSessionManager
 {
-    var gameList :Array<Class<GameState>>;
+    var gameList :Array<GameClass>;
 
-    var gamesUnlocked :Array<Class<GameState>> = [];
-    var gamesPlayed :Array<Class<GameState>> = [];
-    var currentGameBatch :Array<Class<GameState>> = [];
+    var unlockCount :Int;
     var batchSize :Int;
     var newGameUnlocked :Bool = false;
 
-    public function new(list :Array<Class<GameState>>) :Void
+    var batch :GameBatch;
+
+    public function new(list :Array<GameClass>) :Void
     {
         gameList = list;
 
-        var unlockCount :Int = (Reg.save.data.unlockCount != null ? Reg.save.data.unlockCount : 0);
-        gamesUnlocked = gameList.slice(0, unlockCount);
-        // trace('Unlock count: $unlockCount');
+        unlockCount = 0; //(Reg.save.data.unlockCount != null ? Reg.save.data.unlockCount : 0);
+        batch = new GameBatch(gameList.slice(0, unlockCount));
     }
 
-    function getNextGameClass() :Class<GameState>
+    function getNextGameClass() :GameClass
     {
         newGameUnlocked = false;
 
         // completed entire batch of games
-        if (currentGameBatch.length == 0) {
-            currentGameBatch = createGameBatch();
-
-            var gamesPlayedThisSession = gamesPlayed.length;
-            var hasMoreLockedGames = (gameList.length > gamesUnlocked.length);
-            // Only unlock games if enough games have been played in this session
-            if (hasMoreLockedGames && gamesPlayedThisSession >= gamesUnlocked.length) {
-                var unlockedGame = unlockNextGame();
-                currentGameBatch.unshift(unlockedGame); // Add the new game as the first in the batch
+        if (batch.empty()) {
+            if (unlockCount < gameList.length) {
                 newGameUnlocked = true;
+                batch.newBatch(gameList[unlockCount++]);
+                Reg.save.data.unlockCount = unlockCount;
+                Reg.save.flush();
+            } else {
+                batch.newBatch();
             }
 
-            batchSize = currentGameBatch.length;
+            batchSize = batch.length();
             // var batchString = [for (g in currentGameBatch) getGameName(g)].join(", ");
             // trace('currentGameBatch: [$batchString]');
         }
 
-        var nextGame = currentGameBatch.shift();
-        gamesPlayed.push(nextGame);
-        return nextGame;
+        return batch.pickRandom();
     }
 
-    function createGameBatch() :Array<Class<GameState>>
-    {
-        if (currentGameBatch.length > 0) throw "currentGameBatch is non-empty";
-
-        var lastPlayedGame = gamesPlayed[gamesPlayed.length - 1];
-        // trace('lastPlayedGame: ${Type.getClassName(lastPlayedGame)}');
-        var gameBatch :Array<Class<GameState>> = FlxG.random.shuffleArray(gamesUnlocked.copy(), gamesUnlocked.length * 3);
-        if (gameBatch.length > 0 && gameBatch[0] == lastPlayedGame) {
-            gameBatch.shift();
-            gameBatch.insert(FlxG.random.int(1, gameBatch.length), lastPlayedGame);
-        }
-
-        return gameBatch;
-    }
-
-    function unlockNextGame() :Class<GameState>
-    {
-        var unlockedGame = gameList[gamesUnlocked.length];
-        gamesUnlocked.push(unlockedGame);
-
-        Reg.save.data.unlockCount = gamesUnlocked.length;
-        Reg.save.flush();
-        // trace('Unlocked new game: ${getGameName(unlockedGame)}');
-        // onGameUnlocked.dispatch();
-
-        return unlockedGame;
-    }
-
-    function getGameName(cls :Class<GameState>) :String 
+    function getGameName(cls :GameClass) :String 
     {
         var qualifiedName = Type.getClassName(cls);
         var lastDotPos = qualifiedName.lastIndexOf(".");
@@ -98,11 +67,12 @@ class GameSessionManager
     public function getNext() :GameInfo
     {
         var nextGameClass = getNextGameClass();
-        var nextGame = Type.createInstance(getNextGameClass(), []);
+        var nextGame = Type.createInstance(nextGameClass, []);
+        trace('getNext: batchSize: $batchSize, batch.length(): ${batch.length()}');
         return { 
             game: nextGame,
             gameName: getGameName(nextGameClass),
-            gameIndex: batchSize - currentGameBatch.length,
+            gameIndex: batchSize - batch.length(),
             batchSize: batchSize,
             unlockedGame: newGameUnlocked
         };
@@ -113,19 +83,14 @@ class GameSessionManager
         return Type.createInstance(gameList[index], [true]);
     }
 
-    public function getGamesPlayedList() :Array<String>
-    {
-        return [for (g in gamesPlayed) getGameName(g)];
-    }
-
     public function getGamesUnlockedList() :Array<String>
     {
-        return [for (g in gamesUnlocked) getGameName(g)];
+        return [for (i in 0...unlockCount) getGameName(gameList[i])];
     }
 
     public function getUnlockCount() :Int
     {
-        return gamesUnlocked.length;
+        return unlockCount;
     }
 
     public function isNewGame() :Bool
@@ -135,10 +100,55 @@ class GameSessionManager
 
     public function reset() :Void
     {
-        gamesPlayed = [];
-        currentGameBatch = [];
+        batch.reset();
+        batchSize = 0;
+        newGameUnlocked = false;
+    }
+}
 
-        Reg.save.data.unlockCount = 0;
-        Reg.save.flush();
+class GameBatch {
+    var games :Array<GameClass>;
+    var batch :Array<GameClass>;
+    var lastGame :GameClass;
+
+    public function new(unlockedGames :Array<GameClass>) {
+        // trace('Created batch with ${unlockedGames.length} unlocked games');
+        games = unlockedGames;
+        newBatch();
+    }
+
+    public function newBatch(?unlockedGame :GameClass) {
+        // trace('new batch with ${games.length} games and unlocked game: ${unlockedGame != null}');
+        batch = games.copy();
+        batch = FlxG.random.shuffleArray(batch, batch.length * 3);
+        if (unlockedGame != null) {
+            batch.unshift(unlockedGame);
+            games.push(unlockedGame);
+        } else {
+            if (batch.length > 0 && lastGame != null && batch[0] == lastGame) {
+                batch.push(batch.shift());
+            }
+        }
+    }
+
+    public function pickRandom() :GameClass {
+        // trace('pick random from ${batch.length} games');
+        var game = batch.shift();
+        lastGame = game;
+        return game;
+    }
+
+    public function reset() {
+        // trace('reset batch');
+        batch = games.copy();
+        lastGame = null;
+    }
+
+    public function length() :Int {
+        return batch.length;
+    }
+
+    public function empty() :Bool {
+        return batch.length == 0;
     }
 }

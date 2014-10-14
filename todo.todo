@@ -4,16 +4,12 @@ TODO:
     ☐ Put sounds on everything 
     ☐ "Tutorial" screen
     ☐ Fix colors in "MultiTouch"
-    ☐ Refactor GameSessionManager (e.g. unit test?)
     ☐ Deploy to Google Play (see http://www.steverichey.com/dev/openfl-android-tips-and-tricks/)
     --- ✄ -----------------------
     Maybe:
         ☐ Add game complexity setting (easy, medium, hard -- hard to begin with)
-        ☐ Improve vignette shader (see comments)
         ☐ Remaining to high score + new game unlock after game + fun yes/no for testers
         ☐ Google Analytics: https://github.com/fbricker/haxe-ga
-        ☐ Investigate more life-like animations: http://codepen.io/ayamflow/pen/LFexf?editors=001
-        ☐ Send data to Google docs
 
 Games:
     ☐ Rope swinging (http://www.emanueleferonato.com/2013/09/10/creation-of-a-box2d-hook-like-the-one-seen-on-ios-mikey-hooks-game/)
@@ -36,6 +32,12 @@ Bugs:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Refactor GameSessionManager (e.g. unit test?) @done (14-10-14 20:44) @project(TODO)
+  ✔ Fix "Game x/y" text @done (14-10-14 20:44) @project(TODO)
+  ✘ Improve vignette shader (see comments) @cancelled (14-10-14 19:56) @project(TODO / Maybe)
+  ✘ Investigate more life-like animations: http://codepen.io/ayamflow/pen/LFexf?editors=001 @cancelled (14-10-14 19:56) @project(TODO / Maybe)
+  ✘ Send data to Google docs @cancelled (14-10-14 19:56) @project(TODO / Maybe)
+  ✔ Score on game over screen is always 0 @done (14-10-14 19:37) @project(Bugs)
   ✔ Add game over screen @done (27-09-14 21:48) @project(TODO)
   ✔ Improve instruction screen @done (27-09-14 21:48) @project(TODO)
   ✔ Game quick-info screen: @done (27-09-14 21:48) @project(TODO)
