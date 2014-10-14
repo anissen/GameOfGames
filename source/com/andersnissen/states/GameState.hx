@@ -46,6 +46,7 @@ class GameState extends FlxTransitionableState
     var gameActive :Bool = false;
 
     public var speed :Float = 1;
+    public var score :Int = 0;
 
     var backgroundSprite :FlxSprite;
     var backgroundColor :Int;
@@ -287,7 +288,7 @@ class GameState extends FlxTransitionableState
 
         this.transOut.color = ColorScheme.RED;
 
-        textOverlay = new GameTextOverlay(null, "GAME OVER", 'Score: *${Reg.score}*');
+        textOverlay = new GameTextOverlay(null, "GAME OVER", 'Score: *${score}*');
         add(textOverlay);
         textOverlay.open(1.0 / speed);
 

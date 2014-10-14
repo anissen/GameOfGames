@@ -41,6 +41,7 @@ class GameSession
 
         var game = gameInfo.game;
         game.speed = speed;
+        game.score = score;
         game.gameIndex = gameInfo.gameIndex;
         game.gameBatchSize = gameInfo.batchSize;
         game.onWin.addOnce(wonGame);
