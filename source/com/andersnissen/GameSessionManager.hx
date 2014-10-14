@@ -20,16 +20,14 @@ class GameSessionManager
     var gameList :Array<GameClass>;
 
     var unlockCount :Int;
-    var batchSize :Int;
     var newGameUnlocked :Bool = false;
-
     var batch :GameBatch;
 
     public function new(list :Array<GameClass>) :Void
     {
         gameList = list;
 
-        unlockCount = 0; //(Reg.save.data.unlockCount != null ? Reg.save.data.unlockCount : 0);
+        unlockCount = (Reg.save.data.unlockCount != null ? Reg.save.data.unlockCount : 0);
         batch = new GameBatch(gameList.slice(0, unlockCount));
     }
 
@@ -48,7 +46,6 @@ class GameSessionManager
                 batch.newBatch();
             }
 
-            batchSize = batch.length();
             // var batchString = [for (g in currentGameBatch) getGameName(g)].join(", ");
             // trace('currentGameBatch: [$batchString]');
         }
@@ -68,12 +65,11 @@ class GameSessionManager
     {
         var nextGameClass = getNextGameClass();
         var nextGame = Type.createInstance(nextGameClass, []);
-        trace('getNext: batchSize: $batchSize, batch.length(): ${batch.length()}');
         return { 
             game: nextGame,
             gameName: getGameName(nextGameClass),
-            gameIndex: batchSize - batch.length(),
-            batchSize: batchSize,
+            gameIndex: batch.initialBatchSize() - batch.remaining(),
+            batchSize: batch.initialBatchSize(),
             unlockedGame: newGameUnlocked
         };
     }
@@ -101,7 +97,6 @@ class GameSessionManager
     public function reset() :Void
     {
         batch.reset();
-        batchSize = 0;
         newGameUnlocked = false;
     }
 }
@@ -144,7 +139,11 @@ class GameBatch {
         lastGame = null;
     }
 
-    public function length() :Int {
+    public function initialBatchSize() {
+        return games.length;
+    }
+
+    public function remaining() :Int {
         return batch.length;
     }
 
