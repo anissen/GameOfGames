@@ -40,47 +40,56 @@ class HexChain extends GameState
         var collectableHexMap :Array<Array<Bool>> = [ for (x in 0...4) [ for (y in 0...7) false ]];
         var collectableHexCount = 0;
 
-        function makeChain(x :Int, y :Int) :Bool {
-            if (collectableHexCount >= CHAIN_LENGTH) return true;
+        // http://www.redblobgames.com/grids/hexagons/#neighbors
+        function getNeighbor(x :Int, y: Int, direction :Int) {
+            var neighbors;
+            if (y % 2 == 1) { // ODD x
+                neighbors = [
+                   [ [ 1,  0], [ 0, -1], [-1, -1],
+                     [-1,  0], [-1,  1], [ 0,  1] ],
+                   [ [ 1,  0], [ 1, -1], [ 0, -1],
+                     [-1,  0], [ 0,  1], [ 1,  1] ]
+                ];
+            } else { // EVEN x
+                neighbors = [
+                   [ [ 1,  0], [ 1, -1], [ 0, -1],
+                     [-1,  0], [ 0,  1], [ 1,  1] ],
+                   [ [ 1,  0], [ 0, -1], [-1, -1],
+                     [-1,  0], [-1,  1], [ 0,  1] ]
+                ];
+            }
+            var d = neighbors[x & 1][direction];
+            return { x: x + d[0], y: y + d[1] };
+        }
 
+        function canMoveToNeighbor(x :Int, y :Int) :Bool {
             if (x < 0 || x > 3) return false;
             if (y < 0 || y > 6) return false;
             if (x == 3 && y % 2 == 0) return false;
             if (collectableHexMap[x][y] == true) return false;
+            return true;
+        }
 
+        function makeChain(x :Int, y :Int) {
             collectableHexMap[x][y] = true;
             collectableHexCount++;
-            if (collectableHexCount >= CHAIN_LENGTH) return true;
 
-            // http://www.redblobgames.com/grids/hexagons/#neighbors
-            function getNeighbor(direction :Int) {
-                var neighbors;
-                if (y % 2 == 1) { // ODD x
-                    neighbors = [
-                       [ [ 1,  0], [ 0, -1], [-1, -1],
-                         [-1,  0], [-1,  1], [ 0,  1] ],
-                       [ [ 1,  0], [ 1, -1], [ 0, -1],
-                         [-1,  0], [ 0,  1], [ 1,  1] ]
-                    ];
-                } else { // EVEN x
-                    neighbors = [
-                       [ [ 1,  0], [ 1, -1], [ 0, -1],
-                         [-1,  0], [ 0,  1], [ 1,  1] ],
-                       [ [ 1,  0], [ 0, -1], [-1, -1],
-                         [-1,  0], [-1,  1], [ 0,  1] ]
-                    ];
+            while (collectableHexCount < CHAIN_LENGTH) {
+                var movedChain = false;
+                var directions = FlxG.random.shuffleArray([0, 1, 2, 3, 4, 5], 15);
+                for (d in directions) {
+                    var neighbor = getNeighbor(x, y, d);
+                    if (canMoveToNeighbor(neighbor.x, neighbor.y)) {
+                        x = neighbor.x;
+                        y = neighbor.y;
+                        collectableHexMap[x][y] = true;
+                        collectableHexCount++;
+                        movedChain = true;
+                        break;
+                    }
                 }
-                var d = neighbors[x & 1][direction];
-                return [ x + d[0], y + d[1] ];
+                if (!movedChain) return;
             }
-
-            var directions = FlxG.random.shuffleArray([0, 1, 2, 3, 4, 5], 15);
-            for (d in directions) {
-                var neighbor = getNeighbor(d);
-                var chainFinished = makeChain(neighbor[0], neighbor[1]);
-                if (chainFinished) return true;
-            }
-            return false;
         }
 
         var x = FlxG.random.int(0, 2);

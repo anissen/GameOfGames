@@ -27,12 +27,12 @@ Games:
 
 Bugs:
     ☐ Crash on exit!
-    ☐ Hexchain: Can make invalid chain
     ☐ Heart beat sound not playing on Android
     ☐ Laser game is boring + not intuitive
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Hexchain: Can make invalid chain @done (17-10-14 21:39) @project(Bugs)
   ✔ Refactor GameSessionManager (e.g. unit test?) @done (14-10-14 20:44) @project(TODO)
   ✔ Fix "Game x/y" text @done (14-10-14 20:44) @project(TODO)
   ✘ Improve vignette shader (see comments) @cancelled (14-10-14 19:56) @project(TODO / Maybe)
