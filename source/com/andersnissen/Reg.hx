@@ -43,7 +43,6 @@ class Reg
     }
 
     public static function setTrainingHighscore(gameId :String, s :Int) {
-        trace('Setting $gameId to $s');
         trainingScoresMap.set(gameId, s);
         Reg.save.data.trainingHighscores = trainingScoresMap;
         Reg.save.flush();

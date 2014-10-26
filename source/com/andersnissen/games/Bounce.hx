@@ -19,7 +19,7 @@ using flixel.util.FlxSpriteUtil;
 
 class Bounce extends GameState
 {
-    static inline var BAT_SPEED :Int = 1500;
+    static inline var BAT_SPEED :Int = 500;
     
     var _bat :FlxSprite;
     var _ball :FlxSprite;
@@ -38,14 +38,14 @@ class Bounce extends GameState
     {
         name = "Breakout";
         description = "Bounce the ball";
-        controls = "Tilt";
+        controls = "Drag";
         hints = "BOUNCE!";
 
         var trailArea = new FlxTrailArea(0, 0, Settings.WIDTH, Settings.HEIGHT);
         trailArea.antialiasing = true;
         
-        _bat = new FlxSprite(360 / 2 - _batWidth / 2, 600);
-        _bat.makeGraphic(_batWidth, 12, ColorScheme.BLACK);
+        _bat = new FlxSprite(360 / 2 - _batWidth / 2, 550);
+        _bat.makeGraphic(_batWidth, 16, ColorScheme.BLACK);
         _bat.drawRect(1, 1, _batWidth - 2, 10, colorPool.pickColor());
         _bat.immovable = true;
         
@@ -78,7 +78,7 @@ class Bounce extends GameState
         walls.add(topWall);
         
         bottomWall = new FlxSprite(0, 640 - 1);
-        bottomWall.makeGraphic(640, wallWidth, ColorScheme.TRANSPARENT);
+        bottomWall.makeGraphic(640, wallWidth * 2, ColorScheme.TRANSPARENT);
         bottomWall.immovable = true;
         walls.add(bottomWall);
         
@@ -88,52 +88,30 @@ class Bounce extends GameState
         add(_ball);
         addSpriteGroup(walls);
         add(_bat);
-
-        // xText = new FlxText(0, 20, Settings.WIDTH, "x", 30);
-        // xText.alignment = "center";
-        // yText = new FlxText(0, xText.frameHeight + 30, Settings.WIDTH, "y", 30);
-        // yText.alignment = "center";
-        // zText = new FlxText(0, xText.frameHeight + yText.frameHeight + 40, Settings.WIDTH, "z", 30);
-        // zText.alignment = "center";
-        // accText = new FlxText(0, zText.frameHeight + xText.frameHeight + yText.frameHeight + 40, Settings.WIDTH, "acc", 30);
-        // accText.alignment = "center";
-        
-        // add(xText);
-        // add(yText);
-        // add(zText);
-        // add(accText);
     }
     
     override function updateGame(elapsed :Float) :Void
     {
         _bat.velocity.x = 0;
-        _ball.velocity.y += 100 * elapsed;
+        _ball.velocity.y += 20 * speed;
 
-        #if mobile
-        if (FlxG.accelerometer.isSupported) {
-          _bat.velocity.x = -((1 + FlxG.accelerometer.y / 2) * FlxG.accelerometer.x) * BAT_SPEED * elapsed;
-            // xText.text = "x: " + FlxMath.roundDecimal(FlxG.accelerometer.x, 1);
-            // yText.text = "y: " + FlxMath.roundDecimal(FlxG.accelerometer.y, 1);
-            // zText.text = "z: " + FlxMath.roundDecimal(FlxG.accelerometer.z, 1);
-            // accText.text = "acc: " + FlxMath.roundDecimal(_bat.velocity.x, 1);
+        // #if mobile
+        // if (FlxG.accelerometer.isSupported) {
+        //   _bat.velocity.x = -((1 + FlxG.accelerometer.y / 2) * FlxG.accelerometer.x) * BAT_SPEED;
+        // }
+        // #end
+
+        if (FlxG.mouse.pressed) {
+            if (FlxG.mouse.x > 10 && FlxG.mouse.x < 290)
+                _bat.x = FlxG.mouse.x - _batWidth / 2;
         }
-        #end
 
-        #if !FLX_NO_TOUCH
-            for (touch in FlxG.touches.list) {
-                if (touch.pressed) {
-                    if (touch.x > 10 && touch.x < 290)
-                    _bat.x = touch.x;
-                }
-            }
-        #else
-            if (FlxG.keys.anyPressed(["LEFT", "A"]) && _bat.x > 10) {
-                _bat.velocity.x = - BAT_SPEED;
-            }
-            else if (FlxG.keys.anyPressed(["RIGHT", "D"]) && _bat.x < 290) {
-                _bat.velocity.x = BAT_SPEED;
-            }
-        #end
+        if (FlxG.keys.anyPressed(["LEFT", "A"]) && _bat.x > 10) {
+            _bat.velocity.x = - BAT_SPEED;
+        }
+        else if (FlxG.keys.anyPressed(["RIGHT", "D"]) && _bat.x < 290) {
+            _bat.velocity.x = BAT_SPEED;
+        }
         
         if (_bat.x < 10) {
             _bat.x = 10;
@@ -176,7 +154,7 @@ class Bounce extends GameState
             ball.velocity.x = 2 + FlxG.random.int(0, 8);
             ball.angularVelocity = 0;
         }
-        ball.velocity.y = -500 - 200 * speed;
+        ball.velocity.y = -1000;
         success(ball.getMidpoint());
     }
 }

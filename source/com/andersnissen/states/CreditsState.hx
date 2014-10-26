@@ -60,7 +60,7 @@ class CreditsState extends FlxState
             var isHeading = (line.length > 0 && line.charAt(0) == "=");
             var gameText = new FlxText(0, 80 + lineNumber * 35, Settings.WIDTH, (isHeading ? line.substr(1) : line), (isHeading ? 23 : 18));
             // gameText.font = "assets/fonts/kenpixel_blocks.ttf";
-            gameText.color = ColorScheme.randomExcept([ColorScheme.BLACK]);
+            gameText.color = ColorScheme.randomExcept([ColorScheme.BLACK, ColorScheme.NAVY, ColorScheme.GRAY]);
             gameText.borderStyle = FlxTextBorderStyle.OUTLINE_FAST;
             gameText.borderSize = 1;
             gameText.borderColor = ColorScheme.BLACK;

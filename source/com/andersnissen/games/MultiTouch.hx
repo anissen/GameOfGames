@@ -46,7 +46,7 @@ class MultiTouch extends GameState
             });
             if (!validPosition) continue;
 
-            var circle = ShapeBuilder.createCircle(x, y, radius, ColorScheme.RED);
+            var circle = ShapeBuilder.createCircle(x, y, radius, ColorScheme.randomExcept([this.backgroundColor, ColorScheme.RED]));
             circles.add(circle);
             circleCount++;
 
@@ -74,11 +74,9 @@ class MultiTouch extends GameState
                 var circle = circles.members[touch.touchPointID];
                 if (touch.getWorldPosition().distanceTo(circle.getMidpoint()) <= radius) {
                     circleTouched(touch.touchPointID, touch.getWorldPosition());
-                    colorCircles();
                 }
             } else if (touch.justReleased) {
                 touchedCircles[touch.touchPointID] = false;
-                colorCircles();
             }
         }
         #else
@@ -90,21 +88,8 @@ class MultiTouch extends GameState
                 }
                 circleIndex++;
             });
-            colorCircles();
         }
         #end
-    }
-
-    function colorCircle(circle :FlxSprite, color :Int) {
-        circle.drawCircle(radius, radius, radius - 2, color);
-    }
-
-    function colorCircles() {
-        var touchIndex = 0;
-        circles.forEachAlive(function(circle) {
-            colorCircle(circle, (touchedCircles[touchIndex] ? ColorScheme.GREEN : ColorScheme.RED));
-            touchIndex++;
-        });
     }
 
     function circleTouched(index :Int, point :FlxPoint)

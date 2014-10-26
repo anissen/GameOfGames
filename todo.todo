@@ -1,12 +1,12 @@
 
 TODO:
-    ☐ Improve sprite start-up/end effects
-    ☐ Put sounds on everything 
-    ☐ Fix colors in "MultiTouch"
+    ☐ New game icons for jump, bounce, vacuum
     ☐ Deploy to Google Play (see http://www.steverichey.com/dev/openfl-android-tips-and-tricks/)
     --- ✄ -----------------------
     Maybe:
         ☐ Add game complexity setting (easy, medium, hard -- hard to begin with)
+        ☐ Improve sprite start-up/end effects
+        ☐ Put sounds on everything 
 
 Games:
     ☐ Rope swinging (http://www.emanueleferonato.com/2013/09/10/creation-of-a-box2d-hook-like-the-one-seen-on-ios-mikey-hooks-game/)
@@ -28,6 +28,7 @@ Bugs:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Fix colors in "MultiTouch" @done (26-10-14 19:20) @project(TODO)
   ✘ Remaining to high score + new game unlock after game + fun yes/no for testers @cancelled (26-10-14 14:44) @project(TODO / Maybe)
   ✘ Google Analytics: https://github.com/fbricker/haxe-ga @cancelled (26-10-14 14:44) @project(TODO / Maybe)
   ✘ "Tutorial" screen @cancelled (26-10-14 14:43) @project(TODO)

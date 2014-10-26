@@ -45,7 +45,7 @@ class GameSession
         game.score = score;
         game.gameIndex = gameInfo.gameIndex;
         game.gameBatchSize = gameInfo.batchSize;
-        game.training = true;
+        game.training = training;
         game.onWin.addOnce(wonGame);
         game.onLose.addOnce(lostGame);
 
@@ -73,6 +73,8 @@ class GameSession
             if (score > Reg.highscore) {
                 newHighscore = true;
                 Reg.highscore = score;
+            } else {
+                // no new highscore
             }
             Reg.score = score;
         }

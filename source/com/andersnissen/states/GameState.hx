@@ -203,7 +203,7 @@ class GameState extends FlxTransitionableState
             textOverlay = new GameTextOverlay("*NEW GAME*", hints, 'Controls: *$controls*');
         } else {
             if (training) {
-                textOverlay = new GameTextOverlay("Training", hints);
+                textOverlay = new GameTextOverlay("Training", hints, 'Controls: $controls');
             } else {
                 textOverlay = new GameTextOverlay('Game $gameIndex / $gameBatchSize', hints);
             }

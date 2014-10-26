@@ -42,20 +42,20 @@ class Jump extends GameState
 
         obstacles = new FlxSpriteGroup();
 
-        var x = 200 + 100 * speed;
+        var x = 250 + 50 * speed;
         do {
             x += (500 + FlxG.random.int(-100, 100)) * speed;
 
             var width  = FlxG.random.getObject([64, 128]);
             var height = FlxG.random.getObject([64, 128]);
             var y = groundY -height - (FlxG.random.bool(25) ? 32 : 0);
-            var color = FlxG.random.getObject([ColorScheme.RED, ColorScheme.ORANGE, ColorScheme.YELLOW]);
+            var color = ColorScheme.randomExcept([this.backgroundColor, ColorScheme.GREEN]);
             obstacles.add(ShapeBuilder.createRect(x, y, width, height, color));
         } while (x < (4000 * speed));
 
         addSpriteGroup(obstacles);
       
-        obstacles.velocity.x = -400 + (-50 * speed);
+        obstacles.velocity.x = -500 + (-20 * speed);
     }
 
     override function updateGame(elapsed :Float) :Void
@@ -80,7 +80,7 @@ class Jump extends GameState
             }
         }
         else {
-            playerSprite.velocity.y += 4000 * elapsed;
+            playerSprite.velocity.y += 3800 * elapsed;
         }
     }
 }
