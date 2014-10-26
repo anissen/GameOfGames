@@ -17,8 +17,7 @@ class GameSession
     var newHighscore :Bool;
     var newGamesUnlocked :Int;
 
-    public function new()
-    {
+    public function new() {
 
     }
 
@@ -61,7 +60,8 @@ class GameSession
     function lostGame() :Void
     {
         if (training) {
-            var gameName = gameManager.getGamesUnlockedList()[0]; // HACK
+            var game = gameManager.getNext();
+            var gameName = game.gameName;
             var highscore :Null<Int> = Reg.getTrainingHighscore(gameName);
             if (highscore == null || score > highscore) {
                 Reg.setTrainingHighscore(gameName, score);
@@ -74,16 +74,10 @@ class GameSession
             Reg.score = score;
         }
 
-        // TODO: Pass text, score, highscore to InfoState
-        // var infoState = new InfoState(1);
-        // infoState.bgColor = ColorScheme.RED;
-        // infoState.onDone.addOnce(function() {
-            if (training) {
-                FlxG.switchState(new TrainingState());
-            } else {
-                FlxG.switchState(new MenuState(newHighscore, newGamesUnlocked));
-            }
-        // });
-        // FlxG.switchState(infoState);
+        if (training) {
+            FlxG.switchState(new TrainingState());
+        } else {
+            FlxG.switchState(new MenuState(newHighscore, newGamesUnlocked));
+        }
     }
 }
