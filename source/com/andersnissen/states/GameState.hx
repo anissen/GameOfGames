@@ -47,6 +47,7 @@ class GameState extends FlxTransitionableState
 
     public var speed :Float = 1;
     public var score :Int = 0;
+    public var training :Bool = false;
 
     var backgroundSprite :FlxSprite;
     var backgroundColor :Int;
@@ -201,7 +202,11 @@ class GameState extends FlxTransitionableState
         if (isNewUnlockedGame) {
             textOverlay = new GameTextOverlay("*NEW GAME*", hints, 'Controls: *$controls*');
         } else {
-            textOverlay = new GameTextOverlay('Game $gameIndex / $gameBatchSize', hints);
+            if (training) {
+                textOverlay = new GameTextOverlay("Training", hints);
+            } else {
+                textOverlay = new GameTextOverlay('Game $gameIndex / $gameBatchSize', hints);
+            }
         }
         add(textOverlay);
         textOverlay.open(0.5 / speed);

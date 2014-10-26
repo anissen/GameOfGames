@@ -14,6 +14,7 @@ class GameSession
     var speed :Float;
     var score :Int;
     var training :Bool;
+    var trainingPage :Int;
     var newHighscore :Bool;
     var newGamesUnlocked :Int;
 
@@ -21,10 +22,11 @@ class GameSession
 
     }
 
-    public function start(manager :GameSessionManager, ?isTraining :Bool = false) :Void
+    public function start(manager :GameSessionManager, ?isTraining :Bool = false, ?trainingPage :Int = 0) :Void
     {
         gameManager = manager;
         training = isTraining;
+        this.trainingPage = trainingPage;
         speed = 1.0;
         score = 0;
         newHighscore = false;
@@ -43,6 +45,7 @@ class GameSession
         game.score = score;
         game.gameIndex = gameInfo.gameIndex;
         game.gameBatchSize = gameInfo.batchSize;
+        game.training = true;
         game.onWin.addOnce(wonGame);
         game.onLose.addOnce(lostGame);
 
@@ -75,7 +78,7 @@ class GameSession
         }
 
         if (training) {
-            FlxG.switchState(new TrainingState());
+            FlxG.switchState(new TrainingState(trainingPage));
         } else {
             FlxG.switchState(new MenuState(newHighscore, newGamesUnlocked));
         }
