@@ -40,25 +40,15 @@ class HexChain extends GameState
         var collectableHexMap :Array<Array<Bool>> = [ for (x in 0...4) [ for (y in 0...7) false ]];
         var collectableHexCount = 0;
 
-        // http://www.redblobgames.com/grids/hexagons/#neighbors
+        // Using the EVEN r (row) algorithm from http://www.redblobgames.com/grids/hexagons/#neighbors
         function getNeighbor(x :Int, y: Int, direction :Int) {
-            var neighbors;
-            if (y % 2 == 1) { // ODD x
-                neighbors = [
-                   [ [ 1,  0], [ 0, -1], [-1, -1],
-                     [-1,  0], [-1,  1], [ 0,  1] ],
-                   [ [ 1,  0], [ 1, -1], [ 0, -1],
-                     [-1,  0], [ 0,  1], [ 1,  1] ]
-                ];
-            } else { // EVEN x
-                neighbors = [
-                   [ [ 1,  0], [ 1, -1], [ 0, -1],
-                     [-1,  0], [ 0,  1], [ 1,  1] ],
-                   [ [ 1,  0], [ 0, -1], [-1, -1],
-                     [-1,  0], [-1,  1], [ 0,  1] ]
-                ];
-            }
-            var d = neighbors[x & 1][direction];
+            var neighbors = [
+               [ [ 1,  0], [ 1, -1], [ 0, -1],
+                 [-1,  0], [ 0,  1], [ 1,  1] ],
+               [ [ 1,  0], [ 0, -1], [-1, -1],
+                 [-1,  0], [-1,  1], [ 0,  1] ]
+            ];
+            var d = neighbors[y & 1][direction];
             return { x: x + d[0], y: y + d[1] };
         }
 
