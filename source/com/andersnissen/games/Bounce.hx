@@ -106,12 +106,14 @@ class Bounce extends GameState
                 _bat.x = FlxG.mouse.x - _batWidth / 2;
         }
 
+        #if !mobile
         if (FlxG.keys.anyPressed(["LEFT", "A"]) && _bat.x > 10) {
             _bat.velocity.x = - BAT_SPEED;
         }
         else if (FlxG.keys.anyPressed(["RIGHT", "D"]) && _bat.x < 290) {
             _bat.velocity.x = BAT_SPEED;
         }
+        #end
         
         if (_bat.x < 10) {
             _bat.x = 10;

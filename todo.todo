@@ -1,6 +1,8 @@
 
 TODO:
     ☐ New game icons for jump, bounce, vacuum
+    ☐ Jump goes too fast too quickly (should be at least 1/2 speed progression)
+    ☐ Put sounds on button clicks
     ☐ Deploy to Google Play (see http://www.steverichey.com/dev/openfl-android-tips-and-tricks/)
     --- ✄ -----------------------
     Maybe:
@@ -27,11 +29,11 @@ Games:
 
 Bugs:
     ☐ Crash on exit!
-    ☐ Heart beat sound not playing on Android
     ☐ Laser game is boring + not intuitive
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Heart beat sound not playing on Android @done (27-10-14 22:41) @project(Bugs)
   ✔ Fix colors in "MultiTouch" @done (26-10-14 19:20) @project(TODO)
   ✘ Remaining to high score + new game unlock after game + fun yes/no for testers @cancelled (26-10-14 14:44) @project(TODO / Maybe)
   ✘ Google Analytics: https://github.com/fbricker/haxe-ga @cancelled (26-10-14 14:44) @project(TODO / Maybe)
