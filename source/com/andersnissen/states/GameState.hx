@@ -108,7 +108,13 @@ class GameState extends FlxTransitionableState
 
         var isNewUnlockedGame = Reg.gameManager.isNewGame();
 
-        var maxDelay = (isNewUnlockedGame ? 3.0 : 1.0) / speed; // 2.5 or 1.0 seconds, corrected by speed
+        var maxDelay = 1.0 / speed;
+        if (isNewUnlockedGame) {
+            maxDelay = 3.0 / speed;
+        } else if (training && score > 0) {
+            maxDelay = 0.2 / speed;
+        }
+
         var delay :Float = 0;
         for (spriteGroup in spriteGroupsToAdd) {
             spriteGroup.visible = true;
@@ -168,9 +174,18 @@ class GameState extends FlxTransitionableState
             #end
         }
 
-        var timeBeforeStarting = this.transIn.duration / 2 + (isNewUnlockedGame ? 4 : 2) / speed;
+        var timeBeforeStarting = (this.transIn.duration / 2) / speed;
+        if (isNewUnlockedGame) {
+            timeBeforeStarting += 4 / speed;
+        } else if (training && score > 0) {
+            timeBeforeStarting += 1 / speed;
+        } else {
+            timeBeforeStarting += 2 / speed;
+        }
         gameStartTimer = new FlxTimer(timeBeforeStarting, function(_ :FlxTimer) {
-            textOverlay.close(0.3 / speed);
+            if (textOverlay != null) {
+                textOverlay.close(0.3 / speed);
+            }
             // FlxG.camera.flash(0x22FFFFFF, 0.05);
 
             heartBeatTimer = new FlxTimer(1 / speed, function(_ :FlxTimer) {
@@ -203,13 +218,16 @@ class GameState extends FlxTransitionableState
             textOverlay = new GameTextOverlay("*NEW GAME*", hints, 'Controls: *$controls*');
         } else {
             if (training) {
-                textOverlay = new GameTextOverlay("Training", hints, 'Controls: $controls');
+                if (score == 0)
+                    textOverlay = new GameTextOverlay("Training", hints, 'Controls: $controls');
             } else {
                 textOverlay = new GameTextOverlay('Game $gameIndex / $gameBatchSize', hints);
             }
         }
-        add(textOverlay);
-        textOverlay.open(0.5 / speed);
+        if (textOverlay != null) {
+            add(textOverlay);
+            textOverlay.open(0.5 / speed);
+        }
     }
 
     function setup() :Void

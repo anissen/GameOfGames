@@ -78,7 +78,7 @@ class Bounce extends GameState
         walls.add(topWall);
         
         bottomWall = new FlxSprite(0, 640 - 1);
-        bottomWall.makeGraphic(640, wallWidth * 2, ColorScheme.TRANSPARENT);
+        bottomWall.makeGraphic(640, 200, ColorScheme.TRANSPARENT);
         bottomWall.immovable = true;
         walls.add(bottomWall);
         

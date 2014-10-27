@@ -176,8 +176,8 @@ class TrainingState extends FlxState
                 sprite.alpha = 0;
                 sprite.angle = FlxG.random.float(-10, 10);
                 sprite.y += 30;
-                FlxTween.tween(sprite, { alpha: 1, y: sprite.y - 30 }, 0.4, { startDelay: gameCount * 0.1, ease: FlxEase.elasticInOut });
-                FlxTween.angle(sprite, sprite.angle, 0.1, { startDelay: gameCount * 0.1 - 0.1, ease: FlxEase.elasticInOut });
+                FlxTween.tween(sprite, { alpha: 1, y: sprite.y - 30 }, 0.3, { startDelay: gameCount * 0.05, ease: FlxEase.elasticInOut });
+                FlxTween.angle(sprite, sprite.angle, 0.15, { startDelay: gameCount * 0.05 - 0.05, ease: FlxEase.elasticInOut });
             });
 
             gameList.add(gameInfo);

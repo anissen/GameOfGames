@@ -74,7 +74,7 @@ class Jump extends GameState
             }
 
             if (FlxG.mouse.justPressed) {
-                playerSprite.velocity.y -= 1400 + 100 * speed;
+                playerSprite.velocity.y -= 1400 + 90 * speed;
                 FlxTween.tween(playerSprite, { angle: playerSprite.angle - 180 }, 0.4, { ease: FlxEase.quadInOut });
                 isOnGround = false;
             }
