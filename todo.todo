@@ -1,8 +1,14 @@
 
 TODO:
-    ☐ New game icons for jump, bounce, vacuum
     ☐ Jump goes too fast too quickly (should be at least 1/2 speed progression)
     ☐ Put sounds on button clicks
+    ☐ Make 3 new games:
+        ☐ Draw lines
+        ☐ Fly smacker
+        ☐ Avoid seeking enemies
+    ☐ New game icons for jump, bounce, vacuum + new games
+    ☐ Post on "play testing" on TIG forum
+    ☐ Post on "playmygame" on reddit
     ☐ Deploy to Google Play (see http://www.steverichey.com/dev/openfl-android-tips-and-tricks/)
     --- ✄ -----------------------
     Maybe:
