@@ -12,6 +12,8 @@ import com.andersnissen.states.GameState;
 import flixel.math.FlxVelocity;
 import flixel.text.FlxText;
 
+using flixel.util.FlxSpriteUtil;
+
 class RobotVacuumCleaner extends GameState
 {
     var robotSprite :FlxSprite;
@@ -26,7 +28,7 @@ class RobotVacuumCleaner extends GameState
     {
         name = "Robot Vacuum Cleaner";
         description = "???";
-        controls = "???";
+        controls = "Tap and hold";
         hints = "VACUUM!";
         winningCondition = WinningCondition.CompleteObjective;
 
@@ -58,8 +60,21 @@ class RobotVacuumCleaner extends GameState
         robotSprite = ShapeBuilder.createCircle(Settings.WIDTH / 2, Settings.HEIGHT / 2, robotRadius, color);
         add(robotSprite);
 
-        directionSprite = ShapeBuilder.createRect(Settings.WIDTH / 2, Settings.HEIGHT / 2, 8, 8, color);
+        directionSprite = ShapeBuilder.createRect(Settings.WIDTH / 2, Settings.HEIGHT / 2, 64, 64, ColorScheme.TRANSPARENT);
+
+        directionSprite.fill(ColorScheme.TRANSPARENT);
+        directionSprite.drawLine(32, 32, 16, 64 - 16, { color: ColorScheme.BLACK, thickness: 2 } );
+        directionSprite.drawLine(32, 32, 32, 64, { color: ColorScheme.BLACK, thickness: 2 } );
+        directionSprite.drawLine(32, 32, 64 - 16, 64 - 16, { color: ColorScheme.BLACK, thickness: 2 } );
         add(directionSprite);
+
+        rotateArrow();
+    }
+
+    function rotateArrow() {
+        var directionPos = robotSprite.getMidpoint().addPoint(FlxVelocity.velocityFromAngle(robotSprite.angle, robotRadius + 32));
+        directionSprite.setPosition(directionPos.x - 32, directionPos.y - 32);
+        directionSprite.angle = 270 + flixel.math.FlxAngle.angleBetween(directionSprite, robotSprite, true);
     }
 
     override function updateGame(elapsed :Float) :Void
@@ -69,11 +84,10 @@ class RobotVacuumCleaner extends GameState
             wallBounce(robotSprite);
         } else {
             robotSprite.velocity.set(0, 0);
-            robotSprite.angle += 500 * elapsed;
+            robotSprite.angle += 300 * elapsed;
         }
 
-        var directionPos = robotSprite.getMidpoint().addPoint(FlxVelocity.velocityFromAngle(robotSprite.angle, robotRadius));
-        directionSprite.setPosition(directionPos.x - 4, directionPos.y - 4);
+        rotateArrow();
 
         circles.forEachAlive(function(circle) {
             var moveSpeed = (1 / circle.toPoint().distanceTo(robotSprite.toPoint())) * 300000 * elapsed;
@@ -90,19 +104,19 @@ class RobotVacuumCleaner extends GameState
     }
 
     function wallBounce(sprite :FlxSprite) {
-        if (sprite.x <= 0) {
+        if (sprite.x < 0) {
             sprite.x = 0;
             sprite.velocity.x *= -0.5;
         }
-        if (sprite.y <= 0) {
+        if (sprite.y < 0) {
             sprite.y = 0;
             sprite.velocity.y *= -0.5;
         }
-        if (sprite.x >= Settings.WIDTH - sprite.width) {
+        if (sprite.x > Settings.WIDTH - sprite.width) {
             sprite.x = Settings.WIDTH - sprite.width;
             sprite.velocity.x *= -0.5;
         }
-        if (sprite.y >= Settings.HEIGHT - sprite.height) {
+        if (sprite.y > Settings.HEIGHT - sprite.height) {
             sprite.y = Settings.HEIGHT - sprite.height;
             sprite.velocity.y *= -0.5;
         }    

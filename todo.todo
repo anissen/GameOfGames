@@ -1,6 +1,10 @@
 
 TODO:
-    ☐ Jump goes too fast too quickly (should be at least 1/2 speed progression)
+    ✔ Jump goes too fast too quickly (should be at least 1/2 speed progression) @done (28-10-14 19:53)
+    ☐ Don't re-use main music in games
+    ☐ Change main music to a more "quiet" track?
+    ✔ Make vacuum direction dot to an arrow @done (28-10-14 20:45)
+    ✔ Bug: Vacuum game, player can be stuck @done (28-10-14 20:45)
     ☐ Put sounds on button clicks
     ☐ Make 3 new games:
         ☐ Draw lines
@@ -31,7 +35,7 @@ Games:
         --- ✄ -----------------------
     ☐ Draw lines
     ☐ Fly smacker
-    ☐ Avoid seeking enemies
+    ☐ Avoid seeking enemies (http://gfycat.com/PoliticalWelldocumentedJenny)
 
 Bugs:
     ☐ Crash on exit!

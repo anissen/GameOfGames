@@ -55,7 +55,7 @@ class Jump extends GameState
 
         addSpriteGroup(obstacles);
       
-        obstacles.velocity.x = -500 + (-20 * speed);
+        obstacles.velocity.x = -300 + (-10 * speed);
     }
 
     override function updateGame(elapsed :Float) :Void
