@@ -14,6 +14,14 @@ class ShapeBuilder
             .drawRect(borderWidth, borderWidth, width - borderWidth * 2, height - borderWidth * 2, color);
     }
 
+    public static function createTriangle(x :Float, y :Float, width :Int, height :Int, color :Int, ?borderColor :Int = FlxColor.BLACK, ?borderWidth :Int = 2) :FlxSprite
+    {
+        return new FlxSprite(x, y)
+            .makeGraphic(width, height, ColorScheme.TRANSPARENT)
+            .drawTriangle(0, 0, height, borderColor)
+            .drawTriangle(0, borderWidth, height - borderWidth * 2, color);
+    }
+
     public static function createCircle(x :Float, y :Float, radius :Int, color :Int, ?borderColor :Int = FlxColor.BLACK, ?borderWidth :Int = 2) :FlxSprite
     {
         return new FlxSprite(x, y)

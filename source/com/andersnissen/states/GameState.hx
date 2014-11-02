@@ -195,6 +195,7 @@ class GameState extends FlxTransitionableState
             // new FlxTimer(1 / speed, function(_ :FlxTimer) {
             //     takeScreenshot();
             // });
+            start();
             gameActive = true;
             gameTimer = new FlxTimer(5 / speed, timesUp);
         });
@@ -231,6 +232,11 @@ class GameState extends FlxTransitionableState
     }
 
     function setup() :Void
+    {
+        // overridden by inheriting class
+    }
+
+    function start() :Void
     {
         // overridden by inheriting class
     }
