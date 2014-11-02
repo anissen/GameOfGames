@@ -15,7 +15,7 @@ using flixel.math.FlxAngle;
 
 class Flee extends GameState
 {
-    var START_ENEMIES :Int;
+    // var START_ENEMIES :Int;
     var MAX_ENEMIES :Int;
     var enemies :FlxSpriteGroup;
     var player :FlxSprite;
@@ -23,33 +23,33 @@ class Flee extends GameState
     override function setup() :Void {
         name = "Flee";
         description = "???";
-        controls = "Tap";
+        controls = "Touch and hold";
         hints = "FLEE!";
         winningCondition = WinningCondition.Survive;
 
         MAX_ENEMIES = FlxG.random.int(10, 25);
-        START_ENEMIES = FlxG.random.int(0, 3);
+        // START_ENEMIES = FlxG.random.int(0, 3);
 
         enemies = new FlxSpriteGroup();
         add(enemies);
 
         player = ShapeBuilder.createRect(Settings.WIDTH / 2, Settings.HEIGHT / 2, 16, 16, colorPool.pickColor());
         add(player);
-
-        for (i in 0 ... START_ENEMIES) spawnEnemy();
+        
+        // for (i in 0 ... START_ENEMIES) spawnEnemy(2.0);
     }
 
     override function start() {
-        new flixel.util.FlxTimer(0.5 / speed, function(_) { spawnEnemy(); }, MAX_ENEMIES - START_ENEMIES);
+        new flixel.util.FlxTimer(0.7 / speed, function(_) { spawnEnemy(); }, MAX_ENEMIES /*- START_ENEMIES*/);
     }
 
-    function spawnEnemy() {
+    function spawnEnemy(flickerTime :Float = 0.8) {
         var point = { x: FlxG.random.float(32, Settings.WIDTH - 32), y: FlxG.random.float(32, Settings.HEIGHT - 32) };
-        var enemy = ShapeBuilder.createTriangle(point.x, point.y, 16, 16, ColorScheme.random());
+        var enemy = ShapeBuilder.createTriangle(point.x, point.y, 32, 32, ColorScheme.random());
         enemy.scale.set(0, 0);
         FlxTween.tween(enemy.scale, { x: 1, y: 1 }, 0.3, { ease: FlxEase.elasticInOut });
         add(enemy);
-        enemy.flicker(0.8, null, null, null, function(_) { remove(enemy); enemies.add(enemy); });
+        enemy.flicker(flickerTime / speed, 0.04, true, true, function(_) { remove(enemy); enemies.add(enemy); });
     }
 
     function updateEnemies() {
@@ -57,10 +57,12 @@ class Flee extends GameState
             // move player
             player.moveTowardsPoint(FlxG.mouse.getWorldPosition(), 200 * speed);
             player.angle = player.angleBetweenPoint(FlxG.mouse.getWorldPosition(), true);
+        } else {
+            player.velocity.set(0, 0);
         }
 
         enemies.forEachAlive(function(enemy :FlxSprite) {
-            enemy.moveTowardsObject(player, 120 * speed);
+            enemy.moveTowardsObject(player, 100 * speed);
             enemy.angle = 90 + enemy.angleBetweenPoint(player.getMidpoint(), true);
         });
 
