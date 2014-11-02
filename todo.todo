@@ -1,13 +1,13 @@
 
 TODO:
     ✔ Jump goes too fast too quickly (should be at least 1/2 speed progression) @done (28-10-14 19:53)
-    ☐ Don't re-use main music in games
-    ☐ Change main music to a more "quiet" track?
+    ✔ Don't re-use main music in games @done (02-11-14 16:59)
+    ✘ Change main music to a more "quiet" track? @cancelled (02-11-14 16:59)
     ✔ Make vacuum direction dot to an arrow @done (28-10-14 20:45)
     ✔ Bug: Vacuum game, player can be stuck @done (28-10-14 20:45)
     ☐ Put sounds on button clicks
     ☐ Make 3 new games:
-        ☐ Draw lines
+        ✔ Draw lines @done (02-11-14 17:00)
         ☐ Fly smacker
         ☐ Avoid seeking enemies
     ☐ New game icons for jump, bounce, vacuum + new games

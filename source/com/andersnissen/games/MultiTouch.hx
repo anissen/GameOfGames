@@ -16,7 +16,7 @@ class MultiTouch extends GameState
 {
     var circles :FlxSpriteGroup;
     var texts :FlxSpriteGroup;
-    var radius :Int = 50;
+    var radius :Int = 55;
     var touchedCircles :Array<Bool>;
     var MAX_CIRCLES :Int;
 
@@ -50,7 +50,7 @@ class MultiTouch extends GameState
             circles.add(circle);
             circleCount++;
 
-            var text = new FlxText(x, y + radius / 2, radius * 2, '#$circleCount', 30);
+            var text = new FlxText(x, y + radius / 2, radius * 2, '#$circleCount', 36);
             text.color = ColorScheme.WHITE;
             text.alignment = FlxTextAlign.CENTER;
             text.borderColor = ColorScheme.BLACK;

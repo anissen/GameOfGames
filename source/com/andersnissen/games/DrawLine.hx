@@ -30,8 +30,8 @@ class DrawLine extends GameState
 
         lineDots = new FlxSpriteGroup();
         var point = { x: FlxG.random.float(32, Settings.WIDTH - 32), y: FlxG.random.float(32, Settings.HEIGHT - 32) };
-        var vector = { x: FlxG.random.float(12, 20) * FlxG.random.sign(), y: FlxG.random.float(12, 20) * FlxG.random.sign() };
-        lineDots.add(ShapeBuilder.createCircle(point.x, point.y, 16, ColorScheme.random()));
+        var vector = { x: FlxG.random.float(10, 15) * FlxG.random.sign(), y: FlxG.random.float(10, 15) * FlxG.random.sign() };
+        lineDots.add(ShapeBuilder.createCircle(point.x, point.y, 32, ColorScheme.random()));
 
         var lineCount = 0;
         while (lineCount < MAX_LINES) {
@@ -52,11 +52,11 @@ class DrawLine extends GameState
 
             lineCount++;
 
-            var dot = ShapeBuilder.createCircle(point.x, point.y, 16, ColorScheme.random());
+            var dot = ShapeBuilder.createCircle(point.x, point.y, 32, ColorScheme.random());
             dot.velocity.x = FlxG.random.float(-4, 4);
             dot.velocity.y = FlxG.random.float(-4, 4);
             lineDots.add(dot);
-            FlxTween.tween(dot.scale, { x: 0.5, y: 0.5 }, 0.3, { ease: FlxEase.elasticInOut, startDelay: 1.0 -lineCount / MAX_LINES });
+            FlxTween.tween(dot.scale, { x: 0.4, y: 0.4 }, 0.3, { ease: FlxEase.elasticInOut, startDelay: 1.0 -lineCount / MAX_LINES });
         }
 
         lineSprite = ShapeBuilder.createRect(0, 0, Settings.WIDTH, Settings.HEIGHT, ColorScheme.TRANSPARENT);
