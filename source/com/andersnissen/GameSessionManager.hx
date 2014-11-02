@@ -114,8 +114,7 @@ class GameBatch {
 
     public function newBatch(?unlockedGame :GameClass) {
         // trace('new batch with ${games.length} games and unlocked game: ${unlockedGame != null}');
-        batch = games.copy();
-        batch = FlxG.random.shuffleArray(batch, batch.length * 3);
+        batch = FlxG.random.shuffleArray(games.copy(), games.length * 3);
         if (unlockedGame != null) {
             batch.unshift(unlockedGame);
             games.push(unlockedGame);
@@ -135,8 +134,8 @@ class GameBatch {
 
     public function reset() {
         // trace('reset batch');
-        batch = games.copy();
         lastGame = null;
+        newBatch();
     }
 
     public function initialBatchSize() {
