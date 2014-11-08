@@ -45,6 +45,7 @@ class GameSession
         game.score = score;
         game.gameIndex = gameInfo.gameIndex;
         game.gameBatchSize = gameInfo.batchSize;
+        game.className = gameInfo.gameName;
         game.training = training;
         game.onWin.addOnce(wonGame);
         game.onLose.addOnce(lostGame);
@@ -55,7 +56,7 @@ class GameSession
     function wonGame() :Void
     {
         score++;
-        speed += 0.1;
+        speed += 0.08;
 
         startGame(gameManager.getNext());
     }

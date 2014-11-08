@@ -198,13 +198,13 @@ class TrainingState extends FlxState
 
     function onBackClicked()
     {
-        FlxG.sound.play(AssetPaths.button_click, 1);
+        FlxG.sound.play(AssetPaths.button_click__wav, 1);
         FlxG.switchState(new MenuState());
     }
 
     function onGameClicked(gameIndex :Int)
     {
-        FlxG.sound.play(AssetPaths.button_click, 1);
+        FlxG.sound.play(AssetPaths.button_click__wav, 1);
         Reg.gameSession.start(new GameSessionManager([Reg.gameList[gameIndex]]), true, pageNumber);
     }
 }

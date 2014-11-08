@@ -30,7 +30,7 @@ class DrawLine extends GameState
 
         lineDots = new FlxSpriteGroup();
         var point = { x: FlxG.random.float(32, Settings.WIDTH - 32), y: FlxG.random.float(32, Settings.HEIGHT - 32) };
-        var vector = { x: FlxG.random.float(10, 20) * FlxG.random.sign(), y: FlxG.random.float(10, 20) * FlxG.random.sign() };
+        var vector = { x: FlxG.random.float(15, 25) * FlxG.random.sign(), y: FlxG.random.float(15, 25) * FlxG.random.sign() };
         lineDots.add(ShapeBuilder.createCircle(point.x, point.y, 32, ColorScheme.random()));
 
         var lineCount = 0;
@@ -100,7 +100,7 @@ class DrawLine extends GameState
                 success(nextDot.getMidpoint());
                 nextDot.kill();
                 if (lineDots.countLiving() > 0) {
-                    FlxTween.tween(lineDots.getFirstAlive().scale, { x: 1, y: 1 }, 0.1, { ease: FlxEase.elasticInOut });
+                    FlxTween.tween(lineDots.getFirstAlive().scale, { x: 0.7, y: 0.7 }, 0.1, { ease: FlxEase.elasticInOut });
                 }
             }
         }

@@ -39,6 +39,8 @@ class GameState extends FlxTransitionableState
     var controls :String = "???";
     var winningCondition :WinningCondition = WinningCondition.Survive;
 
+    public var className :String = "???";
+
     var gameTimer :FlxTimer;
     var heartBeatTimer :FlxTimer;
     var gameStartTimer :FlxTimer;
@@ -161,19 +163,6 @@ class GameState extends FlxTransitionableState
             emitter.add(whitePixel);
         }
 
-        function takeScreenshot() {
-            #if (!FLX_NO_DEBUG && neko)
-            trace("Screenshot!");
-            //flixel.addons.plugin.screengrab.FlxScreenGrab.grab(null, true, true);
-            var bitmap :flash.display.Bitmap = flixel.addons.plugin.screengrab.FlxScreenGrab.grab(new flash.geom.Rectangle(0, 0, 450, 800), false, true); //
-            // Saving the BitmapData
-            var b :flash.utils.ByteArray = bitmap.bitmapData.encode("png", 1);
-            var fo :sys.io.FileOutput = sys.io.File.write('${name}.png', true);
-            fo.writeString(b.toString());
-            fo.close();
-            #end
-        }
-
         var timeBeforeStarting = (this.transIn.duration / 2) / speed;
         if (isNewUnlockedGame) {
             timeBeforeStarting += 4 / speed;
@@ -192,9 +181,6 @@ class GameState extends FlxTransitionableState
                 if (!gameActive) return;
                 FlxG.sound.play("assets/sounds/heartbeat.ogg", 1);
             }, 0);
-            // new FlxTimer(1 / speed, function(_ :FlxTimer) {
-            //     takeScreenshot();
-            // });
             start();
             gameActive = true;
             gameTimer = new FlxTimer(5 / speed, timesUp);
@@ -273,12 +259,12 @@ class GameState extends FlxTransitionableState
      */
     override public function update(elapsed :Float) :Void
     {
-        #if (android)
+        // #if (android)
         // if (FlxG.android.anyJustPressed([27])) {
         //     lose();
         //     return;
         // }
-        #end
+        // #end
 
         if (gameTimer != null && gameActive) {
             timerSprite.makeGraphic(Settings.WIDTH, Math.floor(gameTimer.progress * Settings.HEIGHT) + 10, ColorScheme.BLACK);
@@ -289,6 +275,29 @@ class GameState extends FlxTransitionableState
             super.update(elapsed * speed);
             updateGame(elapsed * speed);
         }
+
+        if (FlxG.keys.anyJustPressed([flixel.input.keyboard.FlxKey.SPACE])) {
+            takeScreenshot();
+        }
+    }
+
+    function takeScreenshot() {
+        #if (!FLX_NO_DEBUG && neko)
+            trace("Screenshot!");
+            //flixel.addons.plugin.screengrab.FlxScreenGrab.grab(null, true, true);
+            var bitmap :flash.display.Bitmap = flixel.addons.plugin.screengrab.FlxScreenGrab.grab(new flash.geom.Rectangle(0, 0, 450, 800), false, true); //
+            // Saving the BitmapData
+            var b :flash.utils.ByteArray = bitmap.bitmapData.encode("png", 1);
+            var fileindex = 0;
+            var filename;
+            do {
+                filename = '${className}${fileindex}.png';
+                fileindex++;
+            } while (sys.FileSystem.exists(filename));
+            var fo :sys.io.FileOutput = sys.io.File.write(filename, true);
+            fo.writeString(b.toString());
+            fo.close();
+        #end
     }
 
     function updateGame(elapsed :Float) {

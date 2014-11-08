@@ -166,7 +166,7 @@ class HexChain extends GameState
 
             var correctHex = (hexToCollect.indexOf(hex) > -1);
             if (!correctHex) {
-                lose();
+                // lose();
                 return;
             }
 

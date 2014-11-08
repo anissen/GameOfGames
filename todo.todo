@@ -1,6 +1,7 @@
 
 TODO:
     ☐ New game icons for jump, bounce, vacuum + new games
+    ☐ Reorder games
     ☐ Record video from Android
     ☐ Post on "play testing" on TIG forum
     ☐ Post on "playmygame" on reddit
@@ -24,10 +25,6 @@ Games:
     ☐ Game mechanics - HaxeFlixel (http://gme.kasoki.de/)
     ☐ Untangle game (http://johntantalo.com/wiki/Planarity/)
     ☐ Click at the right time (like many games in WarioWare Inc.)
-        --- ✄ -----------------------
-    ☐ Draw lines
-    ☐ Fly smacker
-    ☐ Avoid seeking enemies (http://gfycat.com/PoliticalWelldocumentedJenny)
 
 Bugs:
     ☐ Crash on exit!

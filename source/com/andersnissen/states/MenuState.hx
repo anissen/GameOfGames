@@ -242,7 +242,7 @@ class MenuState extends FlxState
 
     function onPlayClicked()
     {
-        FlxG.sound.play(AssetPaths.button_click, 1);
+        FlxG.sound.play(AssetPaths.button_click__wav, 1);
 
         Reg.gameManager.reset();
 
@@ -255,13 +255,13 @@ class MenuState extends FlxState
 
     function onTrainingClicked()
     {
-        FlxG.sound.play(AssetPaths.button_click, 1);
+        FlxG.sound.play(AssetPaths.button_click__wav, 1);
         FlxG.switchState(new TrainingState());
     }
 
     function onCreditsClicked()
     {
-        FlxG.sound.play(AssetPaths.button_click, 1);
+        FlxG.sound.play(AssetPaths.button_click__wav, 1);
         FlxG.switchState(new CreditsState());
     }
 }

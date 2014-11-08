@@ -42,7 +42,7 @@ class Jump extends GameState
 
         obstacles = new FlxSpriteGroup();
 
-        var x = 250 + 50 * speed;
+        var x = 150 + 50 * speed;
         do {
             x += (500 + FlxG.random.int(-100, 100)) * speed;
 
@@ -55,7 +55,7 @@ class Jump extends GameState
 
         addSpriteGroup(obstacles);
       
-        obstacles.velocity.x = -300 + (-10 * speed);
+        obstacles.velocity.x = -400 + (-10 * speed);
     }
 
     override function updateGame(elapsed :Float) :Void
