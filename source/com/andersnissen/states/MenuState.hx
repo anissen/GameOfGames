@@ -242,6 +242,8 @@ class MenuState extends FlxState
 
     function onPlayClicked()
     {
+        FlxG.sound.play(AssetPaths.button_click, 1);
+
         Reg.gameManager.reset();
 
         if (FlxG.sound.music != null && FlxG.sound.music.playing) {
@@ -253,11 +255,13 @@ class MenuState extends FlxState
 
     function onTrainingClicked()
     {
+        FlxG.sound.play(AssetPaths.button_click, 1);
         FlxG.switchState(new TrainingState());
     }
 
     function onCreditsClicked()
     {
+        FlxG.sound.play(AssetPaths.button_click, 1);
         FlxG.switchState(new CreditsState());
     }
 }

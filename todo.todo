@@ -1,19 +1,11 @@
 
 TODO:
-    ✔ Jump goes too fast too quickly (should be at least 1/2 speed progression) @done (28-10-14 19:53)
-    ✔ Don't re-use main music in games @done (02-11-14 16:59)
-    ✘ Change main music to a more "quiet" track? @cancelled (02-11-14 16:59)
-    ✔ Make vacuum direction dot to an arrow @done (28-10-14 20:45)
-    ✔ Bug: Vacuum game, player can be stuck @done (28-10-14 20:45)
-    ☐ Put sounds on button clicks
-    ☐ Make 3 new games:
-        ✔ Draw lines @done (02-11-14 17:00)
-        ☐ Fly smacker
-        ☐ Avoid seeking enemies
     ☐ New game icons for jump, bounce, vacuum + new games
+    ☐ Record video from Android
     ☐ Post on "play testing" on TIG forum
     ☐ Post on "playmygame" on reddit
     ☐ Deploy to Google Play (see http://www.steverichey.com/dev/openfl-android-tips-and-tricks/)
+    ☐ Update personal website (age, etc.)
     --- ✄ -----------------------
     Maybe:
         ☐ Add game complexity setting (easy, medium, hard -- hard to begin with)
@@ -43,6 +35,16 @@ Bugs:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Jump goes too fast too quickly (should be at least 1/2 speed progression) @done (28-10-14 19:53) @project(TODO)
+  ✔ Don't re-use main music in games @done (02-11-14 16:59) @project(TODO)
+  ✘ Change main music to a more "quiet" track? @cancelled (02-11-14 16:59) @project(TODO)
+  ✔ Make vacuum direction dot to an arrow @done (28-10-14 20:45) @project(TODO)
+  ✔ Bug: Vacuum game, player can be stuck @done (28-10-14 20:45) @project(TODO)
+  ✔ Put sounds on button clicks @done (08-11-14 15:48) @project(TODO)
+  ✔ Make 3 new games: @done (08-11-14 15:45) @project(TODO)
+  ✔ Draw lines @done (02-11-14 17:00) @project(TODO)
+  ✔ Fly smacker @done (08-11-14 15:45) @project(TODO)
+  ✔ Avoid seeking enemies @done (08-11-14 15:45) @project(TODO)
   ✔ Heart beat sound not playing on Android @done (27-10-14 22:41) @project(Bugs)
   ✔ Fix colors in "MultiTouch" @done (26-10-14 19:20) @project(TODO)
   ✘ Remaining to high score + new game unlock after game + fun yes/no for testers @cancelled (26-10-14 14:44) @project(TODO / Maybe)
