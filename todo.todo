@@ -1,12 +1,11 @@
 
 TODO:
-    ☐ New game icons for jump, bounce, vacuum + new games
-    ☐ Reorder games
+    ☐ Game icon
     ☐ Record video from Android
     ☐ Post on "play testing" on TIG forum
     ☐ Post on "playmygame" on reddit
     ☐ Deploy to Google Play (see http://www.steverichey.com/dev/openfl-android-tips-and-tricks/)
-    ☐ Update personal website (age, etc.)
+    ☐ Update personal website after november 10th (age, etc.)
     --- ✄ -----------------------
     Maybe:
         ☐ Add game complexity setting (easy, medium, hard -- hard to begin with)
@@ -32,6 +31,9 @@ Bugs:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ New icon for draw line @done (08-11-14 17:27) @project(TODO)
+  ✔ Reorder games @done (08-11-14 17:07) @project(TODO)
+  ✔ New game icons for jump, bounce, vacuum + new games @done (08-11-14 17:07) @project(TODO)
   ✔ Jump goes too fast too quickly (should be at least 1/2 speed progression) @done (28-10-14 19:53) @project(TODO)
   ✔ Don't re-use main music in games @done (02-11-14 16:59) @project(TODO)
   ✘ Change main music to a more "quiet" track? @cancelled (02-11-14 16:59) @project(TODO)

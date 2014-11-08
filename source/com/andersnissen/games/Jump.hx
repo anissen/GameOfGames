@@ -42,9 +42,9 @@ class Jump extends GameState
 
         obstacles = new FlxSpriteGroup();
 
-        var x = 150 + 50 * speed;
+        var x = 150 + 40 * speed;
         do {
-            x += (500 + FlxG.random.int(-100, 100)) * speed;
+            x += (500 + FlxG.random.int(-80, 80)) * speed;
 
             var width  = FlxG.random.getObject([64, 128]);
             var height = FlxG.random.getObject([64, 128]);
@@ -55,7 +55,7 @@ class Jump extends GameState
 
         addSpriteGroup(obstacles);
       
-        obstacles.velocity.x = -400 + (-10 * speed);
+        obstacles.velocity.x = -430 + (-5 * speed);
     }
 
     override function updateGame(elapsed :Float) :Void
@@ -74,13 +74,13 @@ class Jump extends GameState
             }
 
             if (FlxG.mouse.justPressed) {
-                playerSprite.velocity.y -= 1400 + 90 * speed;
+                playerSprite.velocity.y -= 1420 + 50 * speed;
                 FlxTween.tween(playerSprite, { angle: playerSprite.angle - 180 }, 0.4, { ease: FlxEase.quadInOut });
                 isOnGround = false;
             }
         }
         else {
-            playerSprite.velocity.y += 3800 * elapsed;
+            playerSprite.velocity.y += 3600 * elapsed;
         }
     }
 }

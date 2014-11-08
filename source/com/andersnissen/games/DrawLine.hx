@@ -26,17 +26,17 @@ class DrawLine extends GameState
         hints = "CONNECT THE DOTS!";
         winningCondition = WinningCondition.CompleteObjective;
 
-        MAX_LINES = FlxG.random.int(10, 25);
+        MAX_LINES = FlxG.random.int(8, 16);
 
         lineDots = new FlxSpriteGroup();
         var point = { x: FlxG.random.float(32, Settings.WIDTH - 32), y: FlxG.random.float(32, Settings.HEIGHT - 32) };
-        var vector = { x: FlxG.random.float(15, 25) * FlxG.random.sign(), y: FlxG.random.float(15, 25) * FlxG.random.sign() };
-        lineDots.add(ShapeBuilder.createCircle(point.x, point.y, 32, ColorScheme.random()));
+        var vector = { x: FlxG.random.float(20, 25) * FlxG.random.sign(), y: FlxG.random.float(20, 25) * FlxG.random.sign() };
+        lineDots.add(ShapeBuilder.createCircle(point.x, point.y, 32, ColorScheme.randomExcept(ColorScheme.BLACK, this.backgroundColor)));
 
         var lineCount = 0;
         while (lineCount < MAX_LINES) {
-            vector.x *= FlxG.random.float(0.7, 1.3) * FlxG.random.sign(20);
-            vector.y *= FlxG.random.float(0.7, 1.3) * FlxG.random.sign(20);
+            vector.x *= FlxG.random.float(0.8, 1.2);
+            vector.y *= FlxG.random.float(0.8, 1.2);
             var tempPoint = { x: point.x + vector.x, y: point.y + vector.y };
             tempPoint.x += vector.x;
             tempPoint.y += vector.y;
@@ -53,8 +53,8 @@ class DrawLine extends GameState
             lineCount++;
 
             var dot = ShapeBuilder.createCircle(point.x, point.y, 32, ColorScheme.random());
-            dot.velocity.x = FlxG.random.float(-4, 4);
-            dot.velocity.y = FlxG.random.float(-4, 4);
+            dot.velocity.x = FlxG.random.float(-5, 5);
+            dot.velocity.y = FlxG.random.float(-5, 5);
             lineDots.add(dot);
             FlxTween.tween(dot.scale, { x: 0.4, y: 0.4 }, 0.3, { ease: FlxEase.elasticInOut, startDelay: 1.0 -lineCount / MAX_LINES });
         }

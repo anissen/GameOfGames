@@ -276,9 +276,11 @@ class GameState extends FlxTransitionableState
             updateGame(elapsed * speed);
         }
 
-        if (FlxG.keys.anyJustPressed([flixel.input.keyboard.FlxKey.SPACE])) {
-            takeScreenshot();
-        }
+        #if (desktop && debug)
+            if (FlxG.keys.anyJustPressed([flixel.input.keyboard.FlxKey.SPACE])) {
+                takeScreenshot();
+            }
+        #end
     }
 
     function takeScreenshot() {
