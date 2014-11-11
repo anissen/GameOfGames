@@ -31,8 +31,8 @@ class MenuState extends FlxState
     var creditsButton :FlxText;
     var emitter :FlxEmitter;
 
-    var newHighscore :Bool;
-    var newGamesUnlocked :Int;
+    public var newHighscore :Bool;
+    public var newGamesUnlocked :Int;
 
     function createTextButton(text :String, y :Float, textSize :Int, color :Int, borderStyle :FlxTextBorderStyle, borderColor :Int = FlxColor.BLACK, ?borderSize :Float = 0.0)
     {
@@ -42,15 +42,16 @@ class MenuState extends FlxState
         textButton.borderStyle = borderStyle;
         textButton.borderColor = borderColor;
         textButton.borderSize = borderSize;
+        // textButton.visible = true;
+        // textButton.alpha = 1.0;
         return textButton;
     }
 
-    override public function new(?newHighscore :Bool = false, ?newGamesUnlocked :Int = 0) :Void
-    {
-        super();
-
-        this.newHighscore = newHighscore;
-        this.newGamesUnlocked = newGamesUnlocked;
+    public static function Create(?newHighscore :Bool = false, ?newGamesUnlocked :Int = 0) {
+        var menuState = new MenuState();
+        menuState.newHighscore = newHighscore;
+        menuState.newGamesUnlocked = newGamesUnlocked;
+        return menuState;
     }
 
     function createBackground() {
@@ -161,6 +162,8 @@ class MenuState extends FlxState
         }
         #end
 
+		super.create();
+
         createBackground();
         createEmitter();
         createTitleText();
@@ -171,9 +174,7 @@ class MenuState extends FlxState
 
         // #if (debug)
         // var resetButton = new FlxButton(Settings.WIDTH / 2, 600, "Reset Progress", function () {
-        //     Reg.highscore = 0;
-        //     Reg.speed = 1;
-        //     Reg.gameManager.reset();
+
         // });
         // resetButton.setPosition(resetButton.x - resetButton.width / 2, resetButton.y - resetButton.height / 2);
         // add(resetButton);
@@ -187,7 +188,6 @@ class MenuState extends FlxState
         // textfield.textColor = 0xff00ff;
         // FlxG.addChildBelowMouse(textfield);
 
-		super.create();
 	}
 
     function playMusic() :Void

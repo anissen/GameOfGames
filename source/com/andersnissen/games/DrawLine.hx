@@ -31,7 +31,7 @@ class DrawLine extends GameState
         lineDots = new FlxSpriteGroup();
         var point = { x: FlxG.random.float(32, Settings.WIDTH - 32), y: FlxG.random.float(32, Settings.HEIGHT - 32) };
         var vector = { x: FlxG.random.float(20, 25) * FlxG.random.sign(), y: FlxG.random.float(20, 25) * FlxG.random.sign() };
-        lineDots.add(ShapeBuilder.createCircle(point.x, point.y, 32, ColorScheme.randomExcept(ColorScheme.BLACK, this.backgroundColor)));
+        lineDots.add(ShapeBuilder.createCircle(point.x, point.y, 32, ColorScheme.randomExcept([ColorScheme.BLACK, this.backgroundColor])));
 
         var lineCount = 0;
         while (lineCount < MAX_LINES) {

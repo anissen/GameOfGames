@@ -199,7 +199,7 @@ class TrainingState extends FlxState
     function onBackClicked()
     {
         FlxG.sound.play(AssetPaths.button_click__wav, 1);
-        FlxG.switchState(new MenuState());
+        FlxG.switchState(MenuState.Create());
     }
 
     function onGameClicked(gameIndex :Int)

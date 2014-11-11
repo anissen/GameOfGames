@@ -97,13 +97,14 @@ class Main extends Sprite
         FlxTransitionableState.defaultTransOut.tweenOptions.ease = flixel.tweens.FlxEase.elasticInOut;
         FlxTransitionableState.defaultTransOut.tileData = { asset: diamond, width:32, height:32 };
 
-        #if (android)
+        // #if (android)
         // FlxG.android.preventDefaultKeys = [BACK];
-        #end
+        // #end
 
         Reg.init();
-		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 
+        addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
+        
         // FlxG.addPostProcess(new PostProcess("assets/shaders/scanlines.frag"));
         FlxG.addPostProcess(new PostProcess("assets/shaders/cheapretard.frag"));
         // FlxG.addPostProcess(new PostProcess("assets/shaders/simplegrain.frag"))

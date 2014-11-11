@@ -83,7 +83,7 @@ class GameSession
         if (training) {
             FlxG.switchState(new TrainingState(trainingPage));
         } else {
-            FlxG.switchState(new MenuState(newHighscore, newGamesUnlocked));
+            FlxG.switchState(MenuState.Create(newHighscore, newGamesUnlocked));
         }
     }
 }

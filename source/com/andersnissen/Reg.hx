@@ -61,7 +61,7 @@ class Reg
     }
 
     public static var gameManager :GameSessionManager;
-    public static var networkManager :NetworkManager;
+    // public static var networkManager :NetworkManager;
     public static var gameSession :GameSession;
 
     public static var gameList :Array<Class<GameState>> = [Jump, Flee, Bounce, HexChain, BugSwatter, MultiTouch,RobotVacuumCleaner, CollectDots, Overlap, DrawLine /* Lasers, */ ];
