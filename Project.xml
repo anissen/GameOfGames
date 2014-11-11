@@ -2,15 +2,15 @@
 <project>
     <!------------------------------APPLICATION SETTINGS---------------------------->
     
-    <app title="GameOfGames" file="GameOfGames" main="com.andersnissen.Main" version="0.0.2" company="Anders Nissen" />
+    <app title="Game of Games" file="GameOfGames" main="com.andersnissen.Main" package="com.anissen" version="1.0.0" company="Anders Nissen" />
     
     <!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
     <!--or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"!-->
-    <app preloader="com.anissen.Preloader" />
+    <!-- <app preloader="com.anissen.Preloader" /> -->
     
     <!--Minimum without FLX_NO_GAMEPAD: 11.8, without FLX_NO_NATIVE_CURSOR: 11.2 -->
     <set name="SWF_VERSION" value="11.8" />
-    
+
     <!--------------------------------WINDOW SETTINGS------------------------------->
     
     <!--These window settings apply to all targets-->
@@ -27,6 +27,8 @@
     <window if="mobile" orientation="portrait" fullscreen="true" width="0" height="0" />
 
     <window antialiasing="4" />
+
+    <android target-sdk-version="16" />
     
     <!--------------------------------PATHS SETTINGS-------------------------------->
     
@@ -88,4 +90,10 @@
     <!--------------------------------CUSTOM---------------------------------------->
     
     <!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
+
+    <icon path="assets/icon/icon36.png" size="36" if="android" />
+    <icon path="assets/icon/icon48.png" size="48" if="android" />
+    <icon path="assets/icon/icon72.png" size="72" if="android" />
+    <icon path="assets/icon/icon96.png" size="96" if="android" />
+
 </project>
