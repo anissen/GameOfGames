@@ -11,15 +11,15 @@ uniform sampler2D uImage0;
 
 // Does not work on Android either...
 // Source: http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
-float rand(vec2 co)
-{
-    float a = 12.9898;
-    float b = 78.233;
-    float c = 43758.5453;
-    float dt= dot(co.xy ,vec2(a,b));
-    float sn= mod(dt,3.14);
-    return fract(sin(sn) * c);
-}
+// float rand(vec2 co)
+// {
+//     float a = 12.9898;
+//     float b = 78.233;
+//     float c = 43758.5453;
+//     float dt= dot(co.xy ,vec2(a,b));
+//     float sn= mod(dt,3.14);
+//     return fract(sin(sn) * c);
+// }
 
 const float bloom = 0.35;  // TODO make uniform input (bloom = good / points)
 const float shiftOffset = 0.003; // TODO make uniform input (shift = bad / damage)
@@ -52,20 +52,20 @@ void main(void)
     // }
           
     // electron beam shift (plus random distortion)
-    if (rand(vec2(1.0 - uTime, sin(uTime))) < glitchChance) { 
-        shift = 0.1 * rand(vec2(uTime, uTime));
-        col.r = texture2D(uImage0, vec2(uv.x + shift, uv.y)).x;
-        col.g = texture2D(uImage0, vec2(uv.x, uv.y)).y;
-        col.b = texture2D(uImage0, vec2(uv.x - shift, uv.y)).z;
-    } else {
+    // if (rand(vec2(1.0 - uTime, sin(uTime))) < glitchChance) { 
+    //     shift = 0.1 * rand(vec2(uTime, uTime));
+    //     col.r = texture2D(uImage0, vec2(uv.x + shift, uv.y)).x;
+    //     col.g = texture2D(uImage0, vec2(uv.x, uv.y)).y;
+    //     col.b = texture2D(uImage0, vec2(uv.x - shift, uv.y)).z;
+    // } else {
         col = curcol.rgb;
-    }
+    // }
 
     // col = clamp(col*0.5+0.5*col*col*1.2,0.0,1.0);          // tone curve
     col *= 0.3 + 0.7 * vignetteAmount * uv.x * uv.y * (1.0 - uv.x) * (1.0 - uv.y); // vignette
     // col *= vec3(0.7,1.0,0.6);                              // green tint
     col *= 0.95 + 0.05 * sin(scanlinesScrollSpeed * uTime + uv.y * scanlinesScale);        // scanlines
-    col *= 1.0 - 0.05 * rand(vec2(uTime, tan(uTime)));          // random flicker
+    // col *= 1.0 - 0.05 * rand(vec2(uTime, tan(uTime)));          // random flicker
 
     // bloom
     gl_FragColor = bloom * (sum * sum) * (1.0 - curcol.r) / 40.0 + vec4(col, 1.0);
