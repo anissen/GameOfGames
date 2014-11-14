@@ -1,13 +1,10 @@
 
 TODO:
-    ☐ Record video from Android
     ☐ Post on "play testing" on TIG forum
     ☐ Post on "playmygame" on reddit
-    ☐ Deploy to Google Play (see http://www.steverichey.com/dev/openfl-android-tips-and-tricks/)
-    ☐ List the dependencies + versions:
-        ☐ openfl 2.0.0
-        ☐ lime 1.0.1
-    ☐ Update personal website after november 10th (age, etc.)
+    ☐ Post on facebook
+    ☐ Post on blog
+    ☐ Post to haxeflixel.com
     --- ✄ -----------------------
     Maybe:
         ☐ Add game complexity setting (easy, medium, hard -- hard to begin with)
@@ -33,6 +30,14 @@ Bugs:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ Record video from Android @done (14-11-14 21:07) @project(TODO)
+  ✔ Deploy to Google Play (see http://www.steverichey.com/dev/openfl-android-tips-and-tricks/) @done (13-11-14 19:19) @project(TODO)
+  ✔ List the dependencies + versions: @done (14-11-14 21:07) @project(TODO)
+  ✔ openfl 2.0.0 @done (14-11-14 21:07) @project(TODO)
+  ✔ lime 1.0.1 @done (14-11-14 21:07) @project(TODO)
+  ✔ HaxeFlixel @done (14-11-14 21:07) @project(TODO)
+  ✔ flixel-addons @done (14-11-14 21:07) @project(TODO)
+  ✔ Tweet @done (14-11-14 21:06) @project(TODO)
   ✔ Game icon @done (09-11-14 17:50) @project(TODO)
   ✔ Update haxeflixel libraries @done (09-11-14 16:46) @project(TODO)
   ✔ New icon for draw line @done (08-11-14 17:27) @project(TODO)
