@@ -70,8 +70,8 @@ class Main extends Sprite
 			var ratioX :Float = stageWidth / gameWidth;
 			var ratioY :Float = stageHeight / gameHeight;
 			zoom = Math.min(ratioX, ratioY);
-			gameWidth = Math.ceil(stageWidth / zoom);
-			gameHeight = Math.ceil(stageHeight / zoom);
+			Settings.WIDTH = gameWidth = Math.ceil(stageWidth / zoom);
+			Settings.HEIGHT = gameHeight = Math.ceil(stageHeight / zoom);
 		}
 
         FlxG.stage.quality = flash.display.StageQuality.BEST;
