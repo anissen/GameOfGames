@@ -1,0 +1,4 @@
+openfl 2.0.0
+lime 1.0.1
+HaxeFlixel
+flixel-addons
