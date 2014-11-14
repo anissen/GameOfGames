@@ -44,12 +44,12 @@ class Bounce extends GameState
         var trailArea = new FlxTrailArea(0, 0, Settings.WIDTH, Settings.HEIGHT);
         trailArea.antialiasing = true;
         
-        _bat = new FlxSprite(360 / 2 - _batWidth / 2, 550);
+        _bat = new FlxSprite(Settings.WIDTH / 2 - _batWidth / 2, 550);
         _bat.makeGraphic(_batWidth, 16, ColorScheme.BLACK);
         _bat.drawRect(1, 1, _batWidth - 2, 10, colorPool.pickColor());
         _bat.immovable = true;
         
-        _ball = new FlxSprite(360 / 2, 500);
+        _ball = new FlxSprite(Settings.WIDTH / 2, 500);
         _ball.makeGraphic(12, 12, ColorScheme.BLACK);
         _ball.drawRect(1, 1, 10, 10, colorPool.pickColor());
         _ball.elasticity = 1;
@@ -63,22 +63,22 @@ class Bounce extends GameState
         
         var wallWidth :Int = 10;
         var leftWall = new FlxSprite(0, 0);
-        leftWall.makeGraphic(wallWidth, 640, wallColor);
+        leftWall.makeGraphic(wallWidth, Settings.HEIGHT, wallColor);
         leftWall.immovable = true;
         walls.add(leftWall);
         
-        var rightWall = new FlxSprite(360 - wallWidth, 0);
-        rightWall.makeGraphic(wallWidth, 640, wallColor);
+        var rightWall = new FlxSprite(Settings.WIDTH - wallWidth, 0);
+        rightWall.makeGraphic(wallWidth, Settings.HEIGHT, wallColor);
         rightWall.immovable = true;
         walls.add(rightWall);
         
         var topWall = new FlxSprite(0, 0);
-        topWall.makeGraphic(360, wallWidth, wallColor);
+        topWall.makeGraphic(Settings.WIDTH, wallWidth, wallColor);
         topWall.immovable = true;
         walls.add(topWall);
         
-        bottomWall = new FlxSprite(0, 640 - 1);
-        bottomWall.makeGraphic(640, 200, ColorScheme.TRANSPARENT);
+        bottomWall = new FlxSprite(0, Settings.HEIGHT - 1);
+        bottomWall.makeGraphic(Settings.HEIGHT, 200, ColorScheme.TRANSPARENT);
         bottomWall.immovable = true;
         walls.add(bottomWall);
         

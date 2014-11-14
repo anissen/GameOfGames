@@ -30,6 +30,9 @@ class BugSwatter extends GameState
 
         bugs = new FlxSpriteGroup();
         for (i in 0 ... MAX_BUGS) spawnBug();
+        bugs.forEachAlive(function(bug :FlxSprite) {
+            bug.bound(16, Settings.WIDTH - 16, 16, Settings.HEIGHT - 16);
+        });
         addSpriteGroup(bugs);
     }
 
@@ -61,11 +64,6 @@ class BugSwatter extends GameState
     function killBug(bug :FlxSprite) {
         success(bug.getMidpoint());
         bug.kill();
-        // bugs.remove(bug);
-
-        // add(bug);
-        // bug.fadeOut(0.3);
-        // bug.flicker(0.3, 0.04, true, true, function(_) { remove(bug); });
     }
 
     function updateBugs() {
